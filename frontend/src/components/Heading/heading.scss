@@ -1,0 +1,33 @@
+.heading {
+  width: 100%;
+  h1 {
+    font-family: Poppins;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: #9B9B9B;
+    display: flex;
+    justify-content: space-between;
+  }
+  h1:before,
+  h1:after {
+    color: #181818;
+    content: "";
+    border-top: 1px solid;
+    margin: 0 20px 0 0;
+    flex: 1 0 20px;
+    max-width: 88px;
+  }
+  h1:after {
+    margin: 0 0 0 20px;
+  }
+}

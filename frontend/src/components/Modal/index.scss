@@ -1,0 +1,118 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(0deg, #000000a1, transparent 80%) no-repeat;
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  height: 100vh;
+  overflow-y: hidden;
+}
+.fix{
+  display: flex;
+  justify-content: center;
+}
+.modal {
+  z-index: 12;
+  position: fixed;
+  width: 100%;
+  max-width: 400px;
+  min-width: 200px;
+  bottom: 0;
+
+  .main {
+    width: 100%;
+    min-height: 150px;
+    background: #141618;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 24px 24px 0 0;
+    margin: auto;
+    padding-top: 8px;
+    box-sizing: border-box;
+
+    &:before {
+      position: absolute;
+      content: "";
+      display: block;
+      width: 36px;
+      height: 5px;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 8px;
+      background-color: #ffffff21;
+    }
+  }
+
+
+
+  header {
+    border-bottom: 1px solid #272727;
+    width: 100%;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #dbdbdb;
+
+    // color:#646666;
+  }
+
+  .content {
+    width: 100%;
+    overflow: hidden;
+    // background: #201f23;
+    background: #141618;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 0 4%;
+    padding-bottom: 28px;
+
+    form {
+      width: 100%;
+    }
+
+    .input-text,
+    input {
+      width: 100% !important;
+      //border: 1px solid red;
+    }
+  }
+}
+
+@media (min-width: 480px) {
+  .backdrop{
+    @media (min-width: 480px) {
+      background: #00000061;
+    }
+  }
+  .modal {
+    bottom: unset;
+    position: fixed;
+    top: 20%;
+    .content {
+      padding: 0 6% 30px 5%;
+    }
+    .main {
+      border-radius: 12px;
+    }
+    .content {
+      padding-bottom: 26px;
+    }
+  }
+}

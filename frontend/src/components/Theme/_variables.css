@@ -1,0 +1,23 @@
+:root, [data-theme="default"] {
+  /* --color-bg:red; */
+}
+
+[data-theme] {
+  /* background-color: var(--app-bg); */
+}
+
+[data-theme="blue"] {
+  --main-bg:#09090c;
+  --app-bg:#0c0d10;
+  --navbar-bg:#0f1013;
+  --card-bg:#ffffff10;
+  /* --card-bg:#0E0E0E; */
+}
+
+[data-theme="dark"] {
+  --main-bg:#0C0C0C;
+  --app-bg:#000;
+  --navbar-bg:#5e5e5e10;
+  /* --navbar-bg:#0D0D0D */
+  --card-bg:#ffffff10;
+}

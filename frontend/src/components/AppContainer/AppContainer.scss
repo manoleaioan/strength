@@ -1,0 +1,161 @@
+#app-container {
+  .noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  font-family: "Baloo Tamma 2";
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  background: var(--app-bg);
+  height: 100%;
+  max-height: 100vh;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    position: relative;
+    z-index: 9;
+    padding: 10px 0 10px;
+    min-height: 60px;
+    backdrop-filter: blur(2px);
+    &.sticky {
+      position: sticky;
+      width: 100%;
+      top: 0px;
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--app-bg);
+        opacity: 0.9;
+        z-index: -1;
+        top: 0;
+      }
+      // backdrop-filter: blur(2px);
+    }
+
+    #title {
+      width: auto;
+      &::first-letter {
+        text-transform: uppercase;
+      }
+      h1 {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 23px;
+        color: #ccc;
+      }
+      .underline {
+        width: 25px;
+        height: 7px;
+        background: #272727;
+        border-radius: 9px;
+        display: block;
+        margin-top: clamp(1px, 1vh, 20px);
+      }
+    }
+  }
+
+  .roundbtn {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    mix-blend-mode: normal;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 23px;
+    margin-left: 10px;
+    color: #fff;
+  }
+
+  overflow-y: visible;
+  margin: 0 auto;
+
+  #content {
+    height: 100%;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
+    overflow: visible;
+    box-sizing: border-box;
+    padding-bottom: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 100%;
+    position: relative;
+
+    & > :first-child {
+      max-width: 506px;
+      margin: 0 auto;
+    }
+
+    .dev {
+      margin: 50px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      font-size: 20px;
+      background: #0f1013;
+      padding: 12px 10px;
+      border-radius: 20px;
+      color: #c31023;
+      box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 310px;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      p {
+        margin-left: 10px;
+        text-align: center;
+        margin-top: 6px;
+        line-height: 20px;
+        font-size: 18px;
+        font-weight: 100;
+      }
+      svg {
+        font-size: 24px;
+        box-shadow: 0px 3px 7px rgba(212, 11, 11, 0.3);
+        background: #0c0d10;
+        border-radius: 50%;
+        padding: 9px;
+      }
+    }
+  }
+
+  @media (min-width: 480px) {
+    max-width: 1057px;
+    width: 94%;
+    height: 100%;
+    max-height: 765px;
+    border-radius: 8px;
+    background: var(--app-bg);
+    padding-bottom: unset;
+    display: flex;
+    margin-top: 3%;
+
+    #content {
+      padding-bottom: 20px;
+    }
+
+    .header {
+      padding: 25px 0 10px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    width: 100% !important;
+    max-width: unset !important;
+    margin-top: 0 !important;
+    max-height: 100vh !important;
+  }
+}

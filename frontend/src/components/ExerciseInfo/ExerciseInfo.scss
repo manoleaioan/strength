@@ -1,0 +1,144 @@
+.optionsMenu {
+  .MuiMenu-paper {
+    background: #1a1a1a;
+    border: 1px solid #727272;
+    border-radius: 8px;
+    background: #18191c;
+    border-radius: 8px;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.55);
+    border: 1px solid #ffffff29;
+    border: none;
+    margin-top:8px;
+    margin-left: -1%;
+    .MuiMenuItem-root {
+      font-weight: 500;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      // justify-content: center;
+      text-align: center;
+      line-height: 22px;
+      min-height: 22px;
+      svg {
+        font-size: 18px;
+        // margin-right: 4px;
+      }
+      &:hover {
+        background: #ffffff19;
+      }
+    }
+  }
+}
+
+.exerciseInfo-container {
+  .header {
+    #title {
+      z-index: 122;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .btns {
+      position: unset;
+      width: 40px;
+    }
+    .btn-back {
+      width: 40px;
+      height: 40px;
+      min-width: 10px;
+      min-height: 10px;
+      border-radius: 50%;
+      color: gray;
+      justify-content: center;
+      align-items: center;
+      margin-right: 4px;
+      &:hover {
+        background: #ffffff09;
+      }
+
+      svg {
+        margin-left: 8px;
+        font-size: 20px;
+      }
+    }
+
+    h1 {
+      word-wrap: break-word;
+      padding-top: 4px;
+      overflow: hidden;
+      line-height: 22px;
+      position: relative;
+      &::first-letter{
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .modalDelEx{
+    .main{
+      padding: 20px;
+    }
+    .info{
+      color: #dfdfdf;
+      font-weight: 500;
+      line-height: 19px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      svg{
+        margin-top: -4px;
+        margin-right: 10px;
+        font-size: 40px;
+      }
+    }
+
+    .ctrl{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: -10px;
+      border: unset;
+      .del{
+        background: transparent;
+        border: 1px solid red;
+        color: red;
+        font-weight: 900 !important;
+      }
+      .cancel{
+        color: #dfdfdf;
+      }
+
+      .loader{  
+        color: red;
+        margin-left: -20px;
+      }
+    }
+  }
+
+  .edit-exercise {
+    color: gray;
+    min-width: 10px;
+    min-height: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: transparent;
+    // background: #222020;
+    // background: linear-gradient(90deg, #8A26F8 0%, #7499f7 100%);
+    &:hover {
+      background: #ffffff09;
+      // background: linear-gradient(90deg, #8a26f8 0%, #7499f7 100%);
+    }
+  }
+
+  .del-exercise {
+    color: gray !important;
+    // background: linear-gradient( 90deg , #222020 0%, #970808 100%);
+    background-color: #222020;
+    &:hover {
+      background: linear-gradient(90deg, #222020 0%, #970808 100%);
+    }
+  }
+}
