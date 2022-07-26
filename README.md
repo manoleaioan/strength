@@ -129,7 +129,7 @@ The REST API to the example app is described below.
 | username | `String` | ✕ |
 | fullName | `String` | ✕|
 
-#### Response
+> #### Response
 > | Attributes | Type | Can be None |
 > | :-: | :-: | :-: |
 > | user | [`User`](#type-user) | ✔ |
