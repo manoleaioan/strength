@@ -243,7 +243,7 @@ The REST API to the example app is described below.
 |activityAt| `String`| ✔ |
 | user | [`User`](#type-user) |  ✕  |
 
-<h3 id="type-exercise">Routine</h3>
+<h3 id="type-routine">Routine</h3>
 
 | Field | Type | Can be None |
 | :-: | :-: | :-: |
