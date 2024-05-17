@@ -1,5 +1,6 @@
 import config from './config';
 import { authHeader } from './authHeader';
+import { handleResponse } from './responseHandler';
 import axios from 'axios';
 
 export const userService = {
@@ -11,13 +12,7 @@ export const userService = {
   sendPwResetLink,
   resetPassword,
   uploadImage,
-  updateUserData,
-  getExercises,
-  createExercise,
-  deleteExercise,
-  getRoutines,
-  createRoutine,
-  deleteRoutine
+  updateUserData
 };
 
 function register(user) {
@@ -145,14 +140,19 @@ function uploadImage(file) {
   formData.append("operations", operations);
   const map = `{"0": ["variables.file"]}`;
   formData.append("map", map)
-  formData.append("0", file)
+  formData.append("0", file);
+
+  console.log(formData);
 
   return axios({
     method: 'POST',
     url: config.apiUrl,
-    headers: authHeader(),
-    data: formData
-  }).then(handleResponse);
+    headers: {
+      ...authHeader(),
+      'Content-Type': 'multipart/form-data'
+    },
+    data: formData,
+  }).then(handleResponse)
 }
 
 function getUserData() {
@@ -175,189 +175,4 @@ function getUserData() {
       `
     })
   }).then(handleResponse);
-}
-
-// Exercises
-
-function getExercises() {
-  return axios({
-    method: 'POST',
-    url: config.apiUrl,
-    headers: authHeader(),
-    data: JSON.stringify({
-      query: `
-        query getExercises{
-          getExercises {
-            _id,
-            name,
-            type,
-            maxRep,
-            maxVol,
-            activityAt
-          }
-        }
-      `
-    })
-  }).then(handleResponse);
-}
-
-function createExercise(exerciseInput) {
-  return axios({
-    method: 'POST',
-    url: config.apiUrl,
-    headers: authHeader(),
-    data: JSON.stringify({
-      query: `
-        mutation($exerciseInput: ExerciseInput!){
-          createExercise(exerciseInput: $exerciseInput) {
-            _id,
-            name,
-            type,
-            maxRep,
-            maxVol,
-            activityAt
-          }
-        }
-      `,
-      variables: { exerciseInput }
-    })
-  }).then(handleResponse);
-}
-
-
-function deleteExercise(exerciseId) {
-  return axios({
-    method: 'POST',
-    url: config.apiUrl,
-    headers: authHeader(),
-    data: JSON.stringify({
-      query: `
-        mutation($exerciseId: String!){
-          deleteExercise(exerciseId: $exerciseId) 
-        }
-      `,
-      variables: { exerciseId }
-    })
-  }).then(handleResponse);
-}
-
-// Routines
-
-function getRoutines() {
-  return axios({
-    method: 'POST',
-    url: config.apiUrl,
-    headers: authHeader(),
-    data: JSON.stringify({
-      query: `
-        query getRoutines{
-          getRoutines {
-            _id,
-            name,
-            color,
-            exercises{
-              _id, superset {
-                _id,
-                exId {
-                  _id,
-                  name,
-                  type,
-                  maxRep,
-                  maxVol,
-                  activityAt
-                }
-              },
-              exId {
-                _id,
-                name,
-                type,
-                maxRep,
-                maxVol,
-                activityAt
-              }
-            }
-          }
-        }
-      `
-    })
-  }).then(handleResponse);
-}
-
-function createRoutine(routineInput) {
-  return axios({
-    method: 'POST',
-    url: config.apiUrl,
-    headers: authHeader(),
-    data: JSON.stringify({
-      query: `
-        mutation($routineInput: RoutineInput!){
-          createRoutine(routineInput: $routineInput) {
-            _id,
-            name,
-            color,
-            exercises{
-              _id, superset {
-                _id,
-                exId {
-                  _id,
-                  name,
-                  type,
-                  maxRep,
-                  maxVol,
-                  activityAt
-                }
-              },
-              exId {
-                _id,
-                name,
-                type,
-                maxRep,
-                maxVol,
-                activityAt
-              }
-            }
-          }
-        }
-      `,
-      variables: { routineInput }
-    })
-  }).then(handleResponse);
-}
-
-
-function deleteRoutine(routineId) {
-  return axios({
-    method: 'POST',
-    url: config.apiUrl,
-    headers: authHeader(),
-    data: JSON.stringify({
-      query: `
-        mutation($routineId: String!){
-          deleteRoutine(routineId: $routineId) 
-        }
-      `,
-      variables: { routineId }
-    })
-  }).then(handleResponse);
-}
-
-function handleResponse(response) {
-  const { data } = response
-
-  console.log(response)
-  if (data && data.errors) {
-
-    if (response.status === 401) {
-      // auto logout if 401 response returned from api
-      //logout();
-      //location.reload(true);
-    }
-    console.log("erori")
-    const error = (data && data.errors[0]) || response.statusText;
-    if (error?.message === "Unauthorized") {
-      window.location.reload(false);
-    }
-    return Promise.reject(error);
-  }
-  return data;
 }

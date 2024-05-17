@@ -43,3 +43,18 @@ export const deleteExerciseFailure = error => ({
   type: ExerciseActionTypes.DELETE_EXERCISE_FAILURE,
   payload: error
 });
+
+export const getExerciseChardDataStart = payload => ({
+  type: ExerciseActionTypes.GET_EXERCISE_CHART_START,
+  payload
+});
+
+export const getExerciseChardDataSuccess = status => ({
+  type: ExerciseActionTypes.GET_EXERCISE_CHART_SUCCESS,
+  payload: status
+});
+
+export const getExerciseChardDataFailure = error => ({
+  type: ExerciseActionTypes.GET_EXERCISE_CHART_FAILURE,
+  payload: error
+});

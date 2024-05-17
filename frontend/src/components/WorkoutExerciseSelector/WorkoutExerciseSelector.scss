@@ -56,6 +56,7 @@
     }
     .btn-back {
       width: 40px;
+      min-width: 40px !important;
       height: 40px;
       min-width: 10px;
       min-height: 10px;
@@ -86,7 +87,7 @@
     }
   }
 
-  .modalDelEx {
+  .modal-del-ex {
     .main {
       padding: 20px;
     }
@@ -175,7 +176,6 @@
       width: 100%;
       box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
       border-radius: 14px;
-      border: 1px solid #121316;
       padding: 10px 16px;
       overflow: hidden;
       box-sizing: border-box;
@@ -198,9 +198,7 @@
 
       @media (min-width: 480px) {
         &:hover {
-          background: #1c1d22;
-          border: 1px solid #ffffff36;
-          // transform: scale(1.02);
+          border: 1px solid var(--gray1);
         }
       }
 
@@ -222,7 +220,7 @@
         font-weight: 600;
         font-size: 18px;
         text-transform: uppercase;
-        color: #fff;
+        color: var(--primary-color);
         text-transform: capitalize;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -237,11 +235,8 @@
         font-size: 14px;
         flex-direction: column;
         z-index: 10;
-        // border: 1px solid red;
         pointer-events: all;
         svg {
-          // margin-right: 5px;
-          // margin-top: 5px;
           font-size: 25px;
         }
       }
@@ -267,11 +262,9 @@
       }
     }
 
-    
     .selected{
       opacity: 1;
       border: 1px solid #ffffff36;
     }
-
   }
 }

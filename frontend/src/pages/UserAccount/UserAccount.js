@@ -10,7 +10,9 @@ import { InputText } from '../../components/InputText/InputText';
 import MuiAlert from '@mui/material/Alert';
 import Modal from '../../components/Modal';
 
+
 import "./UserAccount.scss";
+import ThemeSelector from '../../components/Theme/ThemeSelector';
 
 const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updateUserData }) => {
   const {
@@ -34,10 +36,12 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
   const close = () => setModalOpen(false);
 
   useEffect(() => {
+    if (resendActivation_res == null) { return; }
+    
     if (resendActivation_res === "sent") {
       setVerificationWarning(false);
     } else if (resendActivation_res) {
-      alert(resendActivation_res)
+      // console.log(resendActivation_res);
     }
   }, [resendActivation_res, alert])
 
@@ -50,10 +54,12 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
         setAlert({ visible: true, severity: "error" });
       }
     } else {
-      setAlert({ visible: true, severity: "success" });
-      close();
+      if(resendActivation_res != null){
+        setAlert({ visible: true, severity: "success" });
+        close();
+      }
     }
-  }, [profilePicture, updateUserError, user])
+  }, [profilePicture, updateUserError, user, resendActivation_res])
 
   useEffect(() => {
     setErrors({});
@@ -101,9 +107,9 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
       username,
       email,
       password: ""
-    })
-    setErrors({})
-    setModalOpen({ open: true, target })
+    });
+    setErrors({});
+    setModalOpen({ open: true, target });
   };
 
   const modalMarkup = <Modal onClose={close} open={modal.open}>
@@ -125,7 +131,7 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
 
   return (
     <div className="useraccount-container">
-      <div className="header">
+      <div className="header sticky">
         <div id="title">
           <h1>Account</h1>
           <span className="underline"></span>
@@ -156,7 +162,6 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
           </MuiAlert >
         </Snackbar>
       </div>
-
       {modalMarkup}
 
       <div id="userInfo">
@@ -169,14 +174,14 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
         <div className="field">
           <div>
             <h1>Full Name</h1>
-            <p>{fullName}</p>
+            <p className='capitalize'>{fullName}</p>
           </div>
           <Button onClick={() => openModal("fullName")}>Edit</Button>
         </div>
         <div className="field">
           <div>
             <h1>Username</h1>
-            <p>{username}</p>
+            <p className='capitalize'>{username}</p>
           </div>
           <Button onClick={() => openModal("username")}>Edit</Button>
         </div>
@@ -185,7 +190,7 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
             <h1>Email</h1>
             <p>{email}</p>
           </div>
-          <Button onClick={() => openModal("email")}>Edit</Button>
+          <Button className='custom-primary-color' onClick={() => openModal("email")}>Edit</Button>
         </div>
         <div className="field">
           <div>
@@ -195,6 +200,9 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
           <Button onClick={() => openModal("password")}>Edit</Button>
         </div>
       </div>
+
+      <ThemeSelector />
+
       <Button className="logoutbtn" onClick={signOut}>Log out</Button>
     </div >
   )

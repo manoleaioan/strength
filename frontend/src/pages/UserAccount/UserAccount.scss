@@ -1,19 +1,23 @@
 .useraccount-container {
   position: relative;
-  .save{
-   display: inline;
+
+  .save {
+    display: inline;
   }
+
   #profile {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 5px;
+
     h1 {
       font-weight: 600;
       font-size: 26px;
       margin-top: 5px;
       text-transform: capitalize;
     }
+
     img {
       width: 70px;
       height: 70px;
@@ -33,17 +37,20 @@
     }
 
     position: relative;
+
     .spinner {
       position: absolute;
       left: auto;
       right: auto;
       margin-top: 18px;
     }
+
     .err {
       position: unset;
       transform: unset;
       width: 100%;
       justify-content: center;
+
       // max-width: 300px;
       .MuiAlert-root {
         width: 100%;
@@ -51,6 +58,7 @@
         margin-bottom: -55px;
       }
     }
+
     #editProfile {
       display: flex;
       align-items: center;
@@ -65,6 +73,7 @@
       height: 23px;
       cursor: pointer;
       z-index: 4;
+
       label {
         cursor: pointer;
         cursor: pointer;
@@ -74,15 +83,58 @@
         justify-content: center;
         align-items: center;
       }
+
       &:hover {
         background: #fff;
+
         svg path {
           fill: #000;
         }
       }
+
       input {
         display: none;
       }
+    }
+  }
+
+  #theme {
+    background: var(--card-bg);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+
+    &>div {
+      line-height: 22px;
+
+      h1 {
+        font-weight: 500;
+        font-size: 15px;
+        color: #505050;
+      }
+
+      p {
+        text-transform: capitalize;
+      }
+    }
+
+    button {
+      color: var(--primary-color) !important;
+      padding: 11px;
+      background-color: var(--shadow-bg);
+      border-radius: 50%;
+      cursor: pointer;
+      min-width: 18px !important;
+      min-height: 18px !important;
+      width: 36px !important;
+      height: 36px !important;
     }
   }
 
@@ -91,7 +143,7 @@
     box-sizing: border-box;
     background: var(--card-bg);
     // background: #0E0E0E;
-    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin: 0 auto;
     margin-top: 40px;
@@ -108,7 +160,7 @@
 
     &::before {
       content: "";
-      background: #0000001a;
+      background: var(--card-inner-shadow);
       height: 100%;
       width: 100%;
       position: absolute;
@@ -116,48 +168,51 @@
       top: 0;
       transform: skew(45deg);
     }
+
     .field {
       display: flex;
       justify-content: space-between;
       align-items: center;
       min-height: 60px;
       line-height: 22px;
+
       h1 {
         font-weight: 500;
         font-size: 15px;
         color: #505050;
       }
+
       p {
         font-weight: 600;
         font-size: 16px;
-        color: #fff;
+        color: var(--primary-color);
       }
+
       .dpw {
         font-weight: 600;
         font-size: 28px;
         letter-spacing: 0.19em;
         line-height: 22x;
       }
+
       button {
         min-width: unset;
         font-family: "Baloo Tamma 2";
-        background: #242431;
-        background: #ffffff12;
+        background: var(--shadow-bg);
         width: 55px;
         line-height: 16px;
         font-size: 16px;
         text-align: center;
-        color: #ffffff;
+        color: var(--primary-color);
         text-transform: capitalize;
         font-weight: 500;
         border-radius: 20px;
         padding-top: 10px;
         box-sizing: border-box;
-
-     
       }
-  
+
     }
+
     .activate {
       height: 55px;
       background: #ff002e;
@@ -175,6 +230,8 @@
       display: flex;
       flex-direction: column;
       line-height: 18px;
+      color: #fff;
+
       p:nth-child(2) {
         font-size: 14px;
         font-weight: 500;
@@ -218,7 +275,7 @@
     background: linear-gradient(var(--app-bg), var(--app-bg)) padding-box,
       linear-gradient(to right, #7931da, #f87043) border-box;
     border: 3px solid transparent;
-    color: #fff;
+    color: var(--primary-color);
     margin-top: 40px;
   }
 }

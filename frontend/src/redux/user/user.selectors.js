@@ -17,7 +17,7 @@ export const selectVerification_res = createSelector(
   user => user.verification_res
 );
 
-export const selectPwReset_res= createSelector(
+export const selectPwReset_res = createSelector(
   [selectUser],
   user => user.pwReset_res
 );

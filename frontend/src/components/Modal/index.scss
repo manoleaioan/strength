@@ -27,53 +27,75 @@
   .main {
     width: 100%;
     min-height: 150px;
-    background: #141618;
+    background: var(--modal-bg);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 24px 24px 0 0;
     margin: auto;
-    padding-top: 8px;
+    // padding-top: 8px;
     box-sizing: border-box;
 
-    &:before {
-      position: absolute;
-      content: "";
-      display: block;
-      width: 36px;
-      height: 5px;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 8px;
-      background-color: #ffffff21;
-    }
+    // &:before {
+    //   position: absolute;
+    //   content: "";
+    //   display: block;
+    //   width: 36px;
+    //   height: 5px;
+    //   top: 12px;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    //   border-radius: 8px;
+    //   background-color: #ffffff21;
+    //   background-color: var(--modal-dragger);
+    // }
   }
 
-
-
   header {
-    border-bottom: 1px solid #272727;
+    border-bottom: 1px solid;
+    border-color: var(--hr);
     width: 100%;
     text-align: center;
     min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 4px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     font-weight: 600;
-    font-size: 14px;
-    color: #dbdbdb;
+    font-size: 15px;
+    color: var(--primary-color);
+    opacity: 0.8;
+    position: relative;
 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-sizing: border-box;
+    // padding: 0;
     // color:#646666;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 36px;
+      height: 5px;
+      top: 12px;
+      border-radius: 8px;
+      background-color: #ffffff21;
+      background-color: var(--modal-dragger);
+
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
   }
 
   .content {
     width: 100%;
     overflow: hidden;
-    // background: #201f23;
-    background: #141618;
+    background: var(--modal-bg);
+    color: var(--primary-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,13 +107,13 @@
 
     form {
       width: 100%;
+      z-index: 10;
     }
 
     .input-text,
     input {
       width: 100% !important;
-      //border: 1px solid red;
-    }
+  }
   }
 }
 

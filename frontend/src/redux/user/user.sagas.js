@@ -18,7 +18,7 @@ import {
   pwResetFailure,
   imageUploadSuccess,
   updateUserFailure,
-  updateUserSuccess
+  updateUserSuccess,
 } from './user.actions';
 
 import {
@@ -128,6 +128,7 @@ export function* updateUserData({ payload: { userInput } }) {
     yield put(updateUserSuccess(res.data.updateUserData));
   } catch (error) {
     yield put(updateUserFailure(error));
+    return new Error(error);
   }
 }
 
@@ -187,6 +188,6 @@ export function* userSagas() {
     call(onSendPwResetStart),
     call(onResetPasswordStart),
     call(onImageUploadStart),
-    call(onUserUpdateStart)
+    call(onUserUpdateStart),
   ]);
 }

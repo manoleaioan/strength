@@ -7,19 +7,26 @@ const INITIAL_STATE = {
   verification_res: null,
   resendActivation_res: null,
   pwReset_res: null,
-  updateUserError:null,
+  updateUserError: null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UserActionTypes.SIGN_IN_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+        error: null,
+        updateUserError: null,
+        resendActivation_res: null
+      };
     case UserActionTypes.UPDATE_USER_SUCCESS:
       return {
         ...state,
         currentUser: action.payload,
         error: null,
-        updateUserError:null,
-        resendActivation_res:null
+        updateUserError: null,
+        resendActivation_res: 'updated'
       };
     case UserActionTypes.SIGN_OUT_SUCCESS:
       return {
@@ -49,7 +56,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         resendActivation_res: action.payload
       }
-    case UserActionTypes.SEND_PWRESET_LINK_SUCCESS:
+    // case UserActionTypes.PWRESET_START:
     case UserActionTypes.PWRESET_SUCCESS:
     case UserActionTypes.PWRESET_FAILURE:
       return {
@@ -59,16 +66,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case UserActionTypes.IMAGE_UPLOAD_SUCCESS:
       return {
         ...state,
-        updateUserError:null,
+        updateUserError: null,
         currentUser: {
           ...state.currentUser,
-          profilePicture:action.payload
+          profilePicture: action.payload
         }
       }
     case UserActionTypes.UPDATE_USER_FAILURE:
-      return{
+      return {
         ...state,
-        updateUserError:action.payload
+        updateUserError: action.payload
       }
     default:
       return state;

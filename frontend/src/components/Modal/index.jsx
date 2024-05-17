@@ -50,25 +50,20 @@ const Modal = ({ onClose, children, open, className }) => {
     }
   }, [open, controls, close])
 
-  const header = Children.toArray(children).filter(i => i.type === "header");
-  const content = Children.toArray(children).filter(i => i.type !== "header");
+  const header = Children.toArray(children).find(child => child.type === "header");
+  const content = Children.toArray(children).filter(child => child.type !== "header");
 
   const onDragEnd = (event, info) => {
-    if (Math.abs(info.velocity.y >= 50) || y.get() / sheetRef.current.clientHeight > 0.35) {
+    if (Math.abs(info.velocity.y) >= 50 || y.get() / sheetRef.current.clientHeight > 0.35) {
       close();
     } else {
       controls.start("visible")
     }
   }
 
-  // console.log("modal: " + open);
-
   return (
-    <AnimatePresence
-      initial={true}
-      exitBeforeEnter={true}
-    >
-      {open &&
+    <AnimatePresence initial={true} mode="wait">
+      {open && (
         <Backdrop onClick={close}>
           <div className="fix">
             <motion.div
@@ -84,7 +79,6 @@ const Modal = ({ onClose, children, open, className }) => {
               animate={controls}
               onClick={(e) => e.stopPropagation()}
             >
-
               <motion.div
                 className="main"
                 variants={dropIn}
@@ -93,18 +87,14 @@ const Modal = ({ onClose, children, open, className }) => {
                 exit="hidden"
               >
                 {header}
-                <div className="content">{content}</div>
+                <motion.div className="content" drag="false">{content}</motion.div>
               </motion.div>
             </motion.div>
           </div>
-        </Backdrop >
-      }
-    </AnimatePresence >
+        </Backdrop>
+      )}
+    </AnimatePresence>
   );
 };
 
 export default Modal;
-// export default React.memo(Modal, (prev, next) =>
-//   prev.open === next.open
-//   && (prev.children === next.children)
-// );

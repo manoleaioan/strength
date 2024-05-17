@@ -1,0 +1,234 @@
+.metrics-container {
+  .header {
+    #title {
+      z-index: 122;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      width: 100% !important;
+      justify-content: space-between;
+    }
+
+    .btns {
+      position: unset;
+      width: 40px;
+    }
+
+    .btn-left,
+    .btn-right {
+      width: 40px;
+      min-width: 40px !important;
+      height: 40px;
+      min-height: 10px;
+      border-radius: 50%;
+      color: gray;
+      justify-content: center;
+      align-items: center;
+      margin-right: 4px;
+
+      &:hover {
+        background: #ffffff09;
+      }
+
+      svg {
+        font-size: 20px;
+      }
+    }
+
+    .btn-left svg {
+      margin-left: 8px !important;
+    }
+
+    #date-select {
+      color: var(--primary-color);
+      border: 1px solid var(--metrics-card-border);
+      background: var(--card-bg);
+      text-align: center;
+      padding: 2px 15px !important;
+      border-radius: 41px;
+      font-size: 16px !important;
+      font-family: 'Baloo Tamma 2', sans-serif !important;
+      font-weight: 500;
+      padding-top: 6px !important;
+      text-transform: capitalize;
+    }
+
+    .date-select-root .MuiOutlinedInput-notchedOutline {
+      border: none !important;
+    }
+
+    .date-select-root svg {
+      display: none !important;
+    }
+  }
+
+  .charts {
+    .chart-section {
+      .category {
+        font-weight: 600;
+        font-size: 15px;
+        text-transform: uppercase;
+        margin-left: 25px;
+        color: var(--primary-color);
+        opacity: 0.5;
+      }
+
+      .general {
+        width: 100%;
+        box-shadow: 0 3px 7px rgb(0 0 0 / 9%);
+        background: var(--card-bg);
+        background: linear-gradient(270deg, transparent 0%, var(--card-bg) 100%);
+        border: 1px solid var(--metrics-card-border);
+        border-radius: 14px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 110px;
+
+
+        .record {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 100%;
+          height: 70%;
+          position: relative;
+          padding-top: 20px;
+          box-sizing: border-box;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -4px;
+            width: 1px;
+            height: 100%;
+            background-color: var(--hr);
+            transform: rotate(17deg);
+            opacity: 0.5;
+          }
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: -38px;
+            right: -5px;
+            width: 100%;
+            height: 195%;
+            transform: rotate(17deg);
+            background: linear-gradient(182deg, transparent 50%, var(--metrics-general-shadow-fxcolor) 100%);
+          }
+
+          // &.rec::before {
+          //   background: linear-gradient(118deg, transparent 50%, #ff81af25 100%);
+          // }
+
+          // &.ex::before {
+          //   background: linear-gradient(118deg, transparent 50%, #81a3ff25 100%);
+          // }
+
+          &:last-child::after {
+            content: unset !important;
+          }
+
+          h1 {
+            text-align: center;
+            font-size: 24px;
+            line-height: 10px;
+            font-weight: 600;
+
+            &.rec {
+              color: #FF81AF;
+            }
+
+            &.ex {
+              color: #B4C0FF;
+            }
+
+            &.sets {
+              color: #CB711E;
+            }
+
+            &.reps {
+              color: #52FF00;
+            }
+          }
+
+          span {
+            display: flex;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 100;
+            opacity: 0.5;
+          }
+        }
+
+        &.skeleton {
+          // background-color: var(--card-bg) !important;
+          animation: skeleton-loading 1s linear 0.5s infinite alternate !important;
+     
+          &::before {
+            background: gray;
+          }
+        }
+      }
+
+      .exercises,
+      .routines {
+        // min-height: 201px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .charts {
+      .chart-section {
+        .general .record {
+          span {
+            font-size: 16px;
+          }
+
+          &::after {
+            right: 0;
+          }
+          &::before {
+            right: -4px;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+.date-select-paper {
+  border-radius: 8px !important;
+  background: var(--card-bg) !important;
+  box-shadow: 0 3px 7px rgb(0 0 0 / 20%) !important;
+  margin-top: 10px !important;
+  color: var(--primary-color) !important;
+  text-transform: capitalize;
+  max-height: 500px !important;
+
+  .Mui-selected,
+  .MuiMenuItem-root:hover {
+    background: var(--gray1) !important;
+    color: #fff;
+  }
+
+  svg {
+    font-size: 18px;
+  }
+}
+
+.recharts-layer {
+
+  g:focus,
+  path:focus {
+    outline: none !important;
+  }
+}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { motion } from "framer-motion";
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -12,24 +11,17 @@ import { getExercisesStart } from '../../redux/exercise/exercise.actions';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, CircularProgress } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import RoutineModal from '../RoutineModal/RoutineModal';
-import Modal from '../Modal';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AddIcon from '@mui/icons-material/Add';
 
-import "./AddExercises.scss";
+import "./RoutineExerciseSelector.scss";
 import ExerciseModal from '../ExerciseModal/ExerciseModal';
 
 
-const AddExercises = ({ close,
-  routine, deleteRoutine, routines: { deleteRoutine_res }, createRoutine,
+const RoutineExerciseSelector = ({
+  close, routine, routines: { deleteRoutine_res }, createRoutine,
   exercises, exercises: { isLoading }, getExercises }) => {
 
-  const { name, type, _id } = routine || {};
-  const [modal, setModalOpen] = useState(false);
   const [modalExercise, setModalExerciseOpen] = useState(false);
-  const [deleteConfirmation, setdeleteConfirmation] = useState(false);
-  const [isRoutineDeleting, setisRoutineDeleting] = useState(false);
   const [errors, setErrors] = useState();
   const [exerciseList, setExerciseList] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState({});
@@ -39,10 +31,6 @@ const AddExercises = ({ close,
     setExerciseList(exercises.exerciseList)
   }, [exercises.exerciseList]);
 
-  const confirmDeletion = () => {
-    setisRoutineDeleting(true);
-    deleteRoutine({ routineId: _id });
-  }
 
   useEffect(() => {
     setErrors(deleteRoutine_res);
@@ -51,7 +39,6 @@ const AddExercises = ({ close,
   useEffect(() => {
     if (errors) {
       alert(errors);
-      setisRoutineDeleting(false);
     }
   }, [errors])
 
@@ -81,38 +68,32 @@ const AddExercises = ({ close,
   const updateRoutine = () => {
     setIsRoutineUpdating(true);
     const selectedEx = Object.keys(selectedExercises).filter(i => selectedExercises[i] === true);
+    const {chartData, ...routineData} = routine;
+
     createRoutine({
       routineInput: {
-        ...routine,
+        ...routineData,
         exercises: [
-          ...routine.exercises.map(e => { 
-            return {
+          ...routine.exercises.map(e => (
+            {
               _id: e._id,
               ...(e.exId && { exId: e.exId._id }),
               ...(e.superset?.length > 0 && {
-                superset: e.superset.map(s => {
-                  return {
-                    _id: s._id,
-                    exId: s.exId._id,
-                  }
-                })
+                superset: e.superset.map(s => ({
+                  _id: s._id,
+                  exId: s.exId._id,
+                }))
               })
-            }
-          }),
-          ...selectedEx.map(id => { return { exId: id } })
+            })
+          ),
+          ...selectedEx.map(id => ({ exId: id }))
         ]
       }
     });
   }
 
   return (
-    routine && <div
-      // initial={{ x: 100 }}
-      // animate={{ x: 0 }}
-      // transition={{ type: "spring", duration: 0.6, bounce: 0.2 }}
-      // exit={{ x: 100 }}
-      className="addex-container">
-
+    routine && <div className="addex-container">
       <div className="header">
         <div id="title">
           <Button className="btn-back" onClick={close}><ArrowBackIosIcon /></Button>
@@ -140,39 +121,13 @@ const AddExercises = ({ close,
 
       <ExerciseModal open={modalExercise} closeModal={() => setModalExerciseOpen(false)} />
 
-      <RoutineModal editRoutine={routine} open={modal} closeModal={() => setModalOpen(false)} edit={true} />
-
-      <Modal className="modalDelEx" onClose={() => setdeleteConfirmation(false)} open={deleteConfirmation} >
-        <header>
-          {`Deleting ${name}`}
-        </header>
-
-        <div className="info">
-          <InfoOutlinedIcon />
-          Do you really want to delete this routine?
-          This action cannot be undone.
-        </div>
-
-        <div className="ctrl">
-          <Button className="del" type="submit" disabled={isRoutineDeleting} onClick={confirmDeletion}>
-            {isRoutineDeleting && <CircularProgress className="loader" />}DELETE
-          </Button>
-          <Button className="cancel" onClick={() => setdeleteConfirmation(false)} disabled={isRoutineDeleting}>Cancel</Button>
-        </div>
-      </Modal>
-
-      {/* <AddExercises close={() => setSelectExModal(false)} /> */}
-
-      <motion.div
-        className="content"
-      >
+      <div className="content">
         <div className="exercises-list">
           {isLoading && [1, 2, 3].map(i => <div className="exercise skeleton" key={i}></div>)}
           {
             exerciseList && exerciseList
-              // .filter(ex =>!routine.exercises.find(e => e._id === ex._id))
               .map(ex =>
-                <motion.div
+                <div
                   className={classNames('exercise', {
                     selected: selectedExercises[ex._id]
                   })}
@@ -183,12 +138,11 @@ const AddExercises = ({ close,
                     <h1>{ex.name} </h1>
                     {/* <div className="info">{ex.type === 0 ? 'RM/VOL' : 'Max ISO/VOL'}<span>{ex.maxRep}</span> / <span>{ex.maxVol}</span></div> */}
                   </div>
-                </motion.div>
+                </div>
               ).reverse()
           }
         </div>
-      </motion.div>
-
+      </div>
     </div>
   )
 }
@@ -209,4 +163,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddExercises);
+)(RoutineExerciseSelector);

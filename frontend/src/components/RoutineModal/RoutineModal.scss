@@ -2,7 +2,6 @@
   input {
     width: 296px;
     height: 47px;
-    background: #0f1013;
     // border: 2px solid #292833;
     box-sizing: border-box;
     border-radius: 14px;
@@ -11,7 +10,7 @@
   .ctrl {
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #292833;
+    border-top: 1px solid var(--hr);
     padding-top: 26px;
 
     button {
@@ -21,21 +20,18 @@
         margin-right: 5px;
         position: absolute;
         left: 44px;
-
         color: #fff;
       }
     }
   }
 
   button {
-    color: #fff;
     width: 48%;
     height: 48px;
     background: transparent;
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+    // filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
     border-radius: 14px;
     mix-blend-mode: screen;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     text-transform: capitalize;
     font-weight: 600;
 
@@ -44,7 +40,7 @@
     }
 
     &.cancel {
-      border: 2px solid #1b1a1c;
+      border: 2px solid var(--modal-btn-border);
       align-self: flex-end;
       line-height: 0px !important;
       display: block;
@@ -57,7 +53,8 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    background: #0f1013;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     padding: 10px;
     height: 44px;
     position: relative;
@@ -67,7 +64,7 @@
     p {
       text-align: left;
       width: 100%;
-      color: #ffffffa0;
+      color: var(--primary-color);
       font-size: 15px;
       font-weight: 500;
       margin-left: 4px;
@@ -114,12 +111,13 @@
     }
 
     button {
+      color: var(--primary-color);
       width: unset;
       height: 40px;
       padding: 6px 14px;
       border: 2px solid #1b1a1c;
       box-sizing: border-box;
-      filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+      // filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
       border-radius: 14px;
       background: transparent;
       text-transform: capitalize;

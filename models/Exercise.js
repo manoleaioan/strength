@@ -5,13 +5,9 @@ const exerciseSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Name required'],
-    unique: true,
     trim: true,
     minLength: [3, 'Too short'],
     maxLength: [35, 'Max length is 35'],
-    index: {
-      unique: true,
-    }
   },
   type: {
     type: Number,
@@ -27,13 +23,16 @@ const exerciseSchema = new Schema({
   },
   activityAt: {
     type: String,
-    default: new Date().toISOString()
+    // default: new Date().toISOString()
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    index: true // Index for faster querying
   }
-})
+});
 
+
+exerciseSchema.index({ name: 1, user: 1 }, { unique: true, partialFilterExpression: { name: { $exists: true }, user: { $exists: true } } });
 
 module.exports = mongoose.model('Exercise', exerciseSchema)

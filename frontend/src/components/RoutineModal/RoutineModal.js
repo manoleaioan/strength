@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { connect } from 'react-redux';
 import { createRoutineStart } from '../../redux/routine/routine.actions';
 import { createStructuredSelector } from 'reselect';
@@ -16,9 +16,9 @@ import "./RoutineModal.scss";
 
 const RoutineModal = ({ open, closeModal, createRoutine, routine: { routineList, error }, edit = false, editRoutine }) => {
   const [errors, setErrors] = useState({});
-  let isRoutineCreating = useRef(false);
+  const [isRoutineCreating, setIsRoutineCreating] = useState(false);
   const [colors, setColors] = useState({
-    list: ['#95A5A6', '#2ECC71', '#3498DB', '#9B59B6', '#E91E63', '#F1C40F', '#E74C3C', '#ffffff'],
+    list: ['#95A5A6', '#2ECC71', '#3498DB', '#9B59B6', '#E91E63', '#F1C40F', '#E74C3C', 'violet'],
     selected: 0
   });
   const [routineData, setRoutineData] = useState({
@@ -41,13 +41,19 @@ const RoutineModal = ({ open, closeModal, createRoutine, routine: { routineList,
       }))
     }
 
-  }, [edit, editRoutine,open])
+  }, [edit, editRoutine, open])
+
 
   const close = useCallback(() => {
     if (open) {
-      setErrors({})
-      closeModal()
+      setErrors({});
+      closeModal();
     }
+    setColors(c => ({ ...c, selected: 0 }));
+    setRoutineData({
+      name: "",
+      color: colors.list[colors.selected]
+    });
   }, [closeModal, open]);
 
   const handleChange = event => {
@@ -64,11 +70,11 @@ const RoutineModal = ({ open, closeModal, createRoutine, routine: { routineList,
             ? `Routine's name in use`
             : error
         });
-      } else if (isRoutineCreating.current) {
+      } else if (isRoutineCreating) {
         close();
         setRoutineData({ color: '#ff6161', name: "" });
       }
-      isRoutineCreating.current = false;
+      setIsRoutineCreating(false);
     }
   }, [error, routineList, open, close])
 
@@ -87,7 +93,8 @@ const RoutineModal = ({ open, closeModal, createRoutine, routine: { routineList,
         ...validationErrors,
       });
     }
-    isRoutineCreating.current = true;
+    setIsRoutineCreating(true);
+
     if (edit) {
       createRoutine({ routineInput: { ...routineData, _id: editRoutine._id } });
     } else {
@@ -136,7 +143,7 @@ const RoutineModal = ({ open, closeModal, createRoutine, routine: { routineList,
                 background: i === colors.selected ? c : '',
                 borderColor: c
               }}
-              key={c+i}
+              key={c + i}
               onClick={() => pickColor(c, i)}
             >{(i === 7) && <ColorLensIcon style={{ color: i === colors.selected ? '#00000069' : c }} />}</div>
           )
@@ -146,9 +153,9 @@ const RoutineModal = ({ open, closeModal, createRoutine, routine: { routineList,
 
 
       <div className="ctrl">
-        <Button className="save" type="submit" disabled={isRoutineCreating.current}>
-          {isRoutineCreating.current && <CircularProgress className="loader" />}Save</Button>
-        <Button className="cancel" onClick={close} disabled={isRoutineCreating.current}>Cancel</Button>
+        <Button className="save" type="submit" disabled={isRoutineCreating}>
+          {isRoutineCreating && <CircularProgress className="loader" />}Save</Button>
+        <Button className="cancel" onClick={close} disabled={isRoutineCreating}>Cancel</Button>
       </div>
     </form>
   </Modal>

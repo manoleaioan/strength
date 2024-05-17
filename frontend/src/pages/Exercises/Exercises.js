@@ -4,7 +4,7 @@ import { createExerciseStart, getExercisesStart } from '../../redux/exercise/exe
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectExerciseList } from '../../redux/exercise/exercise.selectors';
-import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { timeAgo } from '../../helpers/now';
 
 import { Button } from '@mui/material';
@@ -52,8 +52,8 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
     exerciseList.filter(ex => ex.name.toLowerCase()
       .includes(search.toLowerCase()))
       .sort((a, b) => {
-        a = a[sortBy].toString().toLowerCase();
-        b = b[sortBy].toString().toLowerCase();
+        a = a[sortBy]?.toString().toLowerCase();
+        b = b[sortBy]?.toString().toLowerCase();
 
         if (sortBy === "activityAt")
           return a > b ? -1 : (a < b ? 1 : 0)
@@ -65,8 +65,8 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
     return exs.filter(ex => ex.name.toLowerCase()
       .includes(search.toLowerCase()))
       .sort((a, b) => {
-        a = a[sortBy].toString().toLowerCase();
-        b = b[sortBy].toString().toLowerCase();
+        a = a[sortBy]?.toString().toLowerCase();
+        b = b[sortBy]?.toString().toLowerCase();
         if (sortBy === "activityAt")
           return a > b ? -1 : (a < b ? 1 : 0)
 
@@ -98,7 +98,7 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
             animate={{ opacity: expanded ? 0 : 1 }}
           >
             <h1>Exercises</h1>
-            <div className="sortBy" onClick={(e) => {
+            <div className="sort-by" onClick={(e) => {
               if (expanded) return;
               setOpenSortMenu(true);
               setAnchorEl(e.currentTarget)
@@ -107,7 +107,7 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
             </div>
 
             <Menu
-              className="sortMenu"
+              className="sort-menu"
               anchorEl={anchorEl}
               open={openSortMenu}
               onClose={() => { setAnchorEl(null); setOpenSortMenu(false) }}
@@ -117,7 +117,6 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
               <MenuItem onClick={() => onClickSortOption("activityAt")}>Activity</MenuItem>
             </Menu>
 
-            {/* <span></span> */}
           </motion.div>
 
           <div className="btns">
@@ -128,8 +127,6 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
       }
 
       <ExerciseModal open={modal} closeModal={() => setModalOpen(false)} />
-
-
 
       {openExercise && <ExerciseInfo
         key="openex-ex"
@@ -149,11 +146,10 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
               <motion.div className="exercise"
                 transition={{ duration: 0.4 }}
                 initial={{ opacity: openExercise ? 0 : 1 }}
-                // animate={{opacity:!openExercise?0:1}}
                 exit={{ opacity: 0 }}
                 key={ex.name}
                 layoutId={ex._id}
-                layout
+                layout="position"
                 onClick={() => expandExercise(ex._id)}
               >
                 <div className="title">
@@ -161,9 +157,13 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
                   <div className="info">{ex.type === 0 ? 'RM/VOL' : 'Max ISO/VOL'}<span>{ex.maxRep}</span> / <span>{ex.maxVol}</span></div>
                 </div>
 
-                <div className="time">
-                  <AccessTimeIcon /> <p>{timeAgo(ex.activityAt)}</p>
-                </div>
+                {
+                  ex.activityAt &&
+                  <div className="time">
+                    <AccessTimeIcon /> <p>{timeAgo(ex.activityAt)}</p>
+                  </div>
+                }
+
               </motion.div>
             )
         )}

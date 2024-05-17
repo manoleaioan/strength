@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate , useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./Account.scss";
 
@@ -29,7 +29,7 @@ const expandingTransition = {
 };
 
 export default function Account() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const path = useLocation().pathname;
   const [isExpanded, setExpanded] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Account() {
   const switchPage = route => {
     playExpandingAnimation();
     setTimeout(() => {
-      history.push(route);
+      navigate(route);
     }, 250);
   };
 
@@ -66,7 +66,7 @@ export default function Account() {
         {(path === "/login" || path === "/") && <Login switchPage={switchPage} />}
         {path === "/register" && <Register switchPage={switchPage} />}
         {path === "/password-reset" && <PasswordReset switchPage={switchPage} />}
-        {path.indexOf("/password-reset/confirm/") === 0 && <PasswordResetConfirm />}
+        {path.indexOf("/password-reset/confirm/") === 0 && <PasswordResetConfirm switchPage={switchPage} />}
         {path.indexOf("/verify/") === 0 && <Verification />}
 
       </motion.div>

@@ -7,17 +7,19 @@ import {
   createExerciseSuccess,
   createExerciseFailure,
   deleteExerciseSuccess,
-  deleteExerciseFailure
+  deleteExerciseFailure,
+  getExerciseChardDataFailure,
+  getExerciseChardDataSuccess
 } from './exercise.actions';
 
 import {
-  userService
-} from '../../services/user.service';
+  exercisesService
+} from '../../services/exercises.service';
 
 
 export function* getExercises() {
   try {
-    const exercises = yield userService.getExercises();
+    const exercises = yield exercisesService.getExercises();
     yield put(getExercisesSuccess(exercises.data.getExercises));
   } catch (error) {
     yield put(getExercisesFailure(error));
@@ -26,7 +28,7 @@ export function* getExercises() {
 
 export function* createExercise({ payload: { exerciseInput } }) {
   try {
-    const exercise = yield userService.createExercise(exerciseInput);
+    const exercise = yield exercisesService.createExercise(exerciseInput);
     yield put(createExerciseSuccess(exercise.data.createExercise));
   } catch (error) {
     yield put(createExerciseFailure(error));
@@ -35,10 +37,19 @@ export function* createExercise({ payload: { exerciseInput } }) {
 
 export function* deleteExercise({ payload: { exerciseId } }) {
   try {
-    const exercise = yield userService.deleteExercise(exerciseId);
+    const exercise = yield exercisesService.deleteExercise(exerciseId);
     yield put(deleteExerciseSuccess(exercise.data.deleteExercise));
   } catch (error) {
     yield put(deleteExerciseFailure(error));
+  }
+}
+
+export function* getExerciseChartData({ payload: { exerciseId, period } }) {
+  try {
+    const exercise = yield exercisesService.getExerciseChartData({ exerciseId, period });
+    yield put(getExerciseChardDataSuccess({...exercise.data.getExerciseChartData, exerciseId}));
+  } catch (error) {
+    yield put(getExerciseChardDataFailure(error));
   }
 }
 
@@ -54,10 +65,15 @@ export function* onDeleteExerciseStart() {
   yield takeLatest(ExerciseActionTypes.DELETE_EXERCISE_START, deleteExercise);
 }
 
+export function* onGetExerciseChartDataStart() {
+  yield takeLatest(ExerciseActionTypes.GET_EXERCISE_CHART_START, getExerciseChartData);
+}
+
 export function* exerciseSagas() {
   yield all([
     call(onGetExercisesStart),
     call(onCreateExercisesStart),
-    call(onDeleteExerciseStart)
+    call(onDeleteExerciseStart),
+    call(onGetExerciseChartDataStart)
   ]);
 }

@@ -43,3 +43,8 @@ export const deleteRoutineFailure = error => ({
   type: RoutineActionTypes.DELETE_ROUTINE_FAILURE,
   payload: error
 });
+
+export const updateLastWorkoutDate = workout => ({
+  type: RoutineActionTypes.UPDATE_LAST_WORKOUT_DATE,
+  payload: workout
+})

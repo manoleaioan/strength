@@ -25,6 +25,7 @@ const PasswordResetConfirm = ({ switchPage, resetPassword, pwResetStatus }) => {
 
   useEffect(() => {
     if (pwResetStatus) {
+      console.log(pwResetStatus)
       setErrors({
         password: pwResetStatus.message || pwResetStatus
       });
@@ -55,6 +56,7 @@ const PasswordResetConfirm = ({ switchPage, resetPassword, pwResetStatus }) => {
     setIsLoading(true);
     resetPassword(token, userData.password);
   };
+
 
   return (
     <>

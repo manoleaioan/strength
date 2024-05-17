@@ -21,7 +21,8 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  border: 2px solid #ffffff04;
+  box-shadow: 3px 0px 10px 0px rgba(0, 0, 0, 0);
+  border: 2px solid var(--navbar-border) !important;
 
   backdrop-filter: blur(11px);
 
@@ -30,14 +31,13 @@
     display: none;
     width: 66px;
     height: 66px;
-    border: 2px solid #181818;
     box-sizing: border-box;
     border-radius: 14px;
     margin: 0 auto;
     margin-top: 45px;
     margin-bottom: 37px;
     g path {
-      fill: #484848;
+      fill: var(--logo-fill);
     }
   }
 
@@ -173,7 +173,8 @@
     .logo {
       min-width: 66px;
       min-height: 66px;
-      border: 2px solid #181818;
+      border: 2px solid;
+      border-color: var(--logo-border);
     }
     ul {
       li {

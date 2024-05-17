@@ -39,11 +39,14 @@ app.get('*', function (req, res) {
   );
 });
 
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_USER}:1EKElyp6rNU8svhW@cluster0.uugt1.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`, { useUnifiedTopology: true, useNewUrlParser: true, autoIndex: true })
-  .then(() => {
-    app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
+const mongoURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.uugt1.mongodb.net/${process.env.MONGO_STRENGTH_COLLECTION}?retryWrites=true&w=majority&appName=Cluster0`;
 
-  }).catch(err => {
-    console.log(err);
-  });
+mongoose.connect(mongoURI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  autoIndex: true
+}).then(() => {
+  app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
+}).catch(err => {
+  console.log(err);
+});

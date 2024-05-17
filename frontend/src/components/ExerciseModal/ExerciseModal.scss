@@ -2,7 +2,7 @@
   input {
     width: 296px;
     height: 47px;
-    background: #0f1013;
+    // background: #0f1013;
     // border: 2px solid #292833;
     box-sizing: border-box;
     border-radius: 14px;
@@ -11,7 +11,7 @@
   .ctrl {
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #292833;
+    border-top: 1px solid var(--hr);
     padding-top: 26px;
     button {
       .loader {
@@ -26,26 +26,28 @@
     }
   }
   button {
-    color: #fff;
+    color: var(--primary-color);
     width: 48%;
     height: 48px;
     background: transparent;
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+    // filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
     border-radius: 14px;
     mix-blend-mode: screen;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.01);
     text-transform: capitalize;
     font-weight: 600;
 
     &.save {
+      color: #fff;
       background: #aa4fe2;
     }
 
     &.cancel {
-      border: 2px solid #1b1a1c;
+      border: 2px solid var(--modal-btn-border);
       align-self: flex-end;
       line-height: 0px !important;
       display: block;
+      color: var(--gray1);
     }
   }
 
@@ -60,7 +62,6 @@
       position: absolute;
       margin-right: 5px;
       left: -48px;
-      color: #ffffffa0;
       font-size: 15px;
       font-weight: 500;
     }
@@ -68,9 +69,8 @@
       width: unset;
       height: 40px;
       padding: 6px 14px;
-      border: 2px solid #1b1a1c;
+      border: 2px solid var(--modal-btn-border);
       box-sizing: border-box;
-      filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
       border-radius: 14px;
       background: transparent;
       text-transform: capitalize;

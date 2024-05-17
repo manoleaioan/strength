@@ -1,0 +1,7 @@
+const MetricsActionTypes = {
+  GET_METRICS_START: 'GET_METRICS_START',
+  GET_METRICS_SUCCESS: 'GET_METRICS_SUCCESS',
+  GET_METRICS_FAILURE: 'GET_METRICS_FAILURE'
+};
+
+export default MetricsActionTypes;

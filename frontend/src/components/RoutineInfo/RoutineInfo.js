@@ -15,14 +15,16 @@ import RoutineModal from '../RoutineModal/RoutineModal';
 import Modal from '../Modal';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import AddExercises from '../AddExercises/AddExercises';
+import RoutineExerciseSelector from '../RoutineExerciseSelector/RoutineExerciseSelector';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
+import { removeExerciseFromSuperset, setSupersetWithTheNext } from "../../helpers/exerciseUtils";
 
 import "./RoutineInfo.scss";
+import { Whatshot } from '@mui/icons-material';
 
 
 const supersetIndex = (exerciseList, id) => {
@@ -46,6 +48,7 @@ const Exercise = (props) => {
 
   return (
     <Reorder.Item
+      layout="position"
       layoutId={ex._id}
       value={ex}
       style={{
@@ -93,6 +96,7 @@ const Exercise = (props) => {
             </motion.div>
             {
               ex.superset.map(e => <Exercise
+                layout="position"
                 option={option}
                 onDragEnd={onDragEnd}
                 ex={e}
@@ -102,7 +106,6 @@ const Exercise = (props) => {
                 setSuperset={setSuperset}
                 removeExFromSuperset={removeExFromSuperset}
                 index={index} />)
-              // ex.superset.map(e=>console.log(e))
             }
           </Reorder.Group>
           : ex.exId && <>
@@ -125,7 +128,7 @@ const Exercise = (props) => {
             }
 
             <Menu
-              className="optionsMenuEx"
+              className="options-menu-ex"
               anchorEl={anchorEl}
               open={openOptions}
               onClose={() => {
@@ -158,7 +161,7 @@ const Exercise = (props) => {
 }
 
 const ConfirmDeletionModal = ({ deleteConfirmation, onClose, isRoutineDeleting, confirmExerciseDeletion, confirmRoutineDeletion }) => <Modal
-  className="modalDelEx"
+  className="modal-del-ex"
   onClose={onClose}
   open={deleteConfirmation.field}
 >
@@ -258,44 +261,13 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
   }
 
   const removeExFromSuperset = (ex) => {
-    let exToAdd = [];
-    let exToAddIndex = 0;
-    let deleteSuperset;
-
-    let exs = exerciseList.map((e, i) => {
-      if (e._id === ex.supersetId) {
-        e.superset = e.superset.filter(ee => {
-          if (ee._id === ex._id || e.superset.length <= 2) {
-            exToAdd.push(ee);
-            exToAddIndex = i + 1;
-            return false;
-          } else {
-            return ee;
-          }
-        });
-        if (e.superset.length === 0) {
-          deleteSuperset = e._id;
-        }
-      }
-      return e;
-    });
-
-
-    exs.splice(exToAddIndex, 0, exToAdd[0]);
-    if (exToAdd[1]) {
-      exs.splice(exToAddIndex + 1, 0, exToAdd[1]);
-    }
-
-    if (deleteSuperset) {
-      exs = exs.filter(e => e._id !== deleteSuperset);
-    }
+    let exs = removeExerciseFromSuperset(exerciseList, ex);
 
     setExerciseList(exs);
     saveExList(null, null, exs);
   }
 
   const saveExList = (_, __, exList) => {
-    console.log(exList)
     let exercises = [...(exList || exerciseList).map(e => {
       return {
         _id: e._id,
@@ -312,41 +284,29 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
     })
     ];
 
+    const {chartData, ...routineData} = routine;
+
     createRoutine({
       routineInput: {
-        ...routine,
+        ...routineData,
         exercises
       }
     });
   }
 
   const setSuperset = (id, supersetId, index) => {
-    let currentExercise = exerciseList.find((e, i) => i === index);
-    let nextExercise = exerciseList.find((e, i) => i > index && e.exId);
+    let exs = setSupersetWithTheNext(exerciseList, index)
 
-    let exs = exerciseList.map(e => {
-      if (e._id === currentExercise._id) {
-        if (e.superset?.length > 0) {
-          e.superset = [...e.superset, { _id: nextExercise._id, exId: nextExercise.exId }]
-        } else {
-          e.superset = [
-            { _id: currentExercise._id, exId: currentExercise.exId },
-            { _id: nextExercise._id, exId: nextExercise.exId }
-          ]
-          e.exId = null
-          e._id = undefined
-        }
-      }
-      return e;
-    }).filter(e => e._id !== nextExercise._id);
-
-    setExerciseList(exs);
-    saveExList(null, null, exs);
+    if (exs) {
+      setExerciseList(exs);
+      saveExList(null, null, exs);
+    }
   }
+
 
   const distX = 800;
   const cardVariants = {
-    initial: (next,  close ) => ({
+    initial: (next, close) => ({
       x: !next ? -distX : distX,
       opacity: close ? 0 : 1,
       position: "absolute",
@@ -355,12 +315,13 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
     animate: {
       x: 0,
       opacity: 1,
-      position: "unset",
+      position: "absolute",
+      width:"100%",
       transition: {
         type: "ease",
         duration: 0.5,
         bounce: 0,
-        // delay:0.2
+        delay: 0.2
       }
     },
     exit: (next) => ({
@@ -378,17 +339,27 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
 
   return (
     routine && <motion.div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
       initial={{
-        opacity: 1,
+        opacity: 0,
+      }}
+      exit={{
+        position: "absolute",
+        width: "100%",
+        opacity: 0,
+        transition: {
+          type: "ease",
+          duration: 0.25,
+          bounce: 0,
+          // delay: 0.2
+        }
       }}
       animate={{
         opacity: 1,
         transition: {
-          delay: 0.25
+          type: "ease",
+          duration: 0.25,
+          bounce: 0,
+          delay: 0.2
         }
       }}
     >
@@ -401,7 +372,7 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
             variants={cardVariants}
             custom={addExercise, "close"}
           >
-            <AddExercises
+            <RoutineExerciseSelector
               key="opene-routine"
               routine={routine}
               close={() => setAddExercise(false)}
@@ -411,7 +382,7 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
       </AnimatePresence>
 
       <Menu
-        className="optionsMenu"
+        className="options-menu"
         anchorEl={anchorEl}
         open={openOptions}
         onClose={() => { setAnchorEl(null); setOpenOptions(false) }}
@@ -438,7 +409,7 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
         }}><DeleteIcon />Delete Routine</MenuItem>
       </Menu>
 
-      <AnimatePresence initial={true} >
+      <AnimatePresence initial={false} >
         {!addExercise &&
           <motion.div
             className="routineInfo-container"
@@ -446,7 +417,6 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
             animate="animate"
             exit="exit"
             variants={cardVariants}
-
           >
             <RoutineModal editRoutine={routine} open={modal} closeModal={() => setModalOpen(false)} edit={true} />
 
@@ -458,10 +428,14 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
               confirmRoutineDeletion={confirmRoutineDeletion}
             />
 
-            <motion.div className="header">
+            <motion.div className="header" >
               <div id="title" >
                 <Button className="btn-back" onClick={close}><ArrowBackIosIcon /></Button>
+                <div className="logo" style={{ color: routine.color,background:routine.color+"20", borderColor:routine.color+"15" }}>
+                  <Whatshot />
+                </div>
                 <motion.h1
+                  // layoutId={`h1-${routine._id}`}
                   style={{ color: routine.color }}
                 >
                   {name}
@@ -479,6 +453,7 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
 
             {exerciseList &&
               <Reorder.Group
+                // layout
                 transition={{
                   type: "ease",
                   duration: 0.3
@@ -488,8 +463,8 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
                 values={exerciseList}
                 onReorder={setExerciseList}>
                 {
-                  // [...Array(20)].map(ex => <Exercise ex={{ex:{maxRep:0,maxVol:0,type:0}}} key={ex} />)
                   exerciseList.map((ex, i) => <Exercise
+                    layout
                     index={i}
                     ex={ex}
                     key={ex._id || "del"}

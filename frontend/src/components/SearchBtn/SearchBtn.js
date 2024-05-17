@@ -28,7 +28,7 @@ export const SearchBtn = ({ expanded, setExpanded, setSearch, ...otherProps }) =
       setSearch("");
   }, [expanded, setSearch])
 
-  // useOnClickOutside(ref, () => setExpanded(false));
+  useOnClickOutside(ref, () => setExpanded(false));
 
   const handleChange = event => {
     const { value } = event.target;

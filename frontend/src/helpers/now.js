@@ -52,13 +52,18 @@ export function timeAgo(dateParam) {
   const isYesterday = yesterday.toDateString() === date.toDateString();
   const isThisYear = today.getFullYear() === date.getFullYear();
 
+  const day = date.getDate();
+  const month = MONTH_NAMES[date.getMonth()];
+  const year = date.getFullYear();
 
-  if (seconds < 5) {
+  if(date > today){
+    return `${day} ${month.substring(0,3)} ${year.toString().substring(2)}`
+  }else if (seconds < 5) {
     return 'now';
   } else if (seconds < 60) {
     return `${seconds}s ago`;
   } else if (seconds < 90) {
-    return 'about 1m ago';
+    return '~ 1m ago';
   } else if (minutes < 60) {
     return `${minutes}m ago`;
   } else if (hours < 24) {
@@ -76,6 +81,7 @@ export function timeAgo(dateParam) {
   } else if (isThisYear) {
     return `${years.toFixed(0)}y ago`;//getFormattedDate(date, false, true);
   }
+
 
   return `${years.toFixed(0)}y ago`; //getFormattedDate(date);
 }

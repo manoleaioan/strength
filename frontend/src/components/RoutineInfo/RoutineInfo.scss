@@ -1,5 +1,5 @@
-.optionsMenu,
-.optionsMenuEx {
+.options-menu,
+.options-menu-ex {
   .MuiMenu-paper {
     background: #1a1a1a;
     border: 1px solid #727272;
@@ -11,6 +11,7 @@
     border: none;
     margin-top: 8px;
     margin-left: -1%;
+
     .MuiMenuItem-root {
       font-weight: 500;
       color: #fff;
@@ -19,31 +20,35 @@
       text-align: center;
       line-height: 22px;
       min-height: 22px;
+
       svg {
         font-size: 18px;
         margin-right: 10px;
       }
+
       &:hover {
         background: #ffffff19;
       }
     }
   }
+
   hr {
     border: 1px solid #ffffff1f;
   }
 }
-.optionsMenuEx {
+
+.options-menu-ex {
   .MuiMenu-paper {
     margin-top: -5px;
   }
 }
 
 .routineInfo-container {
-  // margin-bottom: 100px;
   .header {
     position: sticky !important;
     top: 0;
-    &:before {
+
+    &::before {
       content: "";
       position: absolute;
       left: 0;
@@ -54,23 +59,38 @@
       z-index: -1;
       top: 0;
     }
+
     #title {
       z-index: 122;
       overflow: hidden;
       display: flex;
       align-items: center;
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        border: 2px solid;
+        border-radius: 50%;
+        padding: 6px;
+        margin-right: 10px;
+        display: none;
+      }
     }
+
     .btns {
       position: unset;
       width: 40px;
       align-items: center;
+
       .addEx {
         color: gray;
         margin-right: 6px;
       }
     }
+
     .btn-back {
       width: 40px;
+      min-width: 40px !important;
       height: 40px;
       min-width: 10px;
       min-height: 10px;
@@ -79,43 +99,50 @@
       justify-content: center;
       align-items: center;
       margin-right: 4px;
+
       &:hover {
         background: #ffffff09;
       }
+
       svg {
         margin-left: 8px;
         font-size: 20px;
       }
     }
+
     h1 {
       word-wrap: break-word;
       padding-top: 4px;
       overflow: hidden;
       line-height: 22px;
       position: relative;
+
       &::first-letter {
         text-transform: uppercase;
       }
     }
   }
 
-  .modalDelEx {
+  .modal-del-ex {
     .main {
-      padding: 20px;
+      padding: 0 20px 10px 20px;
     }
+
     .info {
-      color: #dfdfdf;
+      color: var(--primary-color);
       font-weight: 500;
       line-height: 19px;
       margin-bottom: 10px;
       display: flex;
       align-items: center;
+
       svg {
         margin-top: -4px;
         margin-right: 10px;
         font-size: 40px;
       }
     }
+
     .ctrl {
       width: 100%;
       display: flex;
@@ -123,14 +150,17 @@
       align-items: center;
       margin-top: -10px;
       border: unset;
+      z-index: 10;
+
       .del {
         background: transparent;
         border: 1px solid red;
         color: red;
         font-weight: 900 !important;
       }
+
       .cancel {
-        color: #dfdfdf;
+        color: var(--gray1);
       }
 
       .loader {
@@ -149,6 +179,7 @@
     height: 40px;
     border-radius: 50%;
     background: transparent;
+
     &:hover {
       background: #ffffff09;
     }
@@ -161,6 +192,7 @@
   .exercises-list {
     height: 100%;
     margin-top: 25px;
+
     .loader-animation {
       width: 40px;
       height: 40px;
@@ -173,13 +205,13 @@
     }
 
     .exercise {
+      box-shadow: 0px 3px 7px rgb(0 0 0 / 9%);
       font-family: Baloo Tamma 2;
       background: #121316;
       background: var(--card-bg);
       width: 100%;
-      box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
       border-radius: 14px;
-      border: 1px solid #121316;
+      border: 1px solid transparent;
       padding: 10px 16px;
       overflow: hidden;
       box-sizing: border-box;
@@ -189,12 +221,13 @@
       justify-content: space-between;
       color: #6e6e6e;
       position: relative;
-      min-height: 70px;
+      height: 70px;
       user-select: none;
       touch-action: cross-slide-y;
 
       &.skeleton {
         animation: skeleton-loading 1s linear infinite alternate;
+
         &::before {
           background: unset;
         }
@@ -202,15 +235,13 @@
 
       @media (min-width: 480px) {
         &:hover {
-          background: #1c1d22;
-          border: 1px solid #ffffff36;
-          // transform: scale(1.02);
+          border: 1px solid var(--gray1);
         }
       }
 
       &::before {
         content: "";
-        background: #0000001a;
+        background: var(--card-inner-shadow);
         height: 100%;
         width: 50%;
         position: absolute;
@@ -226,7 +257,7 @@
         font-weight: 600;
         font-size: 18px;
         text-transform: uppercase;
-        color: #fff;
+        color: var(--primary-color);
         text-transform: capitalize;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -243,6 +274,7 @@
         z-index: 8;
         // border: 1px solid red;
         pointer-events: all;
+
         svg {
           // margin-right: 5px;
           // margin-top: 5px;
@@ -258,11 +290,13 @@
         font-size: 14px;
         font-weight: 500;
         margin-top: -8px;
+
         span {
           font-weight: 700;
           color: #b4c0ff;
           margin-left: 10px;
           margin-right: 2px;
+
           &:nth-child(2) {
             margin-left: 2px;
             color: #ff81af;
@@ -272,10 +306,11 @@
     }
 
     .superset {
-      border-color: transparent;
+      border-color: #6a6a6a36;
       box-shadow: none;
       width: 100%;
       border-radius: 14px;
+      box-shadow: 0px 3px 7px rgb(0 0 0 / 9%);
       // border: 1px solid #121316;
       list-style: none;
       margin-bottom: 8px;
@@ -283,20 +318,25 @@
       padding: 0;
       background: unset;
       overflow: visible;
+      height: 100%;
 
-      &:hover{
+      &:hover {
         // border-color: transparent;
       }
+
       &::before {
         background: transparent;
       }
+
       ul {
         width: 100%;
       }
+
       &:hover {
         background: unset;
       }
-      .heading {   
+
+      .heading {
         padding: 3px 16px;
         overflow: hidden;
         background: #111214;
@@ -304,17 +344,21 @@
         justify-content: space-between;
         box-sizing: border-box;
         align-items: center;
-        border-radius: 16px 16px 0 0;
+        border-radius: 13px 13px 0 0;
+
         .drag {
           padding: 10px 0px;
         }
       }
+
       .exercise {
         border-radius: 0;
         border: 0;
         margin-bottom: 4px;
         box-shadow: none;
         // border-bottom: 3px solid #0c0d10;
+        height: 70px;
+
         &::before {
           // background: transparent;
         }

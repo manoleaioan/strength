@@ -5,13 +5,9 @@ const routineSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Name required'],
-    unique: true,
     trim: true,
     minLength: [3, 'Too short'],
     maxLength: [35, 'Max length is 35'],
-    index: {
-      unique: true,
-    }
   },
   color: {
     type: String,
@@ -32,11 +28,15 @@ const routineSchema = new Schema({
       default: undefined,
     }
   }],
+  lastWorkoutDate: {
+    type: String,
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
 })
 
+routineSchema.index({ name: 1, user: 1 }, { unique: true, partialFilterExpression: { name: { $exists: true }, user: { $exists: true } } });
 
 module.exports = mongoose.model('Routine', routineSchema)

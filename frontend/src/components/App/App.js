@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -12,23 +12,23 @@ import SplashScreen from '../SplashScreen/SplashScreen';
 import AppContainer from '../AppContainer/AppContainer';
 
 import './App.scss';
+import Routines from '../../pages/Routines/Routines';
 
 const Router = () => (
   <BrowserRouter>
-    <Switch>
-      <DynamicRoute exact path="/" component={Account} guest />
-      <DynamicRoute exact path="/login" component={Account} guest />
-      <DynamicRoute exact path="/register" component={Account} guest />
-      <DynamicRoute exact path="/password-reset" component={Account} guest />
-      <DynamicRoute exact path="/password-reset/confirm/:token" component={Account} guest />
-      <DynamicRoute exact path="/verify/:token" component={Account} />
-      <DynamicRoute exact path="/account" component={AppContainer} authenticated />
-      <DynamicRoute exact path="/exercises" component={AppContainer} authenticated />
-      <DynamicRoute exact path="/routines" component={AppContainer} authenticated />
-      <DynamicRoute path="*" authenticated>
-        <Redirect to="/account" />
-      </DynamicRoute>
-    </Switch>
+    <Routes>
+      <Route exact path="/" element={<DynamicRoute component={Account} guest />} />
+      <Route exact path="/login" element={<DynamicRoute component={Account} guest />} />
+      <Route exact path="/register" element={<DynamicRoute component={Account} guest />} />
+      <Route exact path="/password-reset" element={<DynamicRoute component={Account} guest />} />
+      <Route exact path="/password-reset/confirm/:token" element={<DynamicRoute component={Account} guest />} />
+      <Route exact path="/verify/:token" element={<DynamicRoute component={Account} />} />
+      <Route exact path="/account" element={<DynamicRoute component={AppContainer} authenticated />} />
+      <Route exact path="/exercises" element={<DynamicRoute component={AppContainer} authenticated />} />
+      <Route exact path="/routines" element={<DynamicRoute component={AppContainer} authenticated />} />
+      <Route exact path="/workouts" element={<DynamicRoute component={AppContainer} authenticated />} />
+      <Route exact path="/metrics" element={<DynamicRoute component={AppContainer} authenticated />} />
+    </Routes>
   </BrowserRouter>
 );
 

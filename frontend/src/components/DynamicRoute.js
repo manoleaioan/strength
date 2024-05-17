@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../redux/user/user.selectors';
@@ -8,11 +8,11 @@ const DynamicRoute = ({ user, ...props }) => {
   const { currentUser } = user;
 
   if (props.authenticated && !currentUser) {
-    return <Redirect to="/login" />
+    return <Navigate to="/login" />
   } else if (props.guest && currentUser) {
-    return <Redirect to="/account" />
+    return <Navigate to="/workouts" />
   } else {
-    return <Route component={props.component} {...props} />
+    return <props.component {...props} />
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimateSharedLayout } from "framer-motion";
+import { motion } from "framer-motion";
 import classNames from 'classnames';
 
 import "./NavBar.scss";
@@ -32,7 +32,6 @@ const Navbar = ({ path, setPath, setAnimate }) => {
   return (
     <div id="nav-bar">
       <Logo className="logo" />
-      <AnimateSharedLayout>
         <ul>
           {
             menuList.map(item =>
@@ -40,7 +39,7 @@ const Navbar = ({ path, setPath, setAnimate }) => {
                 key={item.txt}
                 className={classNames({
                   'active': item.txt === selected && complete
-                })}
+                },'li-'+item.txt)}
                 onClick={() => {
                   if (item.txt !== selected) {
                     setAnimate(true);
@@ -67,6 +66,7 @@ const Navbar = ({ path, setPath, setAnimate }) => {
                       }
 
                       if (latest.opacity === 1) {
+                        setAnimate(false);
                         setPath("/" + item.txt);
                       }
                     }}
@@ -75,7 +75,6 @@ const Navbar = ({ path, setPath, setAnimate }) => {
             )
           }
         </ul>
-      </AnimateSharedLayout>
     </div>
   )
 }

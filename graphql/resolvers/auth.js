@@ -8,16 +8,28 @@ const { uploadFromBuffer } = require('../../cloudinary');
 const User = require('../../models/User');
 const Exercise = require('../../models/Exercise');
 const Routine = require('../../models/Routine');
+const Workout = require('../../models/Workout');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
 async function creatDefaultData(uid) {
   await Exercise.deleteMany({});
   await Routine.deleteMany({});
+  await Workout.deleteMany({});
 
   let exercises = await Exercise.insertMany([
     {
-      name: "Push-ups",
+      name: "Flat Push-ups",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Incline Push-ups",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Decline Push-ups",
       type: 0,
       user: new ObjectId(uid)
     },
@@ -27,39 +39,97 @@ async function creatDefaultData(uid) {
       user: new ObjectId(uid)
     },
     {
-      name: "Diamond Push-ups",
+      name: "Pull-ups",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+
+    {
+      name: "Back Squats",
       type: 0,
       user: new ObjectId(uid)
     },
     {
-      name: "Wide Push-ups",
+      name: "Jump Squats",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Leg Press",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Leg Extensions",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Leg Curls",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Dumbbell Lunges",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Dumbbell Deadlift",
+      type: 0,
+      user: new ObjectId(uid)
+    },
+    {
+      name: "Straight Leg Deadlift",
       type: 0,
       user: new ObjectId(uid)
     },
   ]);
 
   await Routine.create({
-    name: "Chest Workout",
+    name: "Body Weight - Chest Workout",
     color: "#2ECC71",
     exercises: [
-      ...exercises.slice(0, 2).map(e => {
-        return {
-          exId: new ObjectId(e._id)
-        }
-      }),
       {
         superset: [
-          ...exercises.slice(2, 4).map(e => {
-            return {
-              exId: new ObjectId(e._id)
-            }
-          })
+          ...exercises.slice(0, 2).map(e => ({ exId: new ObjectId(e._id) }))
+        ]
+      },
+      ...exercises.slice(3, 5).map(e => ({ exId: new ObjectId(e._id) })),
+    ],
+    user: new ObjectId(uid)
+  })
+
+  await Routine.create({
+    name: "Superset Legs",
+    color: "#ff2e2e",
+    exercises: [
+      {
+        superset: [
+          ...exercises.slice(5, 7).map(e => ({ exId: new ObjectId(e._id) }))
+        ],
+      },
+      {
+        superset: [
+          ...exercises.slice(7, 9).map(e => ({ exId: new ObjectId(e._id) }))
+        ]
+      },
+      {
+        superset: [
+          ...exercises.slice(9, 11).map(e => ({ exId: new ObjectId(e._id) }))
+        ],
+      },
+      {
+        superset: [
+          ...exercises.slice(11, 13).map(e => ({ exId: new ObjectId(e._id) }))
         ]
       }
     ],
     user: new ObjectId(uid)
   })
+
 }
+
 
 class userError extends Error {
   constructor(args) {
@@ -68,8 +138,8 @@ class userError extends Error {
 
     this.name = "errors"
     this.message = userInput
-    if(args?.code === 11000){
-      this.message =  {[Object.keys(args.keyPattern)[0]] : 'already in use'};
+    if (args?.code === 11000) {
+      this.message = { [Object.keys(args.keyPattern)[0]]: 'already in use' };
     }
   }
 }
@@ -91,7 +161,7 @@ transporter.use("compile", hbs({
   extName: ".hbs"
 }));
 
-const baseUrl =  process.env.BASE_URL;
+const baseUrl = process.env.BASE_URL;
 
 
 const sendActivationUrl = user => {
@@ -211,11 +281,14 @@ module.exports = {
       if (!req.isAuth)
         throw 'Unauthorized';
 
-      const user = await User.findOne({ _id: req.userId })
+      const user = await User.findOne({ _id: req.userId });
+
+
       if (!user) {
         throw 'User does not exist!';
       }
 
+      creatDefaultData( req.userId) ;
 
       return user;
     } catch (err) {
@@ -315,7 +388,7 @@ module.exports = {
       if (!user)
         throw 'Invalid request';
 
-      const { filename, mimetype, encoding, createReadStream }  = await file.promise;
+      const { filename, mimetype, encoding, createReadStream } = await file.promise;
 
       if (!filename)
         throw 'You must select an Image';
@@ -331,6 +404,42 @@ module.exports = {
     } catch (err) {
       // console.log(err)
       throw new Error(err);
+    }
+  },
+
+  changeProfilePicture2: async ({ file }, { req }) => {
+    try {
+      if (!req.isAuth)
+        throw new Error('Unauthorized');
+
+      const user = await User.findOne({ _id: req.userId });
+      if (!user)
+        throw new Error('Invalid request');
+
+      const { createReadStream, filename, mimetype } = await file;
+
+      console.log(file)
+
+      if (!filename)
+        throw new Error('You must select an Image');
+
+      if (!mimetype.startsWith('image/'))
+        throw new Error('Invalid file type');
+
+      // Logic to handle file upload (save to storage, database, etc.)
+      // Example:
+      const path = `/path/to/save/${filename}`;
+      const stream = createReadStream();
+      // Write stream to file or process as needed
+
+      // Update user's profile picture
+      user.profilePicture = path;
+      await user.save();
+
+      return path; // Return path or URL of the saved file
+    } catch (err) {
+      console.error(err);
+      throw new Error(err.message);
     }
   },
 

@@ -1,0 +1,162 @@
+.MuiDateCalendar-root {
+  border: 3px solid var(--card-bg) !important;
+  border-radius: 13px;
+  color: var(--primary-color);
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  padding: 10px !important;
+  height: 100% !important;
+  max-height: 381px !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative;
+  background-color: var(--app-bg) !important;
+
+  .MuiPickersYear-root button {
+    font-weight: 500 !important;
+  }
+
+  .MuiDayCalendar-header {
+    border-bottom: 1px solid transparent; /* Set initial solid color */
+    border-image: linear-gradient(to right, rgba(255, 255, 255, 0), var(--car), rgba(255, 255, 255, 0)); /* Apply linear gradient */
+    border-image-slice: 1; /* Ensures the border image covers the entire border */
+
+    margin-bottom: 10px;
+    background:  linear-gradient(to right, rgba(255, 255, 255, 0), var(--card-bg), rgba(255, 255, 255, 0));
+  }
+
+  .MuiDayCalendar-header,
+  .MuiYearCalendar-root,
+  .MuiDayCalendar-weekContainer {
+    justify-content: space-around !important;
+    width: unset !important;
+    padding: 0 !important;
+    font-size: 20px !important;
+    height: 100%;
+  }
+
+  .MuiDayCalendarSkeleton-root,
+  .MuiDayCalendarSkeleton-daySkeleton {
+    width: 100% !important;
+    display: grid;
+  }
+
+  .MuiPickersDay-today {
+    border: 1px dashed rgb(116 147 245) !important;
+
+    &::after {
+      background: unset !important;
+    }
+  }
+
+  .MuiPickersDay-root,
+  .MuiDayCalendarSkeleton-daySkeleton {
+    // height: 100%;
+    color: var(--primary-color) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border: 1px dashed var(--hr);
+    box-sizing: border-box;
+    border-radius: 8px !important;
+    width: 100% !important;
+    // margin: 0 auto;
+  }
+
+  .MuiDayCalendar-weekContainer,
+  .MuiDayCalendarSkeleton-week {
+    margin: 4px 0 !important;
+    justify-content: space-around !important;
+
+    span {
+      flex-shrink: unset !important;
+      width: 100% !important;
+      max-width: 60px;
+      // aspect-ratio: 1/1;
+    }
+  }
+
+  .MuiSvgIcon-root {
+    color: var(--primary-color) !important;
+  }
+
+  .MuiDayCalendar-weekDayLabel {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--gray1) !important;
+  }
+
+  .MuiPickersCalendarHeader-label {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-wrap: nowrap;
+    white-space: nowrap !important;
+  }
+
+  .MuiPickersCalendarHeader-root {
+    margin-top: 2px !important;
+    margin-bottom: 10px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .MuiDayCalendar-monthContainer,
+  .MuiPickersSlideTransition-root,
+  .MuiDayCalendar-slideTransition,
+  .MuiDayCalendar-loadingContainer {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    position: relative !important;
+    min-height: 100% !important;
+  }
+
+
+  .calendar-badge {
+    color: red !important;
+    font-size: 14px;
+
+    &.battery {
+      color: green;
+    }
+
+    &.beer {
+      color: orange;
+    }
+  }
+
+  .selected-date {
+    margin-top: -10px;
+    color: gray;
+  }
+
+  .day-selected {
+    .MuiPickersDay-root {
+      overflow: hidden;
+      // border: 1px dashed #ff1e00;
+      // box-shadow: inset 0px 0px 8px 0px rgb(255 0 0 / 97%);
+      color: #ff3318;
+      // font-weight: 800 !important;
+    }
+
+    .MuiBadge-badge svg {
+      color: #ff1e00;
+      font-size: 14px;
+      border-radius: 50%;
+      // background: #0000004f;
+    }
+  }
+
+  .Mui-selected {
+    background-color: transparent !important;
+    border: transparent !important;
+    background: linear-gradient(90deg, #7931da 0%, #7499f7 100%) !important;
+    color: #fff !important;
+  }
+
+  .MuiPickersSlideTransition-slideExit {
+    display: none !important;
+  }
+}

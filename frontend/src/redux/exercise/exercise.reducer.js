@@ -4,7 +4,13 @@ const INITIAL_STATE = {
   exerciseList: null,
   isLoading: true,
   error: null,
-  deleteExercise_res: null
+  deleteExercise_res: null,
+  exerciseChart: {
+    exerciseId: null,
+    data: null,
+    loading: false,
+    error: null
+  }
 };
 
 function upsert(array, element) {
@@ -56,6 +62,35 @@ const exerciseReducer = (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload,
         isLoading: false
+      }
+    case ExerciseActionTypes.GET_EXERCISE_CHART_START:
+      return {
+        ...state,
+        exerciseChart: {
+          ...state.exerciseChart,
+          loading: true,
+          error: false
+        }
+      }
+    case ExerciseActionTypes.GET_EXERCISE_CHART_SUCCESS:
+      return {
+        ...state,
+        exerciseChart: {
+          ...state.exerciseChart,
+          data: action.payload,
+          exerciseId: action.payload.exerciseId,
+          error: false,
+          loading: false
+        }
+      }
+    case ExerciseActionTypes.GET_EXERCISE_CHART_FAILURE:
+      return {
+        ...state,
+        exerciseChart: {
+          ...state.exerciseChart,
+          loading: false,
+          error: action.payload
+        }
       }
     default:
       return state;

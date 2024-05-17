@@ -16,7 +16,7 @@ import "./ExerciseModal.scss";
 
 const ExerciseModal = ({ open, closeModal, createExercise, exercise: { exerciseList, error }, edit = false, editEx }) => {
   const [errors, setErrors] = useState({});
-  let isExerciseCreating = useRef(false);
+  const [isExerciseCreating, setExerciseCreating] = useState(false);
   const [exerciseData, setExerciseData] = useState({
     name: "",
     type: 0
@@ -52,11 +52,11 @@ const ExerciseModal = ({ open, closeModal, createExercise, exercise: { exerciseL
             ? 'Exercise Name in use'
             : error
         });
-      } else if (isExerciseCreating.current) {
+      } else if (isExerciseCreating) {
         setExerciseData({ type: 0, name: "" });
         close();
       }
-      isExerciseCreating.current = false;
+      setExerciseCreating(false);
     }
   }, [error, exerciseList, open, close])
 
@@ -75,7 +75,9 @@ const ExerciseModal = ({ open, closeModal, createExercise, exercise: { exerciseL
         ...validationErrors,
       });
     }
-    isExerciseCreating.current = true;
+
+    setExerciseCreating(true);
+
     if (edit) {
       createExercise({ exerciseInput: { ...exerciseData, _id: editEx._id } });
     } else {
@@ -115,9 +117,9 @@ const ExerciseModal = ({ open, closeModal, createExercise, exercise: { exerciseL
       </div>
 
       <div className="ctrl">
-        <Button className="save" type="submit" disabled={isExerciseCreating.current}>
-          {isExerciseCreating.current && <CircularProgress className="loader" />} Save</Button>
-        <Button className="cancel" onClick={close} disabled={isExerciseCreating.current}>Cancel</Button>
+        <Button className="save" type="submit" disabled={isExerciseCreating}>
+          {isExerciseCreating && <CircularProgress className="loader" />} Save</Button>
+        <Button className="cancel" onClick={close} disabled={isExerciseCreating}>Cancel</Button>
       </div>
     </form>
   </Modal>

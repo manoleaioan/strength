@@ -1,5 +1,5 @@
 const RoutineTypes = `
-  input inputEx{
+  input inputEx {
     _id: ID!,
     exId: ID!,
   }
@@ -26,6 +26,15 @@ const RoutineTypes = `
     exercises: [Ex]
     color: String!
     _id: ID
+    lastWorkoutDate: String
+    workoutsComplete: Int
+    totalReps: Int
+  }
+
+  type RoutineChartData {
+    date: String!
+    vol: Int!
+    reps: Int!
   }
 
   type Routine {
@@ -33,7 +42,11 @@ const RoutineTypes = `
     name: String!
     exercises: [ExList!]!
     color: String!
-    user: User!
+    user: User!,
+    lastWorkoutDate: String,
+    workoutsComplete: Int,
+    totalReps: Int,
+    chartData: [RoutineChartData]
   }
 `;
 

@@ -12,7 +12,7 @@ function upsert(array, element) {
   const i = array.findIndex(e => e._id === element._id);
 
   if (i > -1) {
-    array[i] = { ...element };
+    array[i] = { ...array[i], ...element };
     return [...array];
   }
 
@@ -95,6 +95,14 @@ const routineReducer = (state = INITIAL_STATE, action) => {
           };
         })
       }
+      case RoutineActionTypes.UPDATE_LAST_WORKOUT_DATE:
+        const { routineId, startDate } = action.payload;
+        return {
+          ...state,
+          routineList: state.routineList?.map(routine =>
+            routine._id === routineId ? { ...routine, lastWorkoutDate: startDate } : routine
+          )
+        };
     default:
       return state;
   }

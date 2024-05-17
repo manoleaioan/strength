@@ -1,0 +1,550 @@
+.options-menu,
+.options-menu-ex {
+  .MuiMenu-paper {
+    border-radius: 8px;
+    background: #18191c;
+    box-shadow: 0 3px 7px rgba(0 0 0 / 55%);
+    border: 1px solid #ffffff29;
+    border: none;
+    margin-top: 8px;
+    margin-left: -1%;
+
+    .MuiMenuItem-root {
+      font-weight: 500;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      line-height: 22px;
+      min-height: 22px;
+
+      svg {
+        font-size: 18px;
+        margin-right: 10px;
+      }
+
+      &:hover {
+        background: #ffffff19;
+      }
+    }
+  }
+
+  hr {
+    border: 1px solid #ffffff1f;
+  }
+}
+
+.options-menu-ex {
+  .MuiMenu-paper {
+    margin-top: -5px;
+  }
+}
+
+.workout-info-container {
+  .header {
+    position: sticky !important;
+    top: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--app-bg);
+      opacity: 0.9;
+      z-index: -1;
+      top: 0;
+    }
+
+    #title {
+      z-index: 122;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .btns {
+      position: unset;
+      width: 40px;
+      align-items: center;
+
+    }
+
+    .btn-back {
+      width: 40px;
+      min-width: 40px !important;
+      height: 40px;
+      min-height: 10px;
+      border-radius: 50%;
+      color: gray;
+      justify-content: center;
+      align-items: center;
+      margin-right: 4px;
+
+      &:hover {
+        background: #ffffff09;
+      }
+
+      svg {
+        margin-left: 8px;
+        font-size: 20px;
+      }
+    }
+
+    h1 {
+      word-wrap: break-word;
+      padding-top: 4px;
+      overflow: hidden;
+      line-height: 22px;
+      position: relative;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .modal-del-ex {
+    .main {
+      padding: 0 20px 10px;
+    }
+
+    .info {
+      color: var(--primary-color);
+      font-weight: 500;
+      line-height: 19px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-top: -4px;
+        margin-right: 10px;
+        font-size: 40px;
+      }
+    }
+
+    .ctrl {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: -10px;
+      border: unset;
+      z-index: 10;
+
+      .del {
+        background: transparent;
+        border: 1px solid red;
+        color: red;
+        font-weight: 900 !important;
+      }
+
+      .cancel {
+        color: var(--gray1);
+      }
+
+      .loader {
+        color: red;
+        margin-left: -20px;
+      }
+    }
+  }
+
+  .edit-workout,
+  .ex-ctrls button {
+    color: gray;
+    min-width: 10px;
+    min-height: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: transparent;
+
+    &:hover {
+      background: #ffffff09;
+    }
+  }
+
+  .ex-ctrls {
+    flex-wrap: nowrap;
+    display: flex;
+
+    .prev-btn {
+      position: absolute;
+      margin-left: -42px;
+    }
+  }
+
+  .edit-ex {
+    margin-right: -16px;
+  }
+
+  .record-set {
+    margin-right: 5px;
+    border: 2px solid;
+    border-radius: 10px !important;
+  }
+
+  .exercises-list {
+    height: 100%;
+    margin-top: 25px;
+
+    .loader-animation {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-top: 37px;
+      color: #757cef;
+    }
+
+    .exercise {
+      box-shadow: 0 3px 7px rgb(0 0 0 / 9%);
+      font-family: 'Baloo Tamma 2', sans-serif;
+      background: #121316;
+      background: var(--card-bg);
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      overflow: hidden;
+      box-sizing: border-box;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      color: #6e6e6e;
+      position: relative;
+      min-height: 70px;
+      user-select: none;
+      touch-action: cross-slide-y;
+      flex-direction: column;
+      justify-content: center;
+
+      &.skeleton {
+        animation: skeleton-loading 1s linear infinite alternate;
+
+        &::before {
+          background: unset;
+        }
+      }
+
+      @media (width>= 480px) {
+        &:hover {
+          // border: 1px solid var(--gray1);
+        }
+      }
+
+      &::before {
+        content: "";
+        background: var(--card-inner-shadow);
+        height: 500px;
+        width: 90%;
+        position: absolute;
+        transform: skew(45deg);
+        top: 0;
+      }
+
+      &:nth-child(even)::before {
+        transform: skew(315deg);
+      }
+
+      h1 {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--primary-color);
+        text-transform: capitalize;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        line-height: 23px;
+        margin-bottom: 5px;
+      }
+
+      .drag {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 14px;
+        flex-direction: column;
+        z-index: 8;
+        pointer-events: all;
+
+        svg {
+          font-size: 25px;
+        }
+      }
+
+      .title {
+        max-width: 95%;
+      }
+
+      .info {
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: -8px;
+
+        span {
+          font-weight: 700;
+          color: #b4c0ff;
+          margin-left: 10px;
+          margin-right: 2px;
+
+          &:nth-child(2) {
+            margin-left: 2px;
+            color: #ff81af;
+          }
+        }
+      }
+
+      .top,
+      .prev {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 10px 16px;
+        box-sizing: border-box;
+      }
+
+      .prev-container {
+        width: 100%;
+        background-color: rgba(0 0 0 / 5%);
+      }
+
+      .prev {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        padding-top: 0;
+        background-color: var(--prev-set-bg);
+
+        h1 {
+          color: gray;
+        }
+
+        button {
+          overflow: visible;
+        }
+
+        .records {
+          pointer-events: none;
+        }
+      }
+
+      .left {
+        width: 100%;
+      }
+
+      .records {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .record {
+          line-height: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: 700;
+          font-size: 18px;
+          min-width: 49px;
+          text-align: center;
+          border-radius: 10px;
+          padding: 8px 0px 4px 0px;
+          border: 2px solid;
+          box-sizing: border-box;
+          margin-bottom: 4px;
+          font-family: "Baloo Tamma 2" !important;
+          flex-direction: column;
+          overflow: hidden;
+          margin-right: 5px;
+          aspect-ratio: 1 / 1;
+          max-height: 50px;
+          z-index: 2;
+          position: relative;
+
+          // &::before {
+          //   content: "";
+          //   background: var(--card-bg);
+          //   height: 100%;
+          //   width: 100%;
+          //   position: absolute;
+          //   top: 0;
+          //   z-index: 0;
+          //   // transform: skew(45deg);
+          // }
+        }
+
+        .rep {
+          position: relative;
+          z-index: 1;
+        }
+
+        .weight {
+          display: flex;
+          align-items: center;
+          z-index: 0;
+          font-family: revert;
+          font-weight: 700;
+          font-size: 18px;
+          padding: 4px 6px 6px 6px;
+          position: relative;
+          border-top: 1px solid;
+          margin-bottom: -5px;
+          width: 100%;
+          justify-content: center;
+          // margin-right: 5px;
+          border-radius: 50%;
+
+          .kg {
+            font-size: 10px;
+            width: 10px;
+            position: absolute;
+            top: -8px;
+            right: 10px;
+          }
+
+          &::before {
+            // content: "";
+            // width: 1px;
+            // height: 16px;
+            // background-color: rgba(255, 255, 255, 0.265);
+            // position: absolute;
+            // left: 0px;
+            // top: 0px;
+          }
+
+          svg {
+            margin-top: -5px;
+            margin-left: 3px;
+            // fill: white;
+            width: 12px;
+          }
+        }
+      }
+
+      .indicators {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid rgba(128 128 128 / 12.6%);
+        z-index: 2;
+        position: relative;
+        font-size: 14px;
+        font-weight: 700;
+        min-height: 20px;
+        cursor: pointer;
+
+
+        &.open-prev {
+          transition: background-color 0.25s;
+          background-color: var(--prev-set-bg);
+        }
+
+        @media (width>= 480px) {
+          &:hover {
+            background-color: var(--prev-set-bg);
+          }
+        }
+
+        .indicator {
+          display: flex;
+          align-items: center;
+          margin: 0 6px;
+        }
+
+        .values {
+          display: flex;
+          align-items: center;
+          color: #d90f0f;
+        }
+
+        .increase .values {
+          color: #0db30b !important;
+        }
+
+        // svg { font-size: 16px;}
+
+        .up {
+          // color: green;
+          margin-top: -8px;
+        }
+
+        .down {
+          // color: red;
+        }
+      }
+    }
+
+    .superset {
+      border-color: #6a6a6a36;
+      width: 100%;
+      border-radius: 14px;
+      box-shadow: 0 3px 7px rgb(0 0 0 / 9%);
+      list-style: none;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+      padding: 0;
+      background: unset;
+      overflow: visible;
+
+      &:hover {
+        // border-color: transparent;
+        background: unset;
+      }
+
+      &::before {
+        background: transparent;
+      }
+
+      ul {
+        width: 100%;
+      }
+
+      .heading {
+        padding: 3px 16px;
+        overflow: hidden;
+        background: #111214;
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        align-items: center;
+        border-radius: 13px 13px 0 0;
+
+        .drag {
+          padding: 10px 0;
+        }
+      }
+
+      .exercise {
+        border-radius: 0;
+        border: 0;
+        margin-bottom: 4px;
+        box-shadow: none;
+
+        &::before {
+          // background: transparent;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+          border-radius: 0 0 14px 14px;
+        }
+      }
+    }
+  }
+
+  @media screen and (width>=479px) {
+    .records .record,
+    .record-set {
+      transition: all 0.25s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
