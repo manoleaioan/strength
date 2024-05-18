@@ -27,7 +27,8 @@ const Router = () => (
       <Route exact path="/exercises" element={<DynamicRoute component={AppContainer} authenticated />} />
       <Route exact path="/routines" element={<DynamicRoute component={AppContainer} authenticated />} />
       <Route exact path="/workouts" element={<DynamicRoute component={AppContainer} authenticated />} />
-      <Route exact path="/metrics" element={<DynamicRoute component={AppContainer} authenticated />} />
+      <Route exact path="/workouts" element={<DynamicRoute component={AppContainer} authenticated />} />
+      <Route exact path="*" element={<DynamicRoute component={AppContainer} authenticated />} />
     </Routes>
   </BrowserRouter>
 );
