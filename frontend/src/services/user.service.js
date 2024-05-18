@@ -142,8 +142,6 @@ function uploadImage(file) {
   formData.append("map", map)
   formData.append("0", file);
 
-  console.log(formData);
-
   return axios({
     method: 'POST',
     url: config.apiUrl,

@@ -1,13 +1,13 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
-const { graphqlHTTP } = require('express-graphql');
+const { createHandler } = require('graphql-http/lib/use/express');
 const mongoose = require("mongoose");
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
+const graphqlUploadExpress = require("graphql-upload/graphqlUploadExpress.js");
 const isAuth = require('./middleware/is-auth');
 const cors = require('cors');
 const app = express();
-const graphqlUploadExpress = require("graphql-upload/graphqlUploadExpress.js");
 const path = require('path');
 
 app.use(graphqlUploadExpress());
@@ -17,14 +17,34 @@ app.use(cookieParser());
 app.use(cors());
 
 
-app.use('/graphql', graphqlHTTP((req, res, graphQLParams) => {
-  return {
-    schema: graphQlSchema,
-    rootValue: graphQlResolvers,
-    graphiql: process.env.NODE_ENV === 'development',
-    context: { req, res }
+app.use('/graphql', (req, res, next) => {
+  if (req.is('multipart/form-data')) {
+    graphQlResolvers.changeProfilePicture(req.body.variables, { req: req })
+      .then(result => {
+        res.json({ data: { changeProfilePicture: result } });
+      })
+      .catch(error => {
+        res.status(500).json({ error: error.message });
+      });
+  } else {
+    next();
   }
+});
+
+
+app.all('/graphql', createHandler({
+  schema:graphQlSchema,
+  rootValue:graphQlResolvers,
+  graphiql: process.env.NODE_ENV === 'development',
+  validationRules:[],
+  context: (p) => {
+    return {
+      req: p.raw,
+      res: p.context.res
+    };
+  },
 }));
+
 
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
