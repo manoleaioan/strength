@@ -288,7 +288,7 @@ module.exports = {
         throw 'User does not exist!';
       }
 
-      creatDefaultData( req.userId) ;
+      // creatDefaultData( req.userId);
 
       return user;
     } catch (err) {
