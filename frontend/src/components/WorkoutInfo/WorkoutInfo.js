@@ -442,7 +442,6 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
     initial: (next, close) => ({
       x: !next ? -distX : distX,
       opacity: close ? 0 : 1,
-      position: "absolute",
       width: "100%",
     }),
     animate: {
@@ -459,7 +458,6 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
     exit: (next) => ({
       x: next ? distX : -distX,
       opacity: 0,
-      position: "absolute",
       width: "100%",
       transition: {
         duration: 0.5,

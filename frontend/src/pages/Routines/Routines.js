@@ -70,17 +70,19 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
         return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
       });
 
+  // useEffect(() => {
+  //   if (!routines.routineList) {
+  //     setTimeout(getRoutines, 0);
+  //   }
+  // }, [routines.routineList, getRoutines]);
 
   useEffect(() => {
-    if (!routines.routineList) {
-      setTimeout(getRoutines, 0);
-    }
-  }, [routines.routineList, getRoutines]);
+    setTimeout(getRoutines, 0);
+  }, [getRoutines]);
 
   const expandRoutine = (ex) => {
     setopenRoutine(ex);
   };
-
 
   const cardVariants = {
     initial: (next, close) => ({
@@ -152,90 +154,90 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
           <div className="routines-list">
             {isLoading && [1, 2, 3].map(i => <div className="routine skeleton" key={i}></div>)}
 
-            {routineFiltered && (
+
+            {routineFiltered && !isLoading && (
               routineFiltered.length === 0
                 ? <p className="no-results">{routineList.length === 0 ? "No routines" : "No results found :("}</p>
                 : routineFiltered.map(routine =>
-                  <AnimatePresence key={routine._id}>
-                    <motion.div className="routine"
-                      transition={{ layout: { duration: 0.3 } }}
-                      layoutId={routine._id}
-                      onClick={() => expandRoutine(routine._id)}
-                      // style={{ boxShadow: '0 3px 7px rgb(0 0 0 / 9%), inset 0px -40px 34px -34px ' + routine.color + "20"}}
-                    >
+                  <motion.div className="routine"
+                    key={routine._id}
+                    transition={{ layout: { duration: 0.3 } }}
+                    layoutId={routine._id}
+                    onClick={() => expandRoutine(routine._id)}
+                  // style={{ boxShadow: '0 3px 7px rgb(0 0 0 / 9%), inset 0px -40px 34px -34px ' + routine.color + "20"}}
+                  >
 
-                      <div className='top-container'>
-                        <motion.div className="title">
-                          <motion.h1
-                            style={{ color: routine.color }}
-                            layoutId={`h1-${routine._id}`}>{routine.name}
-                          </motion.h1>
-                          <div className="info">
-                            <p>
-                              <span>{routine.exercises?.reduce((acc, e) => acc + (e?.superset ? e.superset.length : 1), 0)}</span>
-                              <span>Exercise{routine.exercises?.length !== 1 && "s"}</span>
-                            </p>
-                            {
-                              routine.exercises?.some(e => e?.superset?.length > 0) && (
-                                <p>| <span>{routine.exercises.filter(e => e?.superset?.length > 0).length}</span>
-                                  <span>Superset{routine.exercises?.filter(e => e?.superset?.length > 0).length !== 1 && "s"}</span>
-                                </p>
-                              )
-                            }
-                            <p className="wk-counter">| <span>{routine.workoutsComplete}</span>
-                              <span>Workout{(routine.workoutsComplete !== 1) && "s"}</span>
-                            </p>
-                          </div>
-                        </motion.div>
+                    <div className='top-container'>
+                      <motion.div className="title">
+                        <motion.h1
+                          style={{ color: routine.color }}
+                          layoutId={`h1-${routine._id}`}>{routine.name}
+                        </motion.h1>
+                        <div className="info">
+                          <p>
+                            <span>{routine.exercises?.reduce((acc, e) => acc + (e?.superset ? e.superset.length : 1), 0)}</span>
+                            <span>Exercise{routine.exercises?.length !== 1 && "s"}</span>
+                          </p>
+                          {
+                            routine.exercises?.some(e => e?.superset?.length > 0) && (
+                              <p>| <span>{routine.exercises.filter(e => e?.superset?.length > 0).length}</span>
+                                <span>Superset{routine.exercises?.filter(e => e?.superset?.length > 0).length !== 1 && "s"}</span>
+                              </p>
+                            )
+                          }
+                          <p className="wk-counter">| <span>{routine.workoutsComplete}</span>
+                            <span>Workout{(routine.workoutsComplete !== 1) && "s"}</span>
+                          </p>
+                        </div>
+                      </motion.div>
+                    </div>
+
+                    <div className="bottom">
+                      <div className="workouts wk-counter-main">
+                        <span style={{ color: routine.color }}>
+                          <MotionNumber value={routine.workoutsComplete || 0} disabled={!init.current && 1 == 2} inView={false} init={init} />
+                        </span>
+                        <p>Workout{routine.workoutsComplete !== 1 && "s"}</p>
                       </div>
+                      <div className="chart-container">
+                        {(!routine.chartData || routine.chartData.length === 0) && <div className='na'>N/A</div>}
 
-                      <div className="bottom">
-                        <div className="workouts wk-counter-main">
-                          <span style={{ color: routine.color }}>
-                            <MotionNumber value={routine.workoutsComplete || 0} disabled={!init.current} inView={false} init={init} />
-                          </span>
-                          <p>Workout{routine.workoutsComplete !== 1 && "s"}</p>
-                        </div>
-                        <div className="chart-container">
-                          {(!routine.chartData || routine.chartData.length === 0) && <div className='na'>N/A</div>}
+                        <ResponsiveContainer width="100%" className={classNames({ 'no-data': (!routine.chartData || routine.chartData.length === 0) }, 'chart')}>
+                          <AreaChart
+                            data={routine.chartData?.length > 0 ? routine.chartData : dummyChartData}
+                            margin={{
+                              right: -7,
+                              left: -7,
+                              bottom: 5
+                            }}
+                          >
+                            <defs>
+                              <linearGradient id={"volGradient-" + routine._id} x1="0%" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={routine.color} stopOpacity={0.8} />
+                                <stop offset="95%" stopColor={routine.color} stopOpacity={0} />
+                              </linearGradient>
+                            </defs>
+                            <Area
+                              type="monotone"
+                              stackId="1"
+                              dataKey="vol"
+                              stroke={routine.color}
+                              fill={`url(#volGradient-${routine._id})`}
+                              isAnimationActive={init.current && routine.chartData?.length > 0}
+                            />
+                            <CartesianGrid strokeDasharray="5 5" stroke="var(--routine-card-split-line)" />
+                          </AreaChart>
 
-                          <ResponsiveContainer width="100%" className={classNames({ 'no-data': (!routine.chartData || routine.chartData.length === 0) }, 'chart')}>
-                            <AreaChart
-                              data={routine.chartData?.length > 0 ? routine.chartData : dummyChartData}
-                              margin={{
-                                right: -7,
-                                left: -7,
-                                bottom: 5
-                              }}
-                            >
-                              <defs>
-                                <linearGradient id={"volGradient-" + routine._id} x1="0%" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor={routine.color} stopOpacity={0.8} />
-                                  <stop offset="95%" stopColor={routine.color} stopOpacity={0} />
-                                </linearGradient>
-                              </defs>
-                              <Area
-                                type="monotone"
-                                stackId="1"
-                                dataKey="vol"
-                                stroke={routine.color}
-                                fill={`url(#volGradient-${routine._id})`}
-                                isAnimationActive={init.current && routine.chartData?.length > 0}
-                              />
-                              <CartesianGrid strokeDasharray="5 5" stroke="var(--routine-card-split-line)" />
-                            </AreaChart>
+                        </ResponsiveContainer>
 
-                          </ResponsiveContainer>
-
-                        </div>
-                        <div className="time">
-                          <AccessTimeIcon />
-                          <p className="date">{routine.lastWorkoutDate ? timeAgo(routine.lastWorkoutDate) : "N/A"}</p>
-                        </div>
                       </div>
-                    </motion.div>
+                      <div className="time">
+                        <AccessTimeIcon />
+                        <p className="date">{routine.lastWorkoutDate ? timeAgo(routine.lastWorkoutDate) : "N/A"}</p>
+                      </div>
+                    </div>
+                  </motion.div>
 
-                  </AnimatePresence>
                 )
             )}
           </div>
