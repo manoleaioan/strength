@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "engines": {
-    "node": "16.13.1",
+    "node": "18.19.0",
     "npm": "8.1.2"
   },
   "scripts": {
