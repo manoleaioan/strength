@@ -13,9 +13,9 @@ const Workout = require('../../models/Workout');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 async function creatDefaultData(uid) {
-  await Exercise.deleteMany({});
-  await Routine.deleteMany({});
-  await Workout.deleteMany({});
+  // await Exercise.deleteMany({});
+  // await Routine.deleteMany({});
+  // await Workout.deleteMany({});
 
   let exercises = await Exercise.insertMany([
     {
