@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "build": "cd client && npm install && npm run build && cd .. && npm i",
+    "build": "cd frontent && npm install && npm run build && cd .. && npm i",
     "postinstall": "npm run build",
     "dev": "nodemon app.js"
   },
