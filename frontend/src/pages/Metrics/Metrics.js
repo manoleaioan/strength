@@ -126,10 +126,8 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
           <div className="category">
             General
           </div>
-          {isLoading && 1 == 12 ?
-            <div className="general skeleton" />
-            :
-            <div className={classNames({ 'skeleton': isLoading }, "general")}>
+        
+            <div className={classNames({ 'skeleton': isLoading && 1==2}, "general")}>
               <div className="record rec">
                 <h1 className='rec'>
                   <MotionNumber value={workouts} inView={false} />
@@ -155,7 +153,7 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
                 <span>Reps</span>
               </div>
             </div>
-          }
+          
         </div>
 
         <div className="chart-section">

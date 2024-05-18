@@ -64,7 +64,7 @@ const PieChartCard = ({ name, data = [], loading }) => {
     setActiveIndex(null);
   }, [data])
 
-  return <motion.div layout='position' className={classNames({ 'noselect': data.length === 0, 'skeleton': loading }, "pie-chart-card-container chart exercises")} onClick={() => setActiveIndex(null)}>
+  return <motion.div layout='position' className={classNames({ 'noselect': data.length === 0, 'skeleton': loading && 1==2}, "pie-chart-card-container chart exercises")} onClick={() => setActiveIndex(null)}>
     <div className='chart-wrapper'>
       <PieChart width={220} height={220} className='pie-chart'>
         <defs>
