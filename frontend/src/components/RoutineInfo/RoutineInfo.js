@@ -309,13 +309,13 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
     initial: (next, close) => ({
       x: !next ? -distX : distX,
       opacity: close ? 0 : 1,
-      // position: "absolute",
+      position: "absolute",
       width: "100%",
     }),
     animate: {
       x: 0,
       opacity: 1,
-      // position: "absolute",
+      position: "unset",
       width:"100%",
       transition: {
         type: "ease",
@@ -327,7 +327,7 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
     exit: (next) => ({
       x: next ? distX : -distX,
       opacity: 0,
-      // position: "absolute",
+      position: "absolute",
       width: "100%",
       transition: {
         duration: 0.5,

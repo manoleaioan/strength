@@ -49,30 +49,25 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
   }, [openExercise])
 
   const exerciseFiltered = exerciseList &&
-    exerciseList.filter(ex => ex.name.toLowerCase()
-      .includes(search.toLowerCase()))
-      .sort((a, b) => {
-        a = a[sortBy]?.toString().toLowerCase();
-        b = b[sortBy]?.toString().toLowerCase();
+  exerciseList.filter(ex => ex.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      let aValue = a[sortBy];
+      let bValue = b[sortBy];
 
-        if (sortBy === "activityAt")
-          return a > b ? -1 : (a < b ? 1 : 0)
+      if (sortBy === "activityAt") {
+        if (aValue == null) return 1;
+        if (bValue == null) return -1;
+        aValue = aValue.toString().toLowerCase();
+        bValue = bValue.toString().toLowerCase();
+        return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
+      }
 
-        return a < b ? -1 : (a > b ? 1 : 0)
-      });
-
-  const filterEx = exs => {
-    return exs.filter(ex => ex.name.toLowerCase()
-      .includes(search.toLowerCase()))
-      .sort((a, b) => {
-        a = a[sortBy]?.toString().toLowerCase();
-        b = b[sortBy]?.toString().toLowerCase();
-        if (sortBy === "activityAt")
-          return a > b ? -1 : (a < b ? 1 : 0)
-
-        return a < b ? -1 : (a > b ? 1 : 0)
-      });
-  }
+      if (aValue == null) return 1;
+      if (bValue == null) return -1;
+      aValue = aValue.toString().toLowerCase();
+      bValue = bValue.toString().toLowerCase();
+      return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
+    });
 
   useEffect(() => {
     if (!exercises.exerciseList) {

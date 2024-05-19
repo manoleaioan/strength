@@ -107,13 +107,22 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
     workoutList.filter(ex => ex.name.toLowerCase()
       .includes(search.toLowerCase()))
       .sort((a, b) => {
-        a = a[sortBy]?.toString().toLowerCase();
-        b = b[sortBy]?.toString().toLowerCase();
-
-        if (sortBy === "activityAt")
-          return a > b ? -1 : (a < b ? 1 : 0)
-
-        return a > b ? -1 : (a > b ? 1 : 0)
+        let aValue = a[sortBy];
+        let bValue = b[sortBy];
+  
+        if (sortBy === "activityAt") {
+          if (aValue == null) return 1;
+          if (bValue == null) return -1;
+          aValue = aValue.toString().toLowerCase();
+          bValue = bValue.toString().toLowerCase();
+          return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
+        }
+  
+        if (aValue == null) return 1;
+        if (bValue == null) return -1;
+        aValue = aValue.toString().toLowerCase();
+        bValue = bValue.toString().toLowerCase();
+        return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
       });
 
   useEffect(() => {

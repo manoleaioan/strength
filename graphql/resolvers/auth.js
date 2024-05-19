@@ -13,9 +13,9 @@ const Workout = require('../../models/Workout');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 async function creatDefaultData(uid) {
-  // await Exercise.deleteMany({});
-  // await Routine.deleteMany({});
-  // await Workout.deleteMany({});
+  await Exercise.deleteMany({ user: uid });
+  await Routine.deleteMany({ user: uid });
+  await Workout.deleteMany({ user: uid });
 
   let exercises = await Exercise.insertMany([
     {
@@ -288,7 +288,7 @@ module.exports = {
         throw 'User does not exist!';
       }
 
-      // creatDefaultData( req.userId);
+      // creatDefaultData(req.userId);
 
       return user;
     } catch (err) {

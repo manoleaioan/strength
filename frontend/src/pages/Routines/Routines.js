@@ -51,23 +51,22 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
     routineList.filter(r => r.name.toLowerCase()
       .includes(search.toLowerCase()))
       .sort((a, b) => {
-        const aValue = a[sortBy]?.toString().toLowerCase();
-        const bValue = b[sortBy]?.toString().toLowerCase();
-
-        if (aValue === null || aValue === undefined) return 1;
-        if (bValue === null || bValue === undefined) return -1;
-
+        let aValue = a[sortBy];
+        let bValue = b[sortBy];
+  
         if (sortBy === "lastWorkoutDate") {
-          const aDate = new Date(aValue);
-          const bDate = new Date(bValue);
-
-          if (isNaN(aDate.getTime())) return 1;
-          if (isNaN(bDate.getTime())) return -1;
-
-          return aDate > bDate ? -1 : aDate < bDate ? 1 : 0;
+          if (aValue == null) return 1;
+          if (bValue == null) return -1;
+          aValue = aValue.toString().toLowerCase();
+          bValue = bValue.toString().toLowerCase();
+          return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
         }
-
-        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+  
+        if (aValue == null) return 1;
+        if (bValue == null) return -1;
+        aValue = aValue.toString().toLowerCase();
+        bValue = bValue.toString().toLowerCase();
+        return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
       });
 
   // useEffect(() => {

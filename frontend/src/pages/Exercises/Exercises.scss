@@ -1,21 +1,21 @@
 .sort-menu {
   .MuiMenu-paper {
-    border-radius: 8px;
-    background: #18191c;
-    box-shadow: 0 3px 7px rgb(0 0 0 / 20%);
+    border-radius: 8px !important;
+    background: var(--card-bg) !important;
+    box-shadow: 0 3px 7px rgb(0 0 0 / 20%) !important;
+    margin-top: 10px !important;
+    color: var(--primary-color) !important;
+    text-transform: capitalize;
+    max-height: 500px !important;
 
-    .MuiMenuItem-root {
-      font-weight: 500;
-      color: var(--primary-color);
-      line-height: 22px;
-      min-height: 22px;
-      svg {
-        font-size: 18px;
-      }
-      &:hover {
-        background: var(--gray1);
-        color:#fff;
-      }
+    .Mui-selected,
+    .MuiMenuItem-root:hover {
+      background: var(--gray1) !important;
+      color: #fff;
+    }
+
+    svg {
+      font-size: 18px;
     }
   }
 }
@@ -34,6 +34,7 @@
   .add-exercise {
     background: #3bbf4a;
     background: linear-gradient(90deg, #69006d 0%, #cf325b 51.04%, #fa7242 100%);
+
     &:hover {
       background: #2f983b;
       background: linear-gradient(90deg, #69006d 0%, #cf325b 51.04%, #fa7242 100%);
@@ -74,7 +75,7 @@
     }
 
     .exercise {
-       font-family: 'Baloo Tamma 2', sans-serif;
+      font-family: 'Baloo Tamma 2', sans-serif;
       background: var(--card-bg);
       width: 100%;
       box-shadow: 0 3px 7px rgb(0 0 0 / 9%);
@@ -90,19 +91,20 @@
       color: var(--gray1);
       position: relative;
       min-height: 70px;
-      touch-action:cross-slide-y;
+      touch-action: cross-slide-y;
       user-select: none;
 
       &.skeleton {
         animation: skeleton-loading 1s linear infinite alternate;
+
         &::before {
           background: unset;
         }
       }
 
-      @media (width>= 480px) {
+      @media (width>=480px) {
         &:hover {
-         border: 1px solid var(--gray1);
+          border: 1px solid var(--gray1);
         }
       }
 
@@ -138,10 +140,11 @@
         font-size: 14px;
         flex-direction: column;
         text-transform: capitalize;
-        
+
         p {
           white-space: nowrap;
         }
+
         svg {
           margin-top: 5px;
           font-size: 16px;
@@ -156,11 +159,13 @@
         font-size: 14px;
         font-weight: 500;
         margin-top: -8px;
+
         span {
           font-weight: 700;
           color: #b4c0ff;
           margin-left: 10px;
           margin-right: 2px;
+
           &:nth-child(2) {
             margin-left: 2px;
             color: #ff81af;

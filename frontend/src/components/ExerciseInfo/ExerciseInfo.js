@@ -201,7 +201,7 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
               MAX REP
             </span>
             <h1>
-              <MotionNumber value={exercise.maxRep} />
+              <MotionNumber value={exercise.maxRep} keyy={'bla'}/>
             </h1>
           </div>
           <div className="record vol">
