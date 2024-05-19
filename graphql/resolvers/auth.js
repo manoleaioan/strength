@@ -137,7 +137,7 @@ class userError extends Error {
     let userInput = args
 
     this.name = "errors"
-    this.message = userInput
+    this.message = JSON.stringify(userInput);
     if (args?.code === 11000) {
       this.message = { [Object.keys(args.keyPattern)[0]]: 'already in use' };
     }
@@ -221,7 +221,7 @@ module.exports = {
       }
 
       if (Object.keys(existingUsers).length) {
-        throw { errors };
+        throw errors;
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
@@ -249,7 +249,7 @@ module.exports = {
       }
     } catch (err) {
       console.log(err)
-      throw new userError(err.errors);
+      throw new userError(err);
     }
   },
 
@@ -289,6 +289,8 @@ module.exports = {
       }
 
       // creatDefaultData(req.userId);
+
+      // sendActivationUrl(user)
 
       return user;
     } catch (err) {

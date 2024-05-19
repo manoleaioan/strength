@@ -21,10 +21,19 @@ const Register = ({ switchPage, signUpStart, registerError }) => {
 
   useEffect(() => {
     if (registerError) {
-      //alert(registerError.message)
-      setErrors(registerError.message);
+      try {
+        const parsedErrors = JSON.parse(registerError.message);
+        const errors = Object.entries(parsedErrors).reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+        setErrors(errors);
+      } catch (error) {
+        console.error("Failed to parse registerError.message:", error);
+      }
     }
-  }, [registerError])
+  }, [registerError]);
+  
 
   useEffect(() => {
     setErrors({});

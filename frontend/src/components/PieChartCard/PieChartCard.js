@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { PieChart, Pie, Cell, RadialGradient, Stop, ResponsiveContainer, Sector } from "recharts";
+import { PieChart, Pie, Cell, Sector } from "recharts";
 import { MotionNumber } from '../../components/MotionNumber/MotionNumber';
 import classNames from 'classnames';
 
@@ -12,7 +11,6 @@ const PieChartCard = ({ name, data = [], loading }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [chartAnimationActive, setchartAnimationActive] = useState(false);
   const rowsRef = useRef(null);
-
 
   const onPieEnter = (props, index, e) => {
     e.stopPropagation();
@@ -71,7 +69,6 @@ const PieChartCard = ({ name, data = [], loading }) => {
           {data.map((entry, index) => {
             if (!entry.color) {
               entry.color = generateRandomColor();
-              console.log(entry.color)
             }
             return (
               <linearGradient id={`gradient-${name}-${index}`} key={`gradient-${name}-${index}`}>
