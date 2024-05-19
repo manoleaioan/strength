@@ -90,7 +90,7 @@ const WorkoutCard = ({ workout, selectCopyWorkout, handleWorkoutCopySelect, ...p
       style={{
         boxShadow: '0 3px 7px rgb(0 0 0 / 9%), inset 0px -40px 34px -34px ' + workout.color + "20",
         // backgroundColor: workout.color + "22",
-        // borderColor: workout.color + "20"
+        borderColor: workout.color + "20"
       }}
       {...props}
     >
