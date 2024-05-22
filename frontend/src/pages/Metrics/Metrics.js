@@ -106,7 +106,7 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
         <div id="title">
           <Button className="btn-left" onClick={() => switchDate("prev")}><ArrowBackIosIcon /></Button>
           <motion.div id="date-select-wrapper"
-            layout='preserve-aspect'
+            layout
             style={{ transformOrigin: 'center' }}
             transition={{ duration: 0.25 }}
           >

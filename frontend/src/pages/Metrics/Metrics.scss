@@ -45,7 +45,8 @@
       border-radius: 41px;
       position: relative;
       overflow: hidden;
-
+      display: flex;
+      justify-content: center;
       #date-select {
         color: var(--primary-color);
         text-align: center;
