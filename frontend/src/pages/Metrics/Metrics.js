@@ -105,9 +105,16 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
       <div className="header sticky">
         <div id="title">
           <Button className="btn-left" onClick={() => switchDate("prev")}><ArrowBackIosIcon /></Button>
-          {isLoading ?
-            <CircularProgress color='inherit' className='spinner' />
-            :
+          <motion.div id="date-select-wrapper"
+            layout='preserve-aspect'
+            style={{ transformOrigin: 'center' }}
+            transition={{ duration: 0.25 }}
+          >
+            {isLoading &&
+              <div className="spinner-container">
+                <CircularProgress color='inherit' className='spinner' />
+              </div>
+            }
             <Select
               classes={{ root: 'date-select-root' }}
               MenuProps={{
@@ -119,7 +126,7 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
             >
               {dates.map(d => <MenuItem key={d.value} value={d.value}>{d.value}</MenuItem>)}
             </Select>
-          }
+          </motion.div>
           <Button className="btn-right" onClick={() => switchDate("next")}><ArrowForwardIos /></Button>
         </div>
       </div>
