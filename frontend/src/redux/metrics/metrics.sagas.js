@@ -13,8 +13,8 @@ import {
 
 export function* getMetrics({ payload }) {
   try {
-    const metrics = yield metricsService.getMetrics(payload);
-    yield put(getMetricsSuccess(metrics.data.getMetrics));
+    const metrics = yield metricsService.getMetrics(payload.date);
+    yield put(getMetricsSuccess({data: metrics.data.getMetrics,selectedDateIndex:payload.selectedDateIndex}));
   } catch (error) {
     yield put(getMetricsFailure(error));
   }

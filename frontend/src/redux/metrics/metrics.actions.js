@@ -1,8 +1,8 @@
 import MetricsActionTypes from './metrics.types';
 
-export const getMetricsStart = date => ({
+export const getMetricsStart = payload => ({
   type: MetricsActionTypes.GET_METRICS_START,
-  payload: date
+  payload: payload
 });
 
 export const getMetricsSuccess = metrics => ({

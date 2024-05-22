@@ -62,12 +62,31 @@ body {
   text-transform: capitalize;
 }
 
-@keyframes skeleton-loading {
-  0% {
-    opacity: 0.2;
-  }
 
-  100% {
-    opacity: 0.75;
+
+.skeleton {
+  background: linear-gradient(90deg, var(--card-bg) 1%, var(--skeleton-bg) 18%, var(--card-bg) 33%);
+  background-size: 200% 100% !important;
+  pointer-events: none !important;
+  animation: 1.5s skeleton-loading linear infinite !important;
+  &::before {
+    content: unset !important;
   }
 }
+
+@keyframes skeleton-loading {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+
+// @keyframes skeleton-loading {
+//   0% {
+//     opacity: 0.2;
+//   }
+
+//   100% {
+//     opacity: 0.75;
+//   }
+// }

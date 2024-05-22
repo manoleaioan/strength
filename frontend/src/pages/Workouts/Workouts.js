@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-import { Button, ThemeProvider, createTheme } from '@mui/material';
+import { Button } from '@mui/material';
 import { DateRange, ModeNight } from '@mui/icons-material';
 import WorkoutInfo from '../../components/WorkoutInfo/WorkoutInfo';
 import { ReactComponent as Workout } from '../../assets/Workout.svg';
@@ -36,23 +36,7 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
   const openWorkoutRef = useRef(false);
   const [date, setDate] = useState(dayjs(workouts.selectedDate || Date.now()));
   const [calendarOpen, setCalendar] = useState(true);
-  const theme = createTheme({
-    typography: {
-      fontFamily: [
-        // 'Baloo Tamma 2',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-    },
-  });
+
 
   const [calendarLoading, setCalendarLoading] = useState(true);
   const [selectCopyWorkout, setSelectCopyWorkout] = useState(false);
@@ -259,7 +243,6 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
 
             {/* CALENDAR */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <ThemeProvider theme={theme}>
                 <AnimatePresence initial={false}>
                   {
                     calendarOpen && <motion.div
@@ -282,8 +265,6 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
                     </motion.div>
                   }
                 </AnimatePresence>
-
-              </ThemeProvider>
             </LocalizationProvider>
 
             {/* WORKOUT LIST */}
@@ -301,9 +282,9 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
 
               <AnimatePresence>
                 {
-                  isLoading &&
-                  [1, 2, 3].map(i => (
-                    <motion.div className="workout skeleton" key={i} exit={{ opacity: "0", animation: "1s liniar", transition: { duration: 0.5 } }} ></motion.div>))
+                  isLoading  &&
+                  [1, 2].map(i => (
+                    <motion.div className="workout-card skeleton" key={i} exit={{ opacity: "0", animation: "1s liniar", transition: { duration: 0.5 } }} ></motion.div>))
                 }
               </AnimatePresence>
 

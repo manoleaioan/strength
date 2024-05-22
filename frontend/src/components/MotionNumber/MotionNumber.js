@@ -13,6 +13,14 @@ export const MotionNumber = ({ value, direction = "up", init, disabled = false, 
 
     const springValue = useSpring(motionValue, springConfig);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+    let canAnimate = false;
+
+    useEffect(() => {
+        if(value === 0 || !value){
+            canAnimate = true;
+        }
+        // console.log(value, canAnimate)
+    }, [value]);
 
     useEffect(() => {
         if (!disabled) {

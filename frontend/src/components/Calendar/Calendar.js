@@ -6,6 +6,7 @@ import { Whatshot } from '@mui/icons-material';
 import Badge from '@mui/material/Badge';
 import { DayCalendarSkeleton, PickersDay } from '@mui/x-date-pickers';
 import classNames from 'classnames';
+import { ThemeProvider,createTheme } from "@mui/material";
 
 import "./Calendar.scss";
 
@@ -47,20 +48,41 @@ function ServerDay(props) {
   );
 }
 
-const Calendar = ({ date, highlightedDays,  ...props }) => {
-  return <DateCalendar
-    className="MuiDayCalendar-header MuiDayCalendar-weekContainer"
-    renderLoading={() => <DayCalendarSkeleton />}
-    slots={{
-      day: ServerDay,
-    }}
-    slotProps={{
-      day: {
-        highlightedDays
-      },
-    }}
-    {...props}
-  />
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      // 'Baloo Tamma 2',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+});
+
+const Calendar = ({ date, highlightedDays, ...props }) => {
+  return <ThemeProvider theme={theme}>
+    <DateCalendar
+      className="MuiDayCalendar-header MuiDayCalendar-weekContainer"
+      renderLoading={() => <DayCalendarSkeleton />}
+      slots={{
+        day: ServerDay,
+      }}
+      slotProps={{
+        day: {
+          highlightedDays
+        },
+      }}
+      {...props}
+    />
+  </ThemeProvider>
 }
 
 export default Calendar;

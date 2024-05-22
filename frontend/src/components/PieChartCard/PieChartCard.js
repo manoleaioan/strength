@@ -7,10 +7,10 @@ import './PieChartCard.scss';
 import { motion } from 'framer-motion';
 import { generateRandomColor } from '../../helpers/colorUtils.js';
 
-const PieChartCard = ({ name, data = [], loading }) => {
+const PieChartCard = ({ name, chartData = [], loading }) => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const [chartAnimationActive, setchartAnimationActive] = useState(false);
   const rowsRef = useRef(null);
+  const [data, setData] = useState([]);
 
   const onPieEnter = (props, index, e) => {
     e.stopPropagation();
@@ -58,11 +58,14 @@ const PieChartCard = ({ name, data = [], loading }) => {
   };
 
   useEffect(() => {
-    setchartAnimationActive(true);
     setActiveIndex(null);
-  }, [data])
+    setData(chartData);
+  }, [chartData])
 
-  return <motion.div layout='position' className={classNames({ 'noselect': data.length === 0, 'skeleton': loading && 1==2}, "pie-chart-card-container chart exercises")} onClick={() => setActiveIndex(null)}>
+  return <motion.div layout='position'
+    className={classNames({ 'noselect': data.length === 0}, "pie-chart-card-container chart exercises")}
+    onClick={() => setActiveIndex(null)}
+  >
     <div className='chart-wrapper'>
       <PieChart width={220} height={220} className='pie-chart'>
         <defs>
@@ -78,7 +81,7 @@ const PieChartCard = ({ name, data = [], loading }) => {
             )
           })}
         </defs>
-        {chartAnimationActive && <Pie
+        <Pie
           data={data.length === 0 ? [{ name: '', val: 1 }] : data}
           dataKey="val"
           innerRadius={"70%"}
@@ -106,12 +109,12 @@ const PieChartCard = ({ name, data = [], loading }) => {
               fill={'var(--metrics-no-data-color)'}
               stroke={0}
             />}
-        </Pie>}
+        </Pie>
       </PieChart>
 
       <div className="total" style={{ display: 'flex' }}>
         <span>
-          <MotionNumber value={data.length}  inView={false} />
+          <MotionNumber value={data.length} inView={false} />
         </span>
         <span className='name'>
           {name}{data.length !== 1 && 's'}

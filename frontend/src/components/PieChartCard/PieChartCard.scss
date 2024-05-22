@@ -143,7 +143,9 @@
 
         .bullet {
           border-radius: 16px;
+          min-width: 14px;
           width: 14px;
+          min-height: 14px;
           height: 14px;
           box-shadow: -4px 0 4px 0 rgba(203, 199, 199, 0.1);
           background: #474747;

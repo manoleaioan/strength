@@ -53,7 +53,7 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
       .sort((a, b) => {
         let aValue = a[sortBy];
         let bValue = b[sortBy];
-  
+
         if (sortBy === "lastWorkoutDate") {
           if (aValue == null) return 1;
           if (bValue == null) return -1;
@@ -61,7 +61,7 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
           bValue = bValue.toString().toLowerCase();
           return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
         }
-  
+
         if (aValue == null) return 1;
         if (bValue == null) return -1;
         aValue = aValue.toString().toLowerCase();
@@ -69,15 +69,13 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
         return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
       });
 
-  // useEffect(() => {
-  //   if (!routines.routineList) {
-  //     setTimeout(getRoutines, 0);
-  //   }
-  // }, [routines.routineList, getRoutines]);
-
   useEffect(() => {
-    setTimeout(getRoutines, 0);
-  }, [getRoutines]);
+    if (!routines.routineList) {
+      setTimeout(getRoutines, 0);
+      console.log('ger')
+    }
+  }, [routines.routineList, getRoutines]);
+
 
   const expandRoutine = (ex) => {
     setopenRoutine(ex);

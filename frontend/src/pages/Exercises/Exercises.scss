@@ -95,12 +95,9 @@
       user-select: none;
 
       &.skeleton {
-        animation: skeleton-loading 1s linear infinite alternate;
-
-        &::before {
-          background: unset;
-        }
+        background: linear-gradient(90deg, var(--card-bg) 1%, var(--skeleton-bg) 18%, var(--card-bg) 33%);
       }
+
 
       @media (width>=480px) {
         &:hover {

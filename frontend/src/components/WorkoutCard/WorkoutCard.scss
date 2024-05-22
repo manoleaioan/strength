@@ -16,6 +16,7 @@
   margin-bottom: 10px;
   touch-action: cross-slide-y;
   user-select: none;
+  min-height: 156px;
 
   &::after {
     content: "";
@@ -48,13 +49,6 @@
     cursor: default;
   }
 
-  &.skeleton {
-    animation: skeleton-loading 1s linear infinite alternate;
-
-    &::before {
-      background: unset;
-    }
-  }
 
   &::before {
     content: "";

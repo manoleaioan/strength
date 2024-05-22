@@ -4,8 +4,9 @@ const INITIAL_STATE = {
   data: {
     general: {},
     routines: [],
-    exercises: []
+    exercises: [],
   },
+  selectedDateIndex: 7,
   isLoading: true,
   error: null,
 };
@@ -20,7 +21,8 @@ const metricsReducer = (state = INITIAL_STATE, action) => {
     case MetricsActionTypes.GET_METRICS_SUCCESS:
       return {
         ...state,
-        data: action.payload,
+        data: action.payload.data,
+        selectedDateIndex:action.payload.selectedDateIndex,
         error: null,
         isLoading: false
       };

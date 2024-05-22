@@ -63,18 +63,14 @@
       touch-action: cross-slide-y;
       user-select: none;
 
+      &.skeleton {
+        background: linear-gradient(90deg, var(--card-bg) 1%, var(--skeleton-bg) 18%, var(--card-bg) 33%);
+      }
+
       p,
       h1,
       span {
         cursor: default;
-      }
-
-      &.skeleton {
-        animation: skeleton-loading 1s linear infinite alternate;
-
-        &::before {
-          background: unset;
-        }
       }
 
       &::before {

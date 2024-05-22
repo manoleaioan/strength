@@ -182,7 +182,8 @@ module.exports = {
         },
         {
           $sort: {
-            val: -1
+            val: -1,
+            name: 1 
           }
         }
       ]);
@@ -256,7 +257,8 @@ module.exports = {
         },
         {
           $sort: {
-            val: -1
+            val: -1,
+            name: 1 
           }
         }
       ]);
