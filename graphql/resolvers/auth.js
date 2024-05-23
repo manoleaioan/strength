@@ -139,7 +139,7 @@ class userError extends Error {
     this.name = "errors"
     this.message = JSON.stringify(userInput);
     if (args?.code === 11000) {
-      this.message = { [Object.keys(args.keyPattern)[0]]: 'already in use' };
+      this.message = JSON.stringify({ [Object.keys(args.keyPattern)[0]]: 'already in use' });
     }
   }
 }

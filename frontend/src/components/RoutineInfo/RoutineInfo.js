@@ -315,7 +315,8 @@ const RoutineInfo = ({ createRoutine, routine, close, deleteRoutine, routines: {
     animate: {
       x: 0,
       opacity: 1,
-      position: "unset",
+      position:"unset",
+      delay:500,
       width:"100%",
       transition: {
         type: "ease",

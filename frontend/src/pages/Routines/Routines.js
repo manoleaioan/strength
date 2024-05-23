@@ -90,7 +90,8 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
     animate: {
       x: 0,
       opacity: 1,
-      position: "unset",
+      position:"unset",
+      delay:500,
       transition: {
         // type: "ease",
         duration: 0.25,

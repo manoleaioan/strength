@@ -50,7 +50,8 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
     animate: {
       x: 0,
       opacity: 1,
-      position: "unset",
+      position:"unset",
+      delay:500,
       transition: {
         // type: "ease",
         duration: 0.25,
@@ -93,7 +94,7 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
       .sort((a, b) => {
         let aValue = a[sortBy];
         let bValue = b[sortBy];
-  
+
         if (sortBy === "activityAt") {
           if (aValue == null) return 1;
           if (bValue == null) return -1;
@@ -101,7 +102,7 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
           bValue = bValue.toString().toLowerCase();
           return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
         }
-  
+
         if (aValue == null) return 1;
         if (bValue == null) return -1;
         aValue = aValue.toString().toLowerCase();
@@ -203,6 +204,15 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
     }
   }
 
+
+  const [renderKey, setRenderKey] = useState(0);
+
+  useEffect(() => {
+    if (isLoading) {
+      setRenderKey((prevKey) => prevKey + 1);
+    }
+  }, [isLoading]);
+
   return <div className="workouts-container">
     <LayoutGroup>
       <AnimatePresence initial={true}>
@@ -243,28 +253,28 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
 
             {/* CALENDAR */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <AnimatePresence initial={false}>
-                  {
-                    calendarOpen && <motion.div
-                      key='calendar'
-                      layout="position"
-                      transition={{ duration: 0.4 }}
-                      initial={{ opacity: 0, y: -200 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -200, height: 0 }}
-                    >
-                      <Calendar
-                        key={'calendar' + workouts.workoutDays.year}
-                        views={["year", "day"]}
-                        value={date}
-                        loading={calendarLoading}
-                        highlightedDays={workouts.workoutDays}
-                        onChange={onCalendarChange}
-                        onMonthChange={handleOnMonthChanged}
-                      />
-                    </motion.div>
-                  }
-                </AnimatePresence>
+              <AnimatePresence initial={false}>
+                {
+                  calendarOpen && <motion.div
+                    key='calendar'
+                    layout="position"
+                    transition={{ duration: 0.4 }}
+                    initial={{ opacity: 0, y: -200 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -200, height: 0 }}
+                  >
+                    <Calendar
+                      key={'calendar' + workouts.workoutDays.year}
+                      views={["year", "day"]}
+                      value={date}
+                      loading={calendarLoading}
+                      highlightedDays={workouts.workoutDays}
+                      onChange={onCalendarChange}
+                      onMonthChange={handleOnMonthChanged}
+                    />
+                  </motion.div>
+                }
+              </AnimatePresence>
             </LocalizationProvider>
 
             {/* WORKOUT LIST */}
@@ -282,9 +292,11 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
 
               <AnimatePresence>
                 {
-                  isLoading  &&
-                  [1, 2].map(i => (
-                    <motion.div className="workout-card skeleton" key={i} exit={{ opacity: "0", animation: "1s liniar", transition: { duration: 0.5 } }} ></motion.div>))
+                  isLoading &&
+                  <>
+                    <motion.div className="workout-card skeleton" exit={{ opacity: "0", animation: "1s liniar", transition: { duration: 0.5 } }} ></motion.div>
+                    <motion.div className="workout-card skeleton" exit={{ opacity: "0", animation: "1s liniar", transition: { duration: 0.5 } }} ></motion.div>
+                  </>
                 }
               </AnimatePresence>
 
@@ -294,7 +306,6 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
                   layout
                   initial={{ opacity: !isLoading ? 0 : 1, transition: { delay: 0 } }}
                   animate={{ opacity: isLoading ? 0 : 1, transition: { duration: 0.25, delay: 0.25 } }}
-                // exit={{ opacity: 0, transition: { duration: 0.25 } }}
                 >
                   <div className='title'>
                     <ModeNight /> Empty day

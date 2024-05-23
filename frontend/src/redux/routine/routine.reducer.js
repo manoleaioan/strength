@@ -9,14 +9,10 @@ const INITIAL_STATE = {
 };
 
 function upsert(array, element) {
-  const i = array.findIndex(e => e._id === element._id);
-
-  if (i > -1) {
-    array[i] = { ...array[i], ...element };
-    return [...array];
-  }
-
-  return [...array, { ...element }]
+  const index = array.findIndex(e => e._id === element._id);
+  return index > -1 
+    ? array.map((e, i) => i === index ? { ...e, ...element } : e) 
+    : [...array, element];
 }
 
 const routineReducer = (state = INITIAL_STATE, action) => {
@@ -36,7 +32,7 @@ const routineReducer = (state = INITIAL_STATE, action) => {
     case RoutineActionTypes.CREATE_ROUTINE_SUCCESS:
       return {
         ...state,
-        routineList: upsert(state.routineList, action.payload),//[ ...state.routineList, ...[action.payload]]
+        routineList: upsert(state.routineList, action.payload),
         error: null,
         isLoading: false
       };

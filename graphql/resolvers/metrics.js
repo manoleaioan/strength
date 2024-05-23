@@ -263,7 +263,7 @@ module.exports = {
         }
       ]);
 
-      console.log('\n\n----------------------------\n\n', result.exercises)
+      // console.log('\n\n----------------------------\n\n', result.exercises)
 
       return result;
     } catch (err) {

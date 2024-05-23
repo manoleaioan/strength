@@ -48,8 +48,15 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
   useEffect(() => {
     setIsLoading(false);
     if (updateUserError) {
-      if (updateUserError.message)
+      if (updateUserError.message){
         setErrors(updateUserError.message);
+        const parsedErrors = JSON.parse(updateUserError.message);
+        const errors = Object.entries(parsedErrors).reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+        setErrors(errors);
+      }
       else {
         setAlert({ visible: true, severity: "error" });
       }

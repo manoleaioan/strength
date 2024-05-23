@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, Reorder, useDragControls } from "framer-motion";
+import { motion, AnimatePresence, Reorder, useDragControls, delay } from "framer-motion";
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -443,11 +443,14 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
       x: !next ? -distX : distX,
       opacity: close ? 0 : 1,
       width: "100%",
+      position:"absolute"
     }),
     animate: {
       x: 0,
       opacity: 1,
       width: "100%",
+      position:"unset",
+      delay:500,
       transition: {
         type: "ease",
         duration: 0.5,
@@ -459,6 +462,7 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
       x: next ? distX : -distX,
       opacity: 0,
       width: "100%",
+      position:"absolute",
       transition: {
         duration: 0.5,
         type: "ease",
