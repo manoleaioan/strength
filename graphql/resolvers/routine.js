@@ -25,72 +25,15 @@ const getRoutinesWithMetrics = async (matchCriteria) => {
       }
     },
     {
-      $unwind: { path: "$workouts", preserveNullAndEmptyArrays: true }
-    },
-    {
-      $unwind: { path: "$workouts.exercises", preserveNullAndEmptyArrays: true }
-    },
-    {
-      $unwind: { path: "$workouts.exercises.records", preserveNullAndEmptyArrays: true }
-    },
-    {
-      $unwind: { path: "$workouts.exercises.superset", preserveNullAndEmptyArrays: true }
-    },
-    {
-      $unwind: { path: "$workouts.exercises.superset.records", preserveNullAndEmptyArrays: true }
-    },
-    {
-      $match: {
-        $or: [
-          {
-            $and: [
-              { "workouts": { $exists: true } },
-              { "workouts": { $ne: [] } },
-              { "workouts.exercises.exId.type": 0 }
-            ]
-          },
-          {
-            $and: [
-              { "workouts": { $exists: true } },
-              { "workouts": { $ne: [] } },
-              { "workouts.exercises.superset.exId.type": 0 }
-            ]
-          },
-          { "workouts": { $exists: false } }
-        ]
-      }
-    },
-    {
-      $group: {
-        _id: "$_id",
-        totalRepsRecords: {
-          $sum: "$workouts.exercises.records.record"
-        },
-        totalRepsSupersetRecords: {
-          $sum: "$workouts.exercises.superset.records.record"
-        },
-        workoutsComplete: { $first: "$workoutsComplete" },
-        routine: { $first: "$$ROOT" }
-      }
-    },
-    {
-      $addFields: {
-        totalReps: { $add: ["$totalRepsRecords", "$totalRepsSupersetRecords"] }
-      }
-    },
-    {
-      $replaceRoot: {
-        newRoot: { $mergeObjects: ["$routine", { totalReps: "$totalReps", workoutsComplete: "$workoutsComplete" }] }
-      }
-    },
-    {
       $project: {
         workouts: 0
       }
     }
   ]);
+  
 
   await Routine.populate(routinesWithWorkoutsAndReps, { path: 'exercises.exId exercises.superset.exId' });
+
 
   const MAX_DATA_POINTS = 10;
 
@@ -140,6 +83,7 @@ const getRoutinesWithMetrics = async (matchCriteria) => {
 
     r.chartData = volSampledData;
   }
+
   return routinesWithWorkoutsAndReps;
 }
 

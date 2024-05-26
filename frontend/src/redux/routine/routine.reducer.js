@@ -10,8 +10,8 @@ const INITIAL_STATE = {
 
 function upsert(array, element) {
   const index = array.findIndex(e => e._id === element._id);
-  return index > -1 
-    ? array.map((e, i) => i === index ? { ...e, ...element } : e) 
+  return index > -1
+    ? array.map((e, i) => i === index ? { ...e, ...element } : e)
     : [...array, element];
 }
 
@@ -91,14 +91,21 @@ const routineReducer = (state = INITIAL_STATE, action) => {
           };
         })
       }
-      case RoutineActionTypes.UPDATE_LAST_WORKOUT_DATE:
-        const { routineId, startDate } = action.payload;
-        return {
-          ...state,
-          routineList: state.routineList?.map(routine =>
-            routine._id === routineId ? { ...routine, lastWorkoutDate: startDate } : routine
-          )
-        };
+    case RoutineActionTypes.UPDATE_WORKOUT:
+      const { routineId, startDate, deleted } = action.payload;
+
+      return {
+        ...state,
+        routineList: state.routineList?.map(routine =>
+          routine._id === routineId ?
+            {
+              ...routine,
+              lastWorkoutDate:deleted ? routine.lastWorkoutDate : startDate,
+              workoutsComplete: deleted ? routine.workoutsComplete - 1 : routine.workoutsComplete + 1
+            }
+            : routine
+        )
+      };
     default:
       return state;
   }

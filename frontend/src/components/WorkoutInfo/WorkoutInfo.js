@@ -318,7 +318,7 @@ const ConfirmDeletionModal = ({ deleteConfirmation, onClose, isWorkoutDeleting, 
 
 
 const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: { deleteWorkout_res } }) => {
-  const { name, type, _id } = workout || {};
+  const { name, type, _id, routineId } = workout || {};
   const [openOptions, setOpenOptions] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [modal, setModalOpen] = useState(false);
@@ -357,7 +357,7 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
 
   const confirmWorkoutDeletion = () => {
     setisWorkoutDeleting(true);
-    deleteWorkout({ workoutId: _id });
+    deleteWorkout({ workoutId: _id, routineId: routineId });
   }
 
   const confirmExerciseDeletion = (id, supersetId) => {

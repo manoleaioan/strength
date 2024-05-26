@@ -12,7 +12,7 @@ import {
   getWorkoutDaysFailure,
 } from './workout.actions';
 
-import { updateLastWorkoutDate } from '../routine/routine.actions';
+import { updateWorkout } from '../routine/routine.actions';
 
 import {
   workoutsService
@@ -33,7 +33,7 @@ export function* createWorkout({ payload: { workoutInput }, callback }) {
   try {
     const workout = yield workoutsService.createWorkout(workoutInput);
     yield put(createWorkoutSuccess(workout.data.createWorkout));
-    yield put(updateLastWorkoutDate(workout.data.createWorkout));
+    yield put(updateWorkout(workout.data.createWorkout));
     if (callback) callback(workout.data.createWorkout);
   } catch (error) {
     yield put(createWorkoutFailure(error));
@@ -41,10 +41,12 @@ export function* createWorkout({ payload: { workoutInput }, callback }) {
   }
 }
 
-export function* deleteWorkout({ payload: { workoutId } }) {
+export function* deleteWorkout({ payload: { workoutId, routineId } }) {
   try {
+    console.log(workoutId)
     const workout = yield workoutsService.deleteWorkout(workoutId);
     yield put(deleteWorkoutSuccess(workout.data.deleteWorkout));
+    yield put(updateWorkout({routineId, deleted:true}));
   } catch (error) {
     yield put(deleteWorkoutFailure(error));
     console.log(error)

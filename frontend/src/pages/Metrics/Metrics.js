@@ -99,7 +99,6 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
     setDate(dates[newIndex]);
   }
 
-
   return (
     <div className="metrics-container">
       <div className="header sticky">

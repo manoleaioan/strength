@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,7 +16,7 @@ import Modal from '../../components/Modal';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { XAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { RestartAlt } from '@mui/icons-material';
 
 import "./ExerciseInfo.scss";
@@ -66,7 +66,6 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
 
   useEffect(() => {
     if (errors) {
-      alert(errors);
       setIsExerciseDeleting(false);
     }
   }, [errors])
@@ -74,7 +73,9 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
 
   useEffect(() => {
     setErrors();
-    onSelectChartPeriod();
+    if ((exerciseChart.exerciseId != exercise._id)) {
+      onSelectChartPeriod();
+    }
   }, []);
 
   const formatDate = (dateString) => {
@@ -201,7 +202,7 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
               MAX REP
             </span>
             <h1>
-              <MotionNumber value={exercise.maxRep} keyy={'bla'}/>
+              <MotionNumber value={exercise.maxRep} />
             </h1>
           </div>
           <div className="record vol">
@@ -237,7 +238,7 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
             {
               (exerciseChart.data?.repsData && exerciseChart.exerciseId === exercise._id) &&
               <AreaChart
-                data={chartDataView === "reps" ? exerciseChart.data?.repsData :  exerciseChart.data?.volData} 
+                data={chartDataView === "reps" ? exerciseChart.data?.repsData : exerciseChart.data?.volData}
                 margin={{
                   right: -7,
                   left: -7,

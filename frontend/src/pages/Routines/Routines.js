@@ -72,7 +72,6 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
   useEffect(() => {
     if (!routines.routineList) {
       setTimeout(getRoutines, 0);
-      console.log('ger')
     }
   }, [routines.routineList, getRoutines]);
 
@@ -93,7 +92,6 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
       position:"unset",
       delay:500,
       transition: {
-        // type: "ease",
         duration: 0.25,
         bounce: 0,
         delay: 0.2
@@ -105,7 +103,6 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
       width: "100%",
       transition: {
         duration: 0.25,
-        // type: "ease",
         bounce: 0
       }
     })
@@ -193,7 +190,7 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
                     <div className="bottom">
                       <div className="workouts wk-counter-main">
                         <span style={{ color: routine.color }}>
-                          <MotionNumber value={routine.workoutsComplete || 0} disabled={!init.current && 1 == 2} inView={false} init={init} />
+                          <MotionNumber value={routine.workoutsComplete || 0} disabled={!init.current} inView={false} init={init} />
                         </span>
                         <p>Workout{routine.workoutsComplete !== 1 && "s"}</p>
                       </div>

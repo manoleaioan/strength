@@ -151,7 +151,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   getExercises: () => dispatch(getExercisesStart()),
   createWorkout: workout => dispatch(createWorkoutStart(workout)),
-  deleteWorkout: workoutId => dispatch(deleteWorkoutStart(workoutId))
+  deleteWorkout: (workoutId, routineId) => dispatch(deleteWorkoutStart(workoutId, routineId))
 });
 
 export default connect(

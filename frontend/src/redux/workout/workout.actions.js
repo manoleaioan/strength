@@ -32,9 +32,9 @@ export const createWorkoutFailure = error => ({
   payload: error
 });
 
-export const deleteWorkoutStart = workoutId => ({
+export const deleteWorkoutStart = ({ workoutId, routineId }) => ({
   type: WorkoutActionTypes.DELETE_WORKOUT_START,
-  payload: workoutId
+  payload: { workoutId, routineId }
 });
 
 export const deleteWorkoutSuccess = status => ({

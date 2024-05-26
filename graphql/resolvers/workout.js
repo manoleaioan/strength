@@ -241,7 +241,7 @@ module.exports = {
 
       const user = await User.findOne({ _id: req.userId })
 
-      const exercise = await Workout.deleteOne({
+      await Workout.deleteOne({
         _id: workoutId,
         user
       });

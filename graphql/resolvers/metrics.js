@@ -173,6 +173,7 @@ module.exports = {
         },
         {
           $project: {
+            routineId: { $ifNull: ['$routineId', 'Other'] },
             name: { $ifNull: ['$routine.name', 'Other'] },
             val: { $round: ['$percentage', 2] },
             color: {
@@ -181,12 +182,28 @@ module.exports = {
           }
         },
         {
+          $group: {
+            _id: { name: '$name', color: '$color' },
+            total: { $sum: '$val' }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            name: '$_id.name',
+            val: { $round: ['$total', 2] },
+            color: '$_id.color'
+          }
+        },
+        {
           $sort: {
             val: -1,
-            name: 1 
+            name: 1
           }
         }
       ]);
+
+      // console.log('\n\n----------------------------\n\n', result.routines)
 
       result.exercises = await Workout.aggregate([
         {
@@ -258,7 +275,7 @@ module.exports = {
         {
           $sort: {
             val: -1,
-            name: 1 
+            name: 1
           }
         }
       ]);

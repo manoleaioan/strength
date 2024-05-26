@@ -41,13 +41,11 @@ const routineReducer = (state = INITIAL_STATE, action) => {
         selectedDate: action.payload.selectedDate
       };
     case WorkoutActionTypes.CREATE_WORKOUT_SUCCESS:
-      let startDate = action.payload.startDate.substring(0, 10);
       return {
         ...state,
-        workoutList: upsert(state.workoutList, action.payload),//[ ...state.workoutList, ...[action.payload]],
+        workoutList: upsert(state.workoutList, action.payload),
         workoutDays: {
           year: state.workoutDays.year,
-          // days: !state.workoutDays.days.includes(startDate) ? [...state.workoutDays.days, startDate] : state.workoutDays.days,
           days: [...state.workoutDays.days, action.payload.startDate]
         },
         error: null,

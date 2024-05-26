@@ -63,7 +63,7 @@ const PieChartCard = ({ name, chartData = [], loading }) => {
   }, [chartData])
 
   return <motion.div layout='position'
-    className={classNames({ 'noselect': data.length === 0}, "pie-chart-card-container chart exercises")}
+    className={classNames({ 'noselect': data.length === 0 }, "pie-chart-card-container chart exercises")}
     onClick={() => setActiveIndex(null)}
   >
     <div className='chart-wrapper'>
@@ -123,7 +123,8 @@ const PieChartCard = ({ name, chartData = [], loading }) => {
     </div>
 
     <div className="data-wrapper">
-      <motion.div layout="position" className="data">
+      <motion.div layout className="data" transition={{type:'ease'}}>
+
         <div className="row row-header transparent-scrollbar">
           <div className="name">
             <div className="bullet"></div>
@@ -136,11 +137,10 @@ const PieChartCard = ({ name, chartData = [], loading }) => {
         </div>
 
 
-        <motion.div layout="position" ref={rowsRef} className="rows">
+        <motion.div layout='position' ref={rowsRef} className="rows">
           {
             [
               ...data,
-              // ...data.length < 5 ? [...Array(4 - data.length).fill().map(() => ({ color: 'var(--metrics-no-data-color)', name: '-', val: '-' }))] : []
             ]
               .map((r, i) => (
                 <div key={`${r.name}-${i}`} className={`row data-row-${i}`}
