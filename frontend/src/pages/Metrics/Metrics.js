@@ -77,7 +77,11 @@ const Metrics = ({ metrics, metrics: { isLoading }, getMetrics }) => {
   useEffect(() => {
     let selectedDateIndex = dates.findIndex(d => d.value === date.value);
 
-    if (date.value != '' && (selectedDateIndex != metrics.selectedDateIndex || metrics.data.exercises.length === 0)) {
+    // if (date.value != '' && (selectedDateIndex != metrics.selectedDateIndex || metrics.data.exercises.length === 0)) {
+    //   getMetrics({ date: { gt: date.gt, lte: date.lte }, selectedDateIndex });
+    // }
+
+    if (date.value != '') {
       getMetrics({ date: { gt: date.gt, lte: date.lte }, selectedDateIndex });
     }
   }, [date])

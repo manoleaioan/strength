@@ -23,7 +23,7 @@ export function* getWorkouts({ payload }) {
   try {
     const workouts = yield workoutsService.getWorkouts(payload);
     console.log(payload)
-    yield put(getWorkoutsSuccess({ workouts: workouts.data.getWorkouts, selectedDate:payload }));
+    yield put(getWorkoutsSuccess({ workouts: workouts.data.getWorkouts, selectedDate: payload }));
   } catch (error) {
     yield put(getWorkoutsFailure(error));
   }
@@ -46,7 +46,7 @@ export function* deleteWorkout({ payload: { workoutId, routineId } }) {
     console.log(workoutId)
     const workout = yield workoutsService.deleteWorkout(workoutId);
     yield put(deleteWorkoutSuccess(workout.data.deleteWorkout));
-    yield put(updateWorkout({routineId, deleted:true}));
+    yield put(updateWorkout({ routineId, deleted: true }));
   } catch (error) {
     yield put(deleteWorkoutFailure(error));
     console.log(error)

@@ -259,7 +259,7 @@
         text-overflow: ellipsis;
         width: 100%;
         line-height: 23px;
-        margin-bottom: 5px;
+        margin-bottom: -4px;
       }
 
       .drag {
@@ -341,6 +341,7 @@
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+        margin-top: 8px;
 
         .record {
           line-height: 20px;
@@ -352,7 +353,7 @@
           min-width: 49px;
           text-align: center;
           border-radius: 10px;
-          padding: 8px 0px 4px 0px;
+          padding: 8px 0 4px;
           border: 2px solid;
           box-sizing: border-box;
           margin-bottom: 4px;
@@ -389,12 +390,13 @@
           font-family: revert;
           font-weight: 700;
           font-size: 18px;
-          padding: 4px 6px 6px 6px;
+          padding: 4px 6px 6px;
           position: relative;
           border-top: 1px solid;
           margin-bottom: -5px;
           width: 100%;
           justify-content: center;
+
           // margin-right: 5px;
           border-radius: 50%;
 
@@ -419,6 +421,7 @@
           svg {
             margin-top: -5px;
             margin-left: 3px;
+
             // fill: white;
             width: 12px;
           }

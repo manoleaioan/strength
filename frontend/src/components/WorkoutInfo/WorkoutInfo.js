@@ -45,21 +45,22 @@ const supersetIndex = (exerciseList, id) => {
 const IndicatorBar = ({ ex, setOpenPrev, openPrev }) => {
   let volume = ex.records.reduce((acc, r) => acc + (r.weight === 0 ? r.record : r.record * r.weight), 0);
   let preVolume = ex.prevRecords.reduce((acc, r) => acc + (r.weight === 0 ? r.record : r.record * r.weight), 0);
-  let volPercentageChange = (((volume - preVolume) / preVolume) * 100).toFixed(0);
+  let volPercentageChange = preVolume === 0 ? 0 : (((volume - preVolume) / preVolume) * 100).toFixed(0);
+
   let volChange = Math.abs(volume - preVolume).toFixed(0);
 
   let reps = ex.records.reduce((acc, r) => acc + r.record, 0);
   let prevReps = ex.prevRecords.reduce((acc, r) => acc + r.record, 0);
-  let repsPercentageChange = (((reps - prevReps) / prevReps) * 100).toFixed(0);
+  let repsPercentageChange = prevReps === 0 ? 0 : (((reps - prevReps) / prevReps) * 100).toFixed(0);
   let repsChange = Math.abs(reps - prevReps).toFixed(0);
 
   let displayVol = volPercentageChange != 0;
   let displayReps = repsPercentageChange != 0;
 
   return (
-    (displayVol || displayReps ) && <div className={classNames({'open-prev':openPrev}, 'indicators')} onClick={() => setOpenPrev(open => !open)}>
+    (displayVol || displayReps) && <div className={classNames({ 'open-prev': openPrev }, 'indicators')} onClick={() => setOpenPrev(open => !open)}>
       {
-        displayVol&&
+        displayVol &&
         <div className={classNames({ 'increase': volPercentageChange > 0 }, 'vol-indicator indicator')}>
           <span>VOL</span> <div className='values'>
             {volPercentageChange >= 0 ?
@@ -166,11 +167,9 @@ const Exercise = (props) => {
                 <motion.div
                   className="title">
                   <h1>{ex.exId.name}</h1>
-
-                  {/* <div className="info">{ex.type === 0 ? 'RM/VOL' : 'Max ISO/VOL'}<span>{ex.maxRep}</span> / <span>{ex.maxVol}</span></div> */}
                 </motion.div>
 
-                <motion.div className='records'>
+                {ex.records?.length>0 &&<motion.div className='records'>
                   {
                     ex.records?.map((r, i) =>
                       <Button key={`record-${i}`} onClick={() => setRecordSetModal({ _id: ex._id, exId: ex.exId, edit: true, setNr: i, ...r })}
@@ -190,7 +189,7 @@ const Exercise = (props) => {
                       </Button>
                     )
                   }
-                </motion.div>
+                </motion.div>}
 
               </div>
               {option === 'reorder' ?
@@ -198,9 +197,6 @@ const Exercise = (props) => {
                   <DragIndicatorIcon />
                 </div>
                 : <div className='ex-ctrls'>
-                  {/* <Button className='prev-btn' onClick={() => setOpenPrev(open => !open)}>
-                    <ArrowUpwardOutlined />
-                  </Button> */}
                   <Button className="record-set" style={{ color: maincolor, background: maincolor + '10', borderColor: maincolor + '10' }} onClick={(e) => {
                     setRecordSetModal({ _id: ex._id, exId: ex.exId, setNr: ex.records?.length || 0 });
                   }}><AddIcon />
@@ -217,16 +213,15 @@ const Exercise = (props) => {
             </div>
 
             {
-              ex.records && ex.prevRecords && <IndicatorBar ex={ex} setOpenPrev={setOpenPrev}  openPrev={openPrev}/>
+              ex.records && ex.prevRecords && <IndicatorBar ex={ex} setOpenPrev={setOpenPrev} openPrev={openPrev} />
             }
 
             <AnimatePresence>
               {
                 openPrev && <motion.div className="prev-container"
-                  // layout
-                  initial={{ height: "0.1", opacity: 0 }}
-                  animate={{ height: "100%", opacity: 1 }}
-                  exit={{ height: "0", opacity: 0 }}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.25 }}
                 >
                   <div className="prev">
@@ -443,14 +438,14 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
       x: !next ? -distX : distX,
       opacity: close ? 0 : 1,
       width: "100%",
-      position:"absolute"
+      position: "absolute"
     }),
     animate: {
       x: 0,
       opacity: 1,
       width: "100%",
-      position:"unset",
-      delay:500,
+      position: "unset",
+      delay: 500,
       transition: {
         type: "ease",
         duration: 0.5,
@@ -462,7 +457,7 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
       x: next ? distX : -distX,
       opacity: 0,
       width: "100%",
-      position:"absolute",
+      position: "absolute",
       transition: {
         duration: 0.5,
         type: "ease",
