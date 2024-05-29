@@ -51,11 +51,10 @@ const RecordSetModal = ({ exercise, closeModal, createWorkout, workout: { workou
   const onWorkoutCreatedCallback = (response) => {
     setIsModalLoading(false);
     close();
-    // onWorkoutCreated(response);
   }
 
   const handleCreateWorkout = async (deleteRecord) => {
-    
+
     let updateExercises = editWorkout.exercises.map(e => {
       if (e._id == exercise._id) {
         if (!e.records) {
@@ -105,7 +104,6 @@ const RecordSetModal = ({ exercise, closeModal, createWorkout, workout: { workou
     });
 
     setIsModalLoading(true);
-
     createWorkout({
       workoutInput: {
         ...editWorkout,
@@ -114,7 +112,8 @@ const RecordSetModal = ({ exercise, closeModal, createWorkout, workout: { workou
           _id: !deleteRecord ? exercise._id : null,
           time: new Date().toISOString()
         }
-      }
+      },
+      exId:exercise.exId._id
     },
       onWorkoutCreatedCallback);
   }

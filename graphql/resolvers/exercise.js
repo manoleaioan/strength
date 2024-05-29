@@ -95,13 +95,20 @@ module.exports = {
     }
   },
 
-  getExercises: async (_, { req }) => {
+  getExercises: async ({ exerciseId }, { req }) => {
     try {
       if (!req.isAuth)
         throw 'Unauthorized';
 
-      const result = await Exercise.find({ user: req.userId });
-      await Exercise.syncIndexes();
+      let match = { user: req.userId };
+      
+      if (exerciseId) {
+        match._id = exerciseId
+      };
+
+      const result = await Exercise.find(match);
+      // await Exercise.syncIndexes();
+
       return result;
     } catch (err) {
       console.log(err)
@@ -109,14 +116,14 @@ module.exports = {
     }
   },
 
-  getExerciseChartData : async ({ chartDataInput: {exerciseId, period} }, { req }) => {
+  getExerciseChartData: async ({ chartDataInput: { exerciseId, period } }, { req }) => {
     try {
       if (!req.isAuth)
         throw 'Unauthorized';
-  
+
       let startDate;
       let MAX_DATA_POINTS = 200;
-  
+
       switch (period) {
         case '1W':
           startDate = new Date(new Date() - 7 * 24 * 60 * 60 * 1000);
@@ -139,7 +146,7 @@ module.exports = {
         default:
           throw new Error('Invalid period selection');
       }
-  
+
       const workouts = await Workout.find({
         $or: [
           { 'exercises.exId._id': exerciseId },
@@ -159,12 +166,12 @@ module.exports = {
         'exercises.exId._id': 1,
         'exercises.superset.exId._id': 1
       });
-  
+
       // Data sampling
       const repSampledData = [];
       const volSampledData = [];
       const samplingInterval = Math.ceil(workouts.length / MAX_DATA_POINTS);
-  
+
       for (let i = 0; i < workouts.length; i += samplingInterval) {
         const workout = workouts[i];
         workout.exercises.forEach(exercise => {
@@ -172,7 +179,7 @@ module.exports = {
             ...(exercise.exId._id?.toString() == exerciseId && exercise.records || []),
             ...(exercise.superset?.filter(e => e.exId._id.toString() == exerciseId && e.records)?.map(e => e.records).flat() || [])
           ];
-            
+
           if (flatRecords.length > 0) {
             flatRecords.forEach(records => {
               repSampledData.push({
@@ -180,7 +187,7 @@ module.exports = {
                 reps: records.record
               });
             });
-  
+
             volSampledData.push({
               date: workout.startDate,
               vol: flatRecords.reduce((acc, r) => acc + (r.weight === 0 ? r.record : r.record * r.weight), 0)
@@ -188,15 +195,15 @@ module.exports = {
           }
         });
       }
-  
+
       // console.log(repSampledData, volSampledData);
-  
+
       let result = {
         repsData: repSampledData,
         volData: volSampledData
       };
-  
-  
+
+
       return result;
     } catch (err) {
       throw new Error(err);

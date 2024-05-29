@@ -58,3 +58,18 @@ export const getExerciseChardDataFailure = error => ({
   type: ExerciseActionTypes.GET_EXERCISE_CHART_FAILURE,
   payload: error
 });
+
+export const getExerciseStart = exerciseId => ({
+  type: ExerciseActionTypes.GET_EXERCISE_START,
+  payload: exerciseId
+});
+
+export const getExerciseStartSuccess = exercise => ({
+  type: ExerciseActionTypes.GET_EXERCISE_SUCCESS,
+  payload: exercise
+});
+
+export const getExerciseFailure = error => ({
+  type: ExerciseActionTypes.GET_EXERCISE_FAILURE,
+  payload: error
+});

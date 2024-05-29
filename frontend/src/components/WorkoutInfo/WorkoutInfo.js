@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, Reorder, useDragControls, delay } from "framer-motion";
+import { motion, AnimatePresence, Reorder, useDragControls } from "framer-motion";
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -14,7 +14,6 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Modal from '../Modal';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import RoutineExerciseSelector from '../RoutineExerciseSelector/RoutineExerciseSelector';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -22,25 +21,13 @@ import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
 import WorkoutEditModal from '../WorkoutEditModal/WorkoutEditModal';
 import WorkoutExerciseSelector from '../WorkoutExerciseSelector/WorkoutExerciseSelector';
-import { removeExerciseFromSuperset, setSupersetWithTheNext } from "../../helpers/exerciseUtils";
-import { ReactComponent as WeightLogo } from '../../assets/Weight.svg';
+import { removeExerciseFromSuperset, setSupersetWithTheNext, supersetIndex } from "../../helpers/exerciseUtils";
 import RecordSetModal from '../RecordSetModal/RecordSetModal';
 import classNames from 'classnames';
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
 import "./WorkoutInfo.scss";
-import { ArrowDownward, ArrowDownwardOutlined, ArrowDownwardRounded, ArrowDropDown, ArrowDropUp, ArrowUpwardOutlined, KeyboardArrowDown, KeyboardArrowUp, KeyboardArrowUpOutlined } from '@mui/icons-material';
 
-
-const supersetIndex = (exerciseList, id) => {
-  let _index = 0;
-  for (let i = 0; i < exerciseList.length; i++) {
-    if (exerciseList[i].superset?.length > 0) {
-      _index++;
-      if (exerciseList[i]._id === id) break;
-    }
-  }
-  return _index;
-}
 
 const IndicatorBar = ({ ex, setOpenPrev, openPrev }) => {
   let volume = ex.records.reduce((acc, r) => acc + (r.weight === 0 ? r.record : r.record * r.weight), 0);
@@ -156,7 +143,6 @@ const Exercise = (props) => {
                 maincolor={maincolor}
                 setRecordSetModal={setRecordSetModal}
               />)
-              // ex.superset.map(e=>console.log(e))
             }
           </Reorder.Group>
           : ex.exId && <>
@@ -169,7 +155,7 @@ const Exercise = (props) => {
                   <h1>{ex.exId.name}</h1>
                 </motion.div>
 
-                {ex.records?.length>0 &&<motion.div className='records'>
+                {ex.records?.length > 0 && <motion.div className='records'>
                   {
                     ex.records?.map((r, i) =>
                       <Button key={`record-${i}`} onClick={() => setRecordSetModal({ _id: ex._id, exId: ex.exId, edit: true, setNr: i, ...r })}
@@ -311,8 +297,7 @@ const ConfirmDeletionModal = ({ deleteConfirmation, onClose, isWorkoutDeleting, 
   </div>
 </Modal>
 
-
-const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: { deleteWorkout_res } }) => {
+const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: { deleteWorkout_res }, getExercise }) => {
   const { name, type, _id, routineId } = workout || {};
   const [openOptions, setOpenOptions] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -412,8 +397,6 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
       }
     })
     ];
-
-    console.log(exercises)
 
     createWorkout({
       workoutInput: {
@@ -592,7 +575,6 @@ const WorkoutInfo = ({ createWorkout, workout, close, deleteWorkout, workouts: {
                 values={exerciseList}
                 onReorder={setExerciseList}>
                 {
-                  // [...Array(20)].map(ex => <Exercise ex={{ex:{maxRep:0,maxVol:0,type:0}}} key={ex} />)
                   exerciseList.map((ex, i) => <Exercise
                     index={i}
                     ex={ex}

@@ -26,6 +26,15 @@ export function* getExercises() {
   }
 }
 
+export function* getExercise({ payload }) {
+  try {
+    const exercises = yield exercisesService.getExercises(payload);
+    yield put(getExercisesSuccess(exercises.data.getExercise));
+  } catch (error) {
+    yield put(getExercisesFailure(error));
+  }
+}
+
 export function* createExercise({ payload: { exerciseInput } }) {
   try {
     const exercise = yield exercisesService.createExercise(exerciseInput);
@@ -47,7 +56,7 @@ export function* deleteExercise({ payload: { exerciseId } }) {
 export function* getExerciseChartData({ payload: { exerciseId, period } }) {
   try {
     const exercise = yield exercisesService.getExerciseChartData({ exerciseId, period });
-    yield put(getExerciseChardDataSuccess({...exercise.data.getExerciseChartData, exerciseId}));
+    yield put(getExerciseChardDataSuccess({ ...exercise.data.getExerciseChartData, exerciseId }));
   } catch (error) {
     yield put(getExerciseChardDataFailure(error));
   }
@@ -69,11 +78,16 @@ export function* onGetExerciseChartDataStart() {
   yield takeLatest(ExerciseActionTypes.GET_EXERCISE_CHART_START, getExerciseChartData);
 }
 
+export function* onGetExerciseStart() {
+  yield takeLatest(ExerciseActionTypes.GET_EXERCISE_START, getExercise);
+}
+
 export function* exerciseSagas() {
   yield all([
     call(onGetExercisesStart),
     call(onCreateExercisesStart),
     call(onDeleteExerciseStart),
-    call(onGetExerciseChartDataStart)
+    call(onGetExerciseChartDataStart),
+    call(onGetExerciseStart),
   ]);
 }

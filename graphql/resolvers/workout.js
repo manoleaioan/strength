@@ -60,13 +60,13 @@ module.exports = {
             }
 
             let mainExercise = await Exercise.findById(findExUpdated?.exId?._id);
-            let lastSetReps = findExUpdated.records[findExUpdated.records.length - 1].record;
+            let maxSetReps = Math.max(...findExUpdated.records.map(record => record.record));
             let fitnessVolume = findExUpdated.records.reduce((acc, r) => acc + (r.weight === 0 ? r.record : r.record * r.weight), 0);
 
 
             if (mainExercise) {
-              if (mainExercise.maxRep < lastSetReps) {
-                mainExercise.maxRep = lastSetReps;
+              if (mainExercise.maxRep < maxSetReps) {
+                mainExercise.maxRep = maxSetReps;
               }
 
               if (mainExercise.maxVol < fitnessVolume) {

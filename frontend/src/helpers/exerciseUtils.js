@@ -42,8 +42,6 @@ const setSupersetWithTheNext = (exerciseList, index) => {
     return exerciseList.filter(Boolean);
 }
 
-
-
 const removeExerciseFromSuperset = (exerciseList, ex) => {
     let exToAdd = [];
     let exToAddIndex = 0;
@@ -80,4 +78,15 @@ const removeExerciseFromSuperset = (exerciseList, ex) => {
     return exercises;
 }
 
-export { setSupersetWithTheNext, removeExerciseFromSuperset };
+const supersetIndex = (exerciseList, id) => {
+    let _index = 0;
+    for (let i = 0; i < exerciseList.length; i++) {
+        if (exerciseList[i].superset?.length > 0) {
+            _index++;
+            if (exerciseList[i]._id === id) break;
+        }
+    }
+    return _index;
+}
+
+export { setSupersetWithTheNext, removeExerciseFromSuperset, supersetIndex };

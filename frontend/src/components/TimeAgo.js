@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+
 const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
@@ -30,9 +32,7 @@ function getFormattedDate(date, prefomattedDate = false, hideYear = false) {
   return `${day}. ${month} ${year}. at ${hours}:${minutes}`;
 }
 
-
-
-export function timeAgo(dateParam) {
+function timeAgo(dateParam) {
   if (!dateParam) {
     return null;
   }
@@ -47,7 +47,7 @@ export function timeAgo(dateParam) {
   const days = hours / 24;
   const weeks = days / 7;
   const months = weeks / 4;
-  const years = months/10;
+  const years = months / 10;
   const isToday = today.toDateString() === date.toDateString();
   const isYesterday = yesterday.toDateString() === date.toDateString();
   const isThisYear = today.getFullYear() === date.getFullYear();
@@ -56,9 +56,9 @@ export function timeAgo(dateParam) {
   const month = MONTH_NAMES[date.getMonth()];
   const year = date.getFullYear();
 
-  if(date > today){
-    return `${day} ${month.substring(0,3)} ${year.toString().substring(2)}`
-  }else if (seconds < 5) {
+  if (date > today) {
+    return `${day} ${month.substring(0, 3)} ${year.toString().substring(2)}`;
+  } else if (seconds < 5) {
     return 'now';
   } else if (seconds < 60) {
     return `${seconds}s ago`;
@@ -79,9 +79,28 @@ export function timeAgo(dateParam) {
   } else if (isYesterday) {
     return getFormattedDate(date, 'Yesterday');
   } else if (isThisYear) {
-    return `${years.toFixed(0)}y ago`;//getFormattedDate(date, false, true);
+    return `${years.toFixed(0)}y ago`;
   }
-
-
-  return `${years.toFixed(0)}y ago`; //getFormattedDate(date);
+  return `${years.toFixed(0)}y ago`;
 }
+
+const TimeAgo = ({ date }) => {
+  const [timeAgoText, setTimeAgoText] = useState(() => timeAgo(date));
+
+  useEffect(() => {
+    const updateTimeAgo = () => {
+      setTimeAgoText(timeAgo(date));
+    };
+
+    const secondsDiff = Math.round((new Date() - new Date(date)) / 1000);
+    let intervalId;
+
+    intervalId = setInterval(updateTimeAgo, secondsDiff < 60 ? 1000 : (secondsDiff <= 3600 ? 60000 : 3600000));
+
+    return () => clearInterval(intervalId);
+  }, [date]);
+
+  return <span>{timeAgoText}</span>;
+};
+
+export default TimeAgo;

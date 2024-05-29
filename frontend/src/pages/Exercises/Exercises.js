@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectExerciseList } from '../../redux/exercise/exercise.selectors';
 import { motion } from "framer-motion";
-import { timeAgo } from '../../helpers/now';
 
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,6 +17,7 @@ import ExerciseInfo from '../../components/ExerciseInfo/ExerciseInfo';
 import ExerciseModal from '../../components/ExerciseModal/ExerciseModal';
 
 import "./Exercises.scss";
+import TimeAgo from '../../components/TimeAgo';
 
 const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) => {
   const [expanded, setExpanded] = useState(false);
@@ -155,7 +155,7 @@ const Exercises = ({ user, getExercises, exercises, exercises: { isLoading } }) 
                 {
                   ex.activityAt &&
                   <div className="time">
-                    <AccessTimeIcon /> <p>{timeAgo(ex.activityAt)}</p>
+                    <AccessTimeIcon /> <p>{<TimeAgo date={ex.activityAt}/>}</p>
                   </div>
                 }
 

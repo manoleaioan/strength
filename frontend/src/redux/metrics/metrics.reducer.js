@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     routines: [],
     exercises: [],
   },
+  date: null,
   selectedDateIndex: 7,
   isLoading: true,
   error: null,
@@ -22,6 +23,7 @@ const metricsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         data: action.payload.data,
+        date: action.payload.date,
         selectedDateIndex:action.payload.selectedDateIndex,
         error: null,
         isLoading: false

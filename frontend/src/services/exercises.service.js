@@ -10,15 +10,15 @@ export const exercisesService = {
   getExerciseChartData
 };
 
-function getExercises() {
+function getExercises(exerciseId) {
   return axios({
     method: 'POST',
     url: config.apiUrl,
     headers: authHeader(),
     data: JSON.stringify({
       query: `
-        query getExercises{
-          getExercises {
+        query getExercises($exerciseId: String){
+          getExercises(exerciseId: $exerciseId) {
             _id,
             name,
             type,
@@ -27,7 +27,8 @@ function getExercises() {
             activityAt
           }
         }
-      `
+      `,
+      variables: { exerciseId }
     })
   }).then(handleResponse);
 }

@@ -92,6 +92,18 @@ const exerciseReducer = (state = INITIAL_STATE, action) => {
           error: action.payload
         }
       }
+    case ExerciseActionTypes.UPDATE_EXERCISE:
+      return {
+        ...state,
+        // exerciseList: state.exerciseList.map(e => e._id === action.payload._id ? action.payload : e),
+        exerciseList: upsert(state.exerciseList, action.payload),
+        exerciseChart: {
+          exerciseId: null,
+          data: null,
+          loading: false,
+          error: null
+        }
+      }
     default:
       return state;
   }

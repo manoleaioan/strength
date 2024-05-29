@@ -21,22 +21,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import LinkOffIcon from '@mui/icons-material/LinkOff';
-import { removeExerciseFromSuperset, setSupersetWithTheNext } from "../../helpers/exerciseUtils";
+import { removeExerciseFromSuperset, setSupersetWithTheNext, supersetIndex } from "../../helpers/exerciseUtils";
 
 import "./RoutineInfo.scss";
 import { Whatshot } from '@mui/icons-material';
 
 
-const supersetIndex = (exerciseList, id) => {
-  let _index = 0;
-  for (let i = 0; i < exerciseList.length; i++) {
-    if (exerciseList[i].superset?.length > 0) {
-      _index++;
-      if (exerciseList[i]._id === id) break;
-    }
-  }
-  return _index;
-}
+
+
 
 const Exercise = (props) => {
   const dragControls = useDragControls();

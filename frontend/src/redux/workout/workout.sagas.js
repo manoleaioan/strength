@@ -1,4 +1,4 @@
-import { takeLatest, put, all, call } from 'redux-saga/effects';
+import { takeLatest, put, all, call, select } from 'redux-saga/effects';
 import WorkoutActionTypes from './workout.types';
 
 import {
@@ -17,7 +17,16 @@ import { updateWorkout } from '../routine/routine.actions';
 import {
   workoutsService
 } from '../../services/workouts.service';
+import { selectMetrics } from '../metrics/metrics.selectors';
+import { getMetricsStart } from '../metrics/metrics.actions';
+import { getExerciseStart } from '../exercise/exercise.actions';
 
+function* updateMetrics(){
+  const metrics = yield select(selectMetrics);
+  if (metrics.date) {
+    yield put(getMetricsStart({ date: metrics.date, selectedDateIndex: metrics.selectedDateIndex }));
+  }
+}
 
 export function* getWorkouts({ payload }) {
   try {
@@ -29,12 +38,14 @@ export function* getWorkouts({ payload }) {
   }
 }
 
-export function* createWorkout({ payload: { workoutInput }, callback }) {
+export function* createWorkout({ payload: { workoutInput, exId }, callback }) {
   try {
     const workout = yield workoutsService.createWorkout(workoutInput);
     yield put(createWorkoutSuccess(workout.data.createWorkout));
     yield put(updateWorkout(workout.data.createWorkout));
     if (callback) callback(workout.data.createWorkout);
+    yield updateMetrics();
+    yield put(getExerciseStart(exId));
   } catch (error) {
     yield put(createWorkoutFailure(error));
     if (callback) callback({ error })
@@ -43,10 +54,10 @@ export function* createWorkout({ payload: { workoutInput }, callback }) {
 
 export function* deleteWorkout({ payload: { workoutId, routineId } }) {
   try {
-    console.log(workoutId)
     const workout = yield workoutsService.deleteWorkout(workoutId);
     yield put(deleteWorkoutSuccess(workout.data.deleteWorkout));
     yield put(updateWorkout({ routineId, deleted: true }));
+    yield updateMetrics();
   } catch (error) {
     yield put(deleteWorkoutFailure(error));
     console.log(error)

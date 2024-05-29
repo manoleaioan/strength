@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectRoutineList } from '../../redux/routine/routine.selectors';
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { timeAgo } from '../../helpers/now';
+import TimeAgo from '../../components/TimeAgo';
 import { CartesianGrid, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 import { Button } from '@mui/material';
@@ -228,7 +228,7 @@ const Routines = ({ user, getRoutines, routines, routines: { isLoading } }) => {
                       </div>
                       <div className="time">
                         <AccessTimeIcon />
-                        <p className="date">{routine.lastWorkoutDate ? timeAgo(routine.lastWorkoutDate) : "N/A"}</p>
+                        <p className="date">{routine.lastWorkoutDate ? <TimeAgo date={routine.lastWorkoutDate}/>: "N/A"}</p>
                       </div>
                     </div>
                   </motion.div>

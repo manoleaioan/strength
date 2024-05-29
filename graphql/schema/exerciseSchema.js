@@ -40,7 +40,7 @@ const ExerciseTypes = `
 `;
 
 const ExerciseQuery = `
-  getExercises:[Exercise!]
+  getExercises(exerciseId: String):[Exercise!]
   getExerciseChartData(chartDataInput: chartDataInput):ChartDataResult
 `;
 
