@@ -72,7 +72,7 @@ const Register = ({ switchPage, signUpStart, registerError }) => {
 
       <form onSubmit={handleSubmit}>
         <InputText
-          type="text"
+          type="email"
           name="email"
           placeholder="Email"
           onChange={handleChange}

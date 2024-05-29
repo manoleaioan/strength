@@ -23,12 +23,11 @@ const exerciseSchema = new Schema({
   },
   activityAt: {
     type: String,
-    // default: new Date().toISOString()
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    index: true // Index for faster querying
+    index: true
   }
 });
 

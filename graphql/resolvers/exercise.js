@@ -22,7 +22,7 @@ module.exports = {
             name, type, user, maxRep, maxVol
           }
         },
-        { upsert: true, new: true }
+        { upsert: true, new: true,  runValidators: true}
       )
 
       return exercise;

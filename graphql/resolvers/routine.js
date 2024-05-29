@@ -105,7 +105,7 @@ module.exports = {
             name, color, exercises, user
           }
         },
-        { upsert: true, new: true }
+        { upsert: true, new: true, runValidators: true }
       ).populate("exercises.exId exercises.superset.exId");
 
       return routine;

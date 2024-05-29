@@ -233,6 +233,11 @@ module.exports = {
         password: hashedPassword
       });
 
+      const validationError = user.validateSync();
+      if (validationError) {
+        throw validationError.errors;
+      }
+
       const result = await user.save();
 
       const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWTPW, {
