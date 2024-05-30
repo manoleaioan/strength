@@ -9,7 +9,9 @@ import {
   deleteExerciseSuccess,
   deleteExerciseFailure,
   getExerciseChardDataFailure,
-  getExerciseChardDataSuccess
+  getExerciseChardDataSuccess,
+  getExerciseFailure,
+  getExerciseSuccess
 } from './exercise.actions';
 
 import {
@@ -29,9 +31,9 @@ export function* getExercises() {
 export function* getExercise({ payload }) {
   try {
     const exercises = yield exercisesService.getExercises(payload);
-    yield put(getExercisesSuccess(exercises.data.getExercise));
+    yield put(getExerciseSuccess(exercises.data.getExercises[0]));
   } catch (error) {
-    yield put(getExercisesFailure(error));
+    yield put(getExerciseFailure(error));
   }
 }
 

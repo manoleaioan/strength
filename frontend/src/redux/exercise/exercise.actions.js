@@ -64,7 +64,7 @@ export const getExerciseStart = exerciseId => ({
   payload: exerciseId
 });
 
-export const getExerciseStartSuccess = exercise => ({
+export const getExerciseSuccess = exercise => ({
   type: ExerciseActionTypes.GET_EXERCISE_SUCCESS,
   payload: exercise
 });

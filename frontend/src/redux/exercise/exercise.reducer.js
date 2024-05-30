@@ -92,10 +92,9 @@ const exerciseReducer = (state = INITIAL_STATE, action) => {
           error: action.payload
         }
       }
-    case ExerciseActionTypes.UPDATE_EXERCISE:
+    case ExerciseActionTypes.GET_EXERCISE_SUCCESS:
       return {
         ...state,
-        // exerciseList: state.exerciseList.map(e => e._id === action.payload._id ? action.payload : e),
         exerciseList: upsert(state.exerciseList, action.payload),
         exerciseChart: {
           exerciseId: null,

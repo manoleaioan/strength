@@ -18,7 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { XAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { RestartAlt } from '@mui/icons-material';
-
+import TimeAgo from '../../components/TimeAgo';
 import "./ExerciseInfo.scss";
 import { MotionNumber } from '../MotionNumber/MotionNumber';
 import dayjs from 'dayjs';
@@ -196,9 +196,23 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
       <motion.div
         className="content"
       >
+        <motion.div className="lastwk" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <span className='title'>
+            Last Performed
+          </span>
+          <div className="date">
+            <h2>
+              {dayjs(exercise.activityAt).format('D MMM YYYY')}
+            </h2>
+            {/* <span>
+               <TimeAgo date={exercise.activityAt} />
+            </span> */}
+          </div>
+        </motion.div>
+
         <div className="max-records">
           <div className="record mr">
-            <span>
+            <span className='title'>
               MAX REP
             </span>
             <h1>
@@ -206,22 +220,22 @@ const ExerciseInfo = ({ exercise, close, deleteExercise, createExercise, exercis
             </h1>
           </div>
           <div className="record vol">
-            <span>
+            <span className='title'>
               MAX VOLUME
             </span>
             <h1>
-              <MotionNumber value={exercise.maxVol} />
+              <MotionNumber value={exercise.maxVol} /> <span className='unit'>kg</span>
             </h1>
           </div>
         </div>
 
         <div className="chart-wrapper">
           <div className="header">
-            <div>
-              {/* <h3>Overview</h3> */}
+            <div className='overview'>
+              <h3>Overview</h3>
               <div className="select">
-                <span className={classNames({ 'active': chartDataView === 'reps' }, 'reps')} onClick={() => setChartDataView('reps')}>Reps</span>
-                <span className={classNames({ 'active': chartDataView === 'vol' }, 'vol')} onClick={() => setChartDataView('vol')}>Vol</span>
+                <Button className={classNames({ 'active': chartDataView === 'reps' }, 'reps')} onClick={() => setChartDataView('reps')}>Reps</Button>
+                <Button className={classNames({ 'active': chartDataView === 'vol' }, 'vol')} onClick={() => setChartDataView('vol')}>Vol</Button>
               </div>
             </div>
             <div className={classNames({ 'reps': chartDataView === 'reps' }, 'periods')}>
