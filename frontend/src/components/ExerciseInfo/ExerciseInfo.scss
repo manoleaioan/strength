@@ -152,8 +152,6 @@
           text-shadow: 0 14px 30px rgba(146 129 252 / 35%);
           width: 100%;
           margin-top: 16px;
-
-          // margin-bottom: -40px;
           height: 100%;
           font-weight: 900;
           z-index: 1;
@@ -163,36 +161,37 @@
     }
 
     .lastwk {
-      // display: none;
-      // background-color: var(--card-bg);
-      // background-image: var(--max-record-card-bg);
+      width: 94%;
+      margin: 0 auto;
       padding: 0 14px;
-      border-radius: 10px;
       box-sizing: border-box;
       border-bottom: 1px dashed var(--max-record-card-border);
-      // box-shadow: 0 -10px 7px rgba(91, 61, 136, 0.1) inset;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       line-height: 32px;
       text-align: left;
       color: var(--primary-color);
+      color: #b4c0ff;
       justify-content: space-between;
-
+      margin-top: -7px;
       display: flex;
 
       .title {
-        text-transform: uppercase !important;
+        // text-transform: uppercase !important;
       }
 
       .date {
         display: flex;
-
+        opacity: 0.5;
+        
         h2 {
-          font-size: 20px;
+          font-weight: 100;
+          font-size: 18px;
         }
       }
 
       span {
         opacity: 0.5;
+        font-weight: 100;
       }
     }
 
@@ -200,12 +199,10 @@
       margin-top: 10px;
       border-radius: 10px;
       color: var(--primary-color) !important;
-      // background-image: var(--max-record-card-bg);
       border: 1px solid var(--card-bg);
       overflow: hidden;
 
       .chart {
-        // border-radius: 10px;
         overflow: hidden;
         border-top: 1px solid var(--hr);
         box-sizing: border-box;
@@ -236,7 +233,6 @@
             border: 1px solid var(--card-bg);
             height: 26px;
             padding: 4px;
-            background-image: var(--max-record-card-bg);
 
             button {
               background-color: var(--card-bg) !important;
