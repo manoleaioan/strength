@@ -42,10 +42,13 @@ export function* createWorkout({ payload: { workoutInput, exId }, callback }) {
   try {
     const workout = yield workoutsService.createWorkout(workoutInput);
     yield put(createWorkoutSuccess(workout.data.createWorkout));
-    yield put(updateWorkout(workout.data.createWorkout));
     if (callback) callback(workout.data.createWorkout);
     yield updateMetrics();
-    yield put(getExerciseStart(exId));
+    if(exId){
+      yield put(getExerciseStart(exId));
+    }else{
+      yield put(updateWorkout(workout.data.createWorkout));
+    }
   } catch (error) {
     yield put(createWorkoutFailure(error));
     if (callback) callback({ error })
