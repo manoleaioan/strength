@@ -31,7 +31,6 @@ function* updateMetrics(){
 export function* getWorkouts({ payload }) {
   try {
     const workouts = yield workoutsService.getWorkouts(payload);
-    console.log(payload)
     yield put(getWorkoutsSuccess({ workouts: workouts.data.getWorkouts, selectedDate: payload }));
   } catch (error) {
     yield put(getWorkoutsFailure(error));
