@@ -1,6 +1,5 @@
 .bg-shapes {
   .left-shape {
-    background: url("../../assets/LeftShape.svg");
     position: fixed;
     top: -56px;
     left: -76px;
@@ -11,22 +10,32 @@
     background-size: contain;
     max-height: 712px;
     max-width: 537px;
+    animation: moveRotate 6s infinite;
   }
 
   .right-shape {
-    background: url("../../assets/RightShape.svg");
     position: fixed;
     top: 107px;
-    right: 0;
     z-index: -10;
     height: 100%;
     background-repeat: no-repeat;
     background-size: contain;
-    /* max-height: 1191px; */
     max-width: 1260px;
     width: 100%;
     background-position: right bottom;
     right: -14%;
+    animation: moveRotate 6s infinite;
+  }
+
+  .left-shape path,
+  .right-shape path {
+    fill: var(--login-bg-shapes);
+    opacity: 1;
+    display: none;
+
+    @media (width>=480px) {
+      // display: block;
+    }
   }
 
   .circles {
@@ -38,6 +47,7 @@
     height: 100%;
     overflow: hidden;
     margin: 0;
+    z-index: -1;
   }
 
   .circles li {
@@ -46,7 +56,7 @@
     list-style: none;
     width: 20px;
     height: 20px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--login-bg-shapes);
     animation: animate 25s linear infinite;
     bottom: -150px;
   }

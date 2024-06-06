@@ -54,6 +54,8 @@
   --metrics-no-data-color:#e0e0e0;
 
   --skeleton-bg:#f5f5f518;
+
+  --login-bg-shapes:rgb(255 255 255 / 70%);
 }
 
 [data-theme="dark"] {
@@ -112,6 +114,8 @@
   --metrics-no-data-color:#272525;
 
   --skeleton-bg:#f5f5f518;
+
+  --login-bg-shapes:rgb(255 255 255 / 8%);
 }
 
 [data-theme="dark-oled"] {

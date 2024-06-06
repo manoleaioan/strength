@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate , useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./Account.scss";
 
@@ -71,7 +71,7 @@ export default function Account() {
 
       </motion.div>
 
-      {/* <BgAnimation /> */}
+      <BgAnimation />
     </div>
   )
 }
