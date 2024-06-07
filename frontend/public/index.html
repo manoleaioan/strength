@@ -30,8 +30,14 @@
 
 <script>
   function setThemeColor() {
-    document.querySelector("body").setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
-    var color = getComputedStyle(document.body).getPropertyValue('--app-bg')
+    let localTheme = localStorage.getItem('theme') || 'device';
+
+    let theme = localTheme === 'device' ?
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light')
+      : localTheme;
+
+    document.querySelector("body").setAttribute('data-theme', theme);
+    var color = getComputedStyle(document.body).getPropertyValue('--app-bg');
     var metaThemeColor = document.querySelector("meta[name=theme-color]");
     metaThemeColor.setAttribute("content", color);
   }

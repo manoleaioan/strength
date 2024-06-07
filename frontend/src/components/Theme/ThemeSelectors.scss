@@ -1,0 +1,61 @@
+#theme {
+    background: var(--card-bg);
+    box-shadow: 0 3px 7px rgb(0 0 0 / 10%);
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &>div {
+        line-height: 22px;
+
+        h1 {
+            font-weight: 500;
+            font-size: 15px;
+            color: #505050;
+        }
+
+        p {
+            text-transform: capitalize;
+            min-width: 70px;
+        }
+    }
+
+    .select{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        max-width: 150px;
+    }
+    
+    button {
+        color: var(--primary-color) !important;
+        padding: 11px;
+        border-radius: 50%;
+        cursor: pointer;
+        min-width: 18px !important;
+        min-height: 18px !important;
+        width: 36px !important;
+        height: 36px !important;
+        background-color: var(--shadow-bg);
+        
+        &.light {
+            background-color: #7499f7;
+            border: 1px solid #7499f7;
+            color: #fff !important;
+        }
+
+        &.dark {
+            border: 1px solid #ffb36142;
+            color: #ffb361 !important;
+        }
+   
+        &.device {
+            border: 1px solid #7931da52;
+            color: #a661ff !important;
+        }
+    }
+}

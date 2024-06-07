@@ -89,45 +89,7 @@
     }
   }
 
-  #theme {
-    background: var(--card-bg);
-    box-shadow: 0 3px 7px rgb(0 0 0 / 10%);
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: 1px solid transparent;
-    margin-top: 20px;
 
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-
-    &>div {
-      line-height: 22px;
-
-      h1 {
-        font-weight: 500;
-        font-size: 15px;
-        color: #505050;
-      }
-
-      p {
-        text-transform: capitalize;
-      }
-    }
-
-    button {
-      color: var(--primary-color) !important;
-      padding: 11px;
-      background-color: var(--shadow-bg);
-      border-radius: 50%;
-      cursor: pointer;
-      min-width: 18px !important;
-      min-height: 18px !important;
-      width: 36px !important;
-      height: 36px !important;
-    }
-  }
 
   #userInfo {
     padding: 20px;

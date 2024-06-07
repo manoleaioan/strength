@@ -1,4 +1,4 @@
-:root, [data-theme="white"] {
+@mixin light-theme{
   --main-bg:#e8e8e8;
   --app-bg:#f4f4f4;
 
@@ -58,7 +58,7 @@
   --login-bg-shapes:rgb(255 255 255 / 70%);
 }
 
-[data-theme="dark"] {
+@mixin dark-theme{
   --main-bg:#09090c;
   --app-bg:#0f1014;
 
@@ -118,6 +118,14 @@
   --login-bg-shapes:rgb(255 255 255 / 8%);
 }
 
+:root, [data-theme="white"] {
+  @include light-theme;
+}
+
+[data-theme="dark"] {
+  @include dark-theme;
+}
+
 [data-theme="dark-oled"] {
   --main-bg:#09090c;
   --app-bg:#000;
@@ -154,4 +162,14 @@
 
   --scrollbar:#ffffff12;
   --scrollbar-hover:#ffffff26;
+}
+
+[data-theme="device"] {
+  @media (prefers-color-scheme: dark) {
+    @include dark-theme;
+  }
+
+  @media (prefers-color-scheme: light) {
+    @include light-theme;
+  }
 }
