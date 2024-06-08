@@ -10,6 +10,7 @@ import { ReactComponent as Metrics } from '../../assets/Metrics.svg';
 import { ReactComponent as Exercises } from '../../assets/Exercises.svg';
 import { ReactComponent as Routines } from '../../assets/Routines.svg';
 import { ReactComponent as Workout } from '../../assets/Workout.svg';
+import CopyRight from '../CopyRight/CopyRight';
 
 const Navbar = ({ path, setPath, setAnimate }) => {
   const menuList = [
@@ -75,6 +76,8 @@ const Navbar = ({ path, setPath, setAnimate }) => {
             )
           }
         </ul>
+
+        <CopyRight/>
     </div>
   )
 }

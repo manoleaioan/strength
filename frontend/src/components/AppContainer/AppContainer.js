@@ -7,7 +7,6 @@ import Routines from '../../pages/Routines/Routines';
 import Workouts from '../../pages/Workouts/Workouts';
 import Metrics from '../../pages/Metrics/Metrics';
 import { motion } from "framer-motion";
-import ConstructionIcon from '@mui/icons-material/Construction';
 
 import "./AppContainer.scss";
 import HomeScreenPrompt from '../HomeScreenPrompt/HomeScreenPrompt';
@@ -16,7 +15,6 @@ const AppContainer = () => {
   const [path, setPath] = useState(useLocation().pathname);
   const [animate, setAnimate] = useState();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const components = {
     "/account": <UserAccount />,
@@ -42,7 +40,7 @@ const AppContainer = () => {
         animate={{ opacity: animate ? 0 : 1  }}
         layoutScroll
         id="content">
-        {components[path] || <div className='dev'><ConstructionIcon /> <p>Section under development</p></div>}
+        {components[path]}
       </motion.div>
     </div>
   )

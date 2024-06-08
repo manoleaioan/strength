@@ -1,4 +1,5 @@
 .account-container {
+  position: relative;
   min-height: 100vh;
   min-width: 280px;
   font-family: Poppins;
@@ -9,34 +10,18 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 0% 30px 0 30px;
+  padding: 0% 30px 0;
   max-width: 357px;
   margin: 0 auto;
-
-
-  // background-color: var(--app-bg);
-
-  //border: 1px solid red;
-
   -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
   user-select: none;
-  /* Non-prefixed version, currently
-                                supported by Chrome, Edge, Opera and Firefox */
+
+  #content-wrap {
+    padding-bottom: 60px;
+  }
 
   header {
     text-align: center;
-    height: 28vh;
-    // max-height: 220px;
-    min-height: 200px;
     height: 7vh;
     max-height: 186px;
     min-height: 174px;
@@ -44,13 +29,13 @@
     p {
       margin: revert;
       color: #676767;
-      font-family: "Puritan", sans-serif;
+      font-family: Puritan, sans-serif;
       font-weight: 400;
       font-size: 15px;
       line-height: 10px;
 
       &:nth-of-type(1) {
-        font-family: "Ubuntu";
+        font-family: Ubuntu;
         font-weight: 500;
         font-size: 21px;
       }
@@ -64,7 +49,7 @@
     width: 38%;
     pointer-events: none;
     margin-top: 20px;
-    border: 4px solid  var(--logo-border);
+    border: 4px solid var(--logo-border);
     border-radius: 16px;
     box-sizing: border-box;
   }
@@ -91,7 +76,6 @@
     border: 10px;
     border-radius: 14px;
     margin-bottom: 167px;
-    //min-height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,7 +91,7 @@
 
   .enter-email {
     margin: 0 auto;
-    font-family: "Ubuntu";
+    font-family: Ubuntu;
     margin-top: -14px;
     margin-bottom: 20px;
     font-size: 15px;
@@ -126,7 +110,6 @@
     text-align: center;
 
     input {
-      //margin-bottom: 1.2vh;
       margin-bottom: 14px;
     }
 
@@ -152,17 +135,22 @@
     button {
       height: 64px;
       text-align: center;
-      color: #ffffff;
+      color: #fff;
       border-radius: 16px;
       text-transform: capitalize;
-      font-family: "Ubuntu";
+      font-family: Ubuntu;
       font-size: 16px;
       background: linear-gradient(90deg, #69006d 0%, #cf325b 51.04%, #fa7242 100%);
       background-repeat: no-repeat;
 
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 4px rgb(0 0 0 / 5%);
       margin-top: 15px;
       padding: 0;
     }
+  }
+
+  #copyright {
+    margin-bottom: 10px;
+    border-top: 0;
   }
 }

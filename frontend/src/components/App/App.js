@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -12,7 +12,6 @@ import SplashScreen from '../SplashScreen/SplashScreen';
 import AppContainer from '../AppContainer/AppContainer';
 
 import './App.scss';
-import Routines from '../../pages/Routines/Routines';
 
 const Router = () => (
   <BrowserRouter>

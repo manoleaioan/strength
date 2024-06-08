@@ -11,6 +11,7 @@ import Register from '../../pages/Account/Register';
 import PasswordReset from '../../pages/Account/PasswordReset';
 import Verification from './Verification';
 import PasswordResetConfirm from './PasswordResetConfirm';
+import CopyRight from '../../components/CopyRight/CopyRight';
 
 const backdropVariants = {
   expanded: {
@@ -49,29 +50,32 @@ export default function Account() {
   };
 
   return (
+
     <div className="account-container">
-      <header>
-        <Logo className="logo" />
-        <p>Welcome to Strength!</p>
-        <p>"Your workout routine"</p>
-      </header>
+      <div id="content-wrap">
+        <header>
+          <Logo className="logo" />
+          <p>Welcome to Strength!</p>
+          <p>"Your workout routine"</p>
+        </header>
 
-      <motion.div
-        className="motion"
-        animate={isExpanded ? "expanded" : "collapsed"}
-        variants={backdropVariants}
-        transition={expandingTransition}
-      >
+        <motion.div
+          className="motion"
+          animate={isExpanded ? "expanded" : "collapsed"}
+          variants={backdropVariants}
+          transition={expandingTransition}
+        >
 
-        {(path === "/login" || path === "/") && <Login switchPage={switchPage} />}
-        {path === "/register" && <Register switchPage={switchPage} />}
-        {path === "/password-reset" && <PasswordReset switchPage={switchPage} />}
-        {path.indexOf("/password-reset/confirm/") === 0 && <PasswordResetConfirm switchPage={switchPage} />}
-        {path.indexOf("/verify/") === 0 && <Verification />}
+          {(path === "/login" || path === "/") && <Login switchPage={switchPage} />}
+          {path === "/register" && <Register switchPage={switchPage} />}
+          {path === "/password-reset" && <PasswordReset switchPage={switchPage} />}
+          {path.indexOf("/password-reset/confirm/") === 0 && <PasswordResetConfirm switchPage={switchPage} />}
+          {path.indexOf("/verify/") === 0 && <Verification />}
 
-      </motion.div>
-
-      <BgAnimation />
+        </motion.div>
+        <BgAnimation />
+      </div>
+      <CopyRight />
     </div>
   )
 }
