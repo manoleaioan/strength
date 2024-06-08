@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import ConstructionIcon from '@mui/icons-material/Construction';
 
 import "./AppContainer.scss";
+import HomeScreenPrompt from '../HomeScreenPrompt/HomeScreenPrompt';
 
 const AppContainer = () => {
   const [path, setPath] = useState(useLocation().pathname);
@@ -33,6 +34,7 @@ const AppContainer = () => {
 
   return (
     <div id="app-container">
+      <HomeScreenPrompt />
       <Navbar path={path} setPath={setPath} setAnimate={setAnimate}/>
       <motion.div
         transition={{duration: 0.4}}

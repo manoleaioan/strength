@@ -13,6 +13,9 @@ const ThemeSelector = () => {
         localStorage.setItem('theme', theme);
         setTheme(theme);
         document.querySelector("body").setAttribute('data-theme', theme);
+        var color = getComputedStyle(document.body).getPropertyValue('--app-bg')
+        var metaThemeColor = document.querySelector("meta[name=theme-color]");
+        metaThemeColor.setAttribute("content", color);
     };
 
     return (
