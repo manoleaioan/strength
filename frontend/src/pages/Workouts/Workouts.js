@@ -25,7 +25,6 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const Workouts = ({ getWorkouts, getWorkoutDays, workouts, workouts: { isLoading }, createWorkout }) => {
-  const sortBy = useState("startDate");
   const [openWorkout, setOpenWorkout] = useState(false);
   const [modal, setModalOpen] = useState(false);
   const [workoutList, setWorkoutList] = useState(false);
@@ -85,22 +84,14 @@ const Workouts = ({ getWorkouts, getWorkoutDays, workouts, workouts: { isLoading
 
   const workoutFiltered = workoutList &&
     workoutList.sort((a, b) => {
-      let aValue = a[sortBy];
-      let bValue = b[sortBy];
-
-      if (sortBy === "activityAt") {
-        if (aValue == null) return 1;
-        if (bValue == null) return -1;
-        aValue = aValue.toString().toLowerCase();
-        bValue = bValue.toString().toLowerCase();
-        return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
-      }
+      let aValue = a['startDate'];
+      let bValue = b['startDate'];
 
       if (aValue == null) return 1;
       if (bValue == null) return -1;
       aValue = aValue.toString().toLowerCase();
       bValue = bValue.toString().toLowerCase();
-      return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
+      return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
     });
 
   const onCalendarChange = useCallback((_date) => {
@@ -137,7 +128,7 @@ const Workouts = ({ getWorkouts, getWorkoutDays, workouts, workouts: { isLoading
     if (!date) {
       onCalendarChange(dayjs(workouts.selectedDate || Date.now()));
     }
-  }, [date, onCalendarChange, workouts.selectedDate ])
+  }, [date, onCalendarChange, workouts.selectedDate])
 
   const expandWorkout = (ex) => {
     setOpenWorkout(ex);
