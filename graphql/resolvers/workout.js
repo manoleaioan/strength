@@ -78,7 +78,6 @@ module.exports = {
               await mainExercise.save();
             }
             // console.log(workoutInput.exerciseRecordUpdated, findExUpdated);
-
           }
         }
       } else {

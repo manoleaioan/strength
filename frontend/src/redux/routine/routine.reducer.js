@@ -91,21 +91,11 @@ const routineReducer = (state = INITIAL_STATE, action) => {
           };
         })
       }
-    case RoutineActionTypes.UPDATE_WORKOUT:
-      const { routineId, startDate, deleted } = action.payload;
-
+    case RoutineActionTypes.GET_ROUTINE_SUCCESS:
       return {
         ...state,
-        routineList: state.routineList?.map(routine =>
-          routine._id === routineId ?
-            {
-              ...routine,
-              lastWorkoutDate:deleted ? routine.lastWorkoutDate : startDate,
-              workoutsComplete: deleted ? routine.workoutsComplete - 1 : routine.workoutsComplete + 1
-            }
-            : routine
-        )
-      };
+        routineList: upsert(state.routineList, action.payload)
+      }
     default:
       return state;
   }

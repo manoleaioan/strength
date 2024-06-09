@@ -44,7 +44,17 @@ export const deleteRoutineFailure = error => ({
   payload: error
 });
 
-export const updateWorkout = workout => ({
-  type: RoutineActionTypes.UPDATE_WORKOUT,
-  payload: workout
-})
+export const getRoutineStart = routineId => ({
+  type: RoutineActionTypes.GET_ROUTINE_START,
+  payload: routineId
+});
+
+export const getRoutineSuccess = routine => ({
+  type: RoutineActionTypes.GET_ROUTINE_SUCCESS,
+  payload: routine
+});
+
+export const getRoutineFailure = error => ({
+  type: RoutineActionTypes.GET_ROUTINE_FAILURE,
+  payload: error
+});

@@ -9,21 +9,20 @@ export const routinesService = {
   deleteRoutine,
 };
 
-function getRoutines() {
+function getRoutines(routineId) {
   return axios({
     method: 'POST',
     url: config.apiUrl,
     headers: authHeader(),
     data: JSON.stringify({
       query: `
-        query getRoutines{
-          getRoutines {
+        query getRoutines($routineId: String){
+          getRoutines(routineId: $routineId) {
             _id,
             name,
             color,
             lastWorkoutDate,
             workoutsComplete,
-            totalReps,
             chartData {
               date,
               vol
@@ -51,7 +50,8 @@ function getRoutines() {
             }
           }
         }
-      `
+      `,
+      variables: { routineId }
     })
   }).then(handleResponse);
 }

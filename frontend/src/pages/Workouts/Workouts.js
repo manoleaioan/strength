@@ -304,8 +304,8 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
               {!isLoading && workouts.workoutList?.length === 0 &&
                 <motion.div className="empty-day"
                   layout
-                  initial={{ opacity: !isLoading ? 0 : 1, transition: { delay: 0 } }}
-                  animate={{ opacity: isLoading ? 0 : 1, transition: { duration: 0.25, delay: 0.25 } }}
+                  initial={{ opacity: !isLoading ? 0 : 1 }}
+                  animate={{ opacity: isLoading ? 0 : 1, transition: { duration: 0.25, delay: 0.6 } }}
                 >
                   <div className='title'>
                     <ModeNight /> Empty day

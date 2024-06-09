@@ -4,6 +4,8 @@ import RoutineActionTypes from './routine.types';
 import {
   getRoutinesSuccess,
   getRoutinesFailure,
+  getRoutineSuccess,
+  getRoutineFailure,
   createRoutineSuccess,
   createRoutineFailure,
   deleteRoutineSuccess,
@@ -14,6 +16,15 @@ import {
   routinesService
 } from '../../services/routines.service';
 
+
+export function* getRoutine({ payload }) {
+  try {
+    const routines = yield routinesService.getRoutines(payload);
+    yield put(getRoutineSuccess(routines.data.getRoutines[0]));
+  } catch (error) {
+    yield put(getRoutineFailure(error));
+  }
+}
 
 export function* getRoutines() {
   try {
@@ -47,6 +58,10 @@ export function* onGetRoutinesStart() {
   yield takeLatest(RoutineActionTypes.GET_ROUTINES_START, getRoutines);
 }
 
+export function* onGetRoutineStart() {
+  yield takeLatest(RoutineActionTypes.GET_ROUTINE_START, getRoutine);
+}
+
 export function* onCreateroutinesStart() {
   yield takeLatest(RoutineActionTypes.CREATE_ROUTINE_START, createRoutine);
 }
@@ -58,6 +73,7 @@ export function* onDeleteroutineStart() {
 export function* routineSagas() {
   yield all([
     call(onGetRoutinesStart),
+    call(onGetRoutineStart),
     call(onCreateroutinesStart),
     call(onDeleteroutineStart)
   ]);

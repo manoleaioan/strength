@@ -28,7 +28,6 @@ const RoutineTypes = `
     _id: ID
     lastWorkoutDate: String
     workoutsComplete: Int
-    totalReps: Int
   }
 
   type RoutineChartData {
@@ -45,13 +44,12 @@ const RoutineTypes = `
     user: User!,
     lastWorkoutDate: String,
     workoutsComplete: Int,
-    totalReps: Int,
     chartData: [RoutineChartData]
   }
 `;
 
 const RoutineQuery = `
-  getRoutines:[Routine!]
+  getRoutines(routineId:String):[Routine!]
 `;
 
 const RoutineMutation = `
