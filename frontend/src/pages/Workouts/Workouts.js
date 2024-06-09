@@ -1,8 +1,7 @@
-import { React, useState, useEffect, useRef } from 'react';
+import { React, useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createWorkoutStart, getWorkoutDaysStart, getWorkoutsStart } from '../../redux/workout/workout.actions';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectWorkoutList } from '../../redux/workout/workout.selectors';
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import dayjs from 'dayjs';
@@ -25,21 +24,17 @@ import "./Workouts.scss";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isLoading }, createWorkout }) => {
-  const [expanded, setExpanded] = useState(false);
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("startDate");
-  const [errors, setErrors] = useState({});
+const Workouts = ({ getWorkouts, getWorkoutDays, workouts, workouts: { isLoading }, createWorkout }) => {
+  const sortBy = useState("startDate");
   const [openWorkout, setOpenWorkout] = useState(false);
   const [modal, setModalOpen] = useState(false);
   const [workoutList, setWorkoutList] = useState(false);
   const openWorkoutRef = useRef(false);
-  const [date, setDate] = useState(dayjs(workouts.selectedDate || Date.now()));
+  const [date, setDate] = useState(null);
   const [calendarOpen, setCalendar] = useState(true);
-
-
   const [calendarLoading, setCalendarLoading] = useState(true);
   const [selectCopyWorkout, setSelectCopyWorkout] = useState(false);
+
 
   const cardVariants = {
     initial: (next, close) => ({
@@ -50,8 +45,8 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
     animate: {
       x: 0,
       opacity: 1,
-      position:"unset",
-      delay:500,
+      position: "unset",
+      delay: 500,
       transition: {
         // type: "ease",
         duration: 0.25,
@@ -89,26 +84,48 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
   }, [openWorkout])
 
   const workoutFiltered = workoutList &&
-    workoutList.filter(ex => ex.name.toLowerCase()
-      .includes(search.toLowerCase()))
-      .sort((a, b) => {
-        let aValue = a[sortBy];
-        let bValue = b[sortBy];
+    workoutList.sort((a, b) => {
+      let aValue = a[sortBy];
+      let bValue = b[sortBy];
 
-        if (sortBy === "activityAt") {
-          if (aValue == null) return 1;
-          if (bValue == null) return -1;
-          aValue = aValue.toString().toLowerCase();
-          bValue = bValue.toString().toLowerCase();
-          return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
-        }
-
+      if (sortBy === "activityAt") {
         if (aValue == null) return 1;
         if (bValue == null) return -1;
         aValue = aValue.toString().toLowerCase();
         bValue = bValue.toString().toLowerCase();
-        return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
-      });
+        return aValue > bValue ? -1 : (aValue < bValue ? 1 : 0);
+      }
+
+      if (aValue == null) return 1;
+      if (bValue == null) return -1;
+      aValue = aValue.toString().toLowerCase();
+      bValue = bValue.toString().toLowerCase();
+      return aValue < bValue ? -1 : (aValue > bValue ? 1 : 0);
+    });
+
+  const onCalendarChange = useCallback((_date) => {
+    _date = _date
+      .hour(dayjs().hour())
+      .minute(dayjs().minute())
+      .second(dayjs().second());
+
+    const today = dayjs().startOf('day');
+    if (!dayjs(_date).isSame(today, 'day')) {
+      _date = _date
+        .hour(0)
+        .minute(0)
+        .second(0);
+    }
+
+    setDate(_date);
+
+    getWorkouts((_date.hour(0).minute(0).second(0).millisecond(0)).toISOString());
+
+    if (_date.year().toString() !== workouts.workoutDays.year) {
+      setCalendarLoading(true);
+      getWorkoutDays({ year: _date.year().toString(), utcOffset: dayjs().format('Z') });
+    }
+  }, [getWorkoutDays, getWorkouts, workouts.workoutDays.year]);
 
   useEffect(() => {
     if (workouts.workoutDays.days !== null) {
@@ -117,35 +134,14 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
   }, [workouts.workoutDays]);
 
   useEffect(() => {
-    if (!workouts.workoutList) {
-      onCalendarChange(date);
+    if (!date) {
+      onCalendarChange(dayjs(workouts.selectedDate || Date.now()));
     }
-  }, [])
+  }, [date, onCalendarChange, workouts.selectedDate ])
 
   const expandWorkout = (ex) => {
     setOpenWorkout(ex);
   };
-
-  const onCalendarChange = date => {
-    date = date
-      .hour(dayjs().hour())
-      .minute(dayjs().minute())
-      .second(dayjs().second());
-
-    // date = date
-    //   .hour(0)
-    //   .minute(0)
-    //   .second(0);
-
-    setDate(date);
-
-    getWorkouts((date.hour(0).minute(0).second(0).millisecond(0)).toISOString());
-
-    if (date.year().toString() !== workouts.workoutDays.year) {
-      setCalendarLoading(true);
-      getWorkoutDays({ year: date.year().toString(), utcOffset: dayjs().format('Z') });
-    }
-  }
 
   const onCalendarClick = () => {
     document.getElementById('content').scrollTo({ top: 0, behavior: 'smooth' });
@@ -204,15 +200,6 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
     }
   }
 
-
-  const [renderKey, setRenderKey] = useState(0);
-
-  useEffect(() => {
-    if (isLoading) {
-      setRenderKey((prevKey) => prevKey + 1);
-    }
-  }, [isLoading]);
-
   return <div className="workouts-container">
     <LayoutGroup>
       <AnimatePresence initial={true}>
@@ -226,9 +213,7 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
           >
             {/* HEADER */}
             <motion.div className="header sticky">
-              <motion.div id="title"
-                animate={{ opacity: expanded ? 0 : 1 }}
-              >
+              <motion.div id="title">
                 <h1>Workouts</h1>
                 <div className='selected-date'>{selectedDateString()}</div>
               </motion.div>
@@ -339,7 +324,6 @@ const Workouts = ({ user, getWorkouts, getWorkoutDays, workouts, workouts: { isL
 }
 
 const mapStateToProps = createStructuredSelector({
-  user: selectCurrentUser,
   workouts: selectWorkoutList
 });
 
