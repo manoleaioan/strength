@@ -34,7 +34,6 @@ const Workouts = ({ getWorkouts, getWorkoutDays, workouts, workouts: { isLoading
   const [calendarLoading, setCalendarLoading] = useState(true);
   const [selectCopyWorkout, setSelectCopyWorkout] = useState(false);
 
-
   const cardVariants = {
     initial: (next, close) => ({
       opacity: close ? 0 : 1,
@@ -247,6 +246,7 @@ const Workouts = ({ getWorkouts, getWorkoutDays, workouts, workouts: { isLoading
                       highlightedDays={workouts.workoutDays}
                       onChange={onCalendarChange}
                       onMonthChange={handleOnMonthChanged}
+                      maxDate={dayjs()}
                     />
                   </motion.div>
                 }

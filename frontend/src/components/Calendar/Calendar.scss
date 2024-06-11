@@ -18,12 +18,15 @@
   }
 
   .MuiDayCalendar-header {
-    border-bottom: 1px solid transparent; /* Set initial solid color */
-    border-image: linear-gradient(to right, rgb(255 255 255 / 0%), var(--car), rgb(255 255 255 / 0%)); /* Apply linear gradient */
-    border-image-slice: 1; /* Ensures the border image covers the entire border */
+    border-bottom: 1px solid transparent;
+    /* Set initial solid color */
+    border-image: linear-gradient(to right, rgb(255 255 255 / 0%), var(--car), rgb(255 255 255 / 0%));
+    /* Apply linear gradient */
+    border-image-slice: 1;
+    /* Ensures the border image covers the entire border */
 
     margin-bottom: 10px;
-    background:  linear-gradient(to right, rgb(255 255 255 / 0%), var(--card-bg), rgb(255 255 255 / 0%));
+    background: linear-gradient(to right, rgb(255 255 255 / 0%), var(--card-bg), rgb(255 255 255 / 0%));
   }
 
   .MuiDayCalendar-header,
@@ -34,6 +37,10 @@
     padding: 0 !important;
     font-size: 20px !important;
     height: 100%;
+  }
+  
+  .MuiYearCalendar-root{
+    justify-content: flex-start !important;
   }
 
   .MuiDayCalendarSkeleton-root,
@@ -62,6 +69,10 @@
     width: 100% !important;
 
     // margin: 0 auto;
+  }
+
+  .MuiPickersDay-root.Mui-disabled:not(.MuiPickersDay-hiddenDaySpacingFiller) {
+    opacity: 0.4;
   }
 
   .MuiDayCalendar-weekContainer,
@@ -159,5 +170,9 @@
 
   .MuiPickersSlideTransition-slideExit {
     display: none !important;
+  }
+
+  .MuiPickersArrowSwitcher-button.Mui-disabled {
+    opacity: 0.4;
   }
 }

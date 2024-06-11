@@ -81,27 +81,8 @@ module.exports = {
           }
         }
       } else {
-        //create workout by routine
-        if (workoutInput.routineId) {
-          let routine = await Routine.findById(workoutInput.routineId).populate("exercises.exId exercises.superset.exId");
-
-          if (!routine) {
-            throw new Error('Routine not found');
-          }
-
-          const { name, color, exercises } = routine;
-
-          workout = new Workout({
-            name,
-            color,
-            exercises,
-            user,
-            routineId: workoutInput.routineId,
-            startDate: workoutInput.startDate
-          });
-
-          //create workout by a prev workout
-        } else if (workoutInput.workoutId) {
+        //create workout by a prev workout
+        if (workoutInput.workoutId) {
           let selectedWorkout = await Workout.findById(workoutInput.workoutId);
 
           if (!selectedWorkout) {
@@ -138,9 +119,28 @@ module.exports = {
             routineId: workoutInput.routineId,
             startDate: workoutInput.startDate
           });
+        }
+        //create workout by routine
+        else if (workoutInput.routineId) {
+          let routine = await Routine.findById(workoutInput.routineId).populate("exercises.exId exercises.superset.exId");
 
-          // new workout
-        } else {
+          if (!routine) {
+            throw new Error('Routine not found');
+          }
+
+          const { name, color, exercises } = routine;
+
+          workout = new Workout({
+            name,
+            color,
+            exercises,
+            user,
+            routineId: workoutInput.routineId,
+            startDate: workoutInput.startDate
+          });
+        }
+        // new workout
+        else {
           workout = new Workout({
             _id,
             name,
