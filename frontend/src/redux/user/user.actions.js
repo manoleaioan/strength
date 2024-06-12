@@ -126,3 +126,7 @@ export const updateUserFailure = error => ({
   type: UserActionTypes.UPDATE_USER_FAILURE,
   payload: error
 });
+
+export const resetPwResetResponse = () => ({
+  type: UserActionTypes.RESET_PWRESET_RES
+})

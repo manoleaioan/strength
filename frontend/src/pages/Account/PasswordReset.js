@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { sendPwResetStart } from '../../redux/user/user.actions';
+import { resetPwResetResponse, sendPwResetStart } from '../../redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectPwReset_res } from '../../redux/user/user.selectors';
 import { motion } from "framer-motion";
@@ -11,7 +11,7 @@ import Heading from '../../components/Heading/Heading';
 import { InputText } from '../../components/InputText/InputText';
 
 
-const PasswordReset = ({ switchPage, sendPwResetLink, pwResetStatus }) => {
+const PasswordReset = ({ switchPage, sendPwResetLink, pwResetStatus, resetPwResetRes }) => {
   const [userData, setUser] = useState({ email: "" })
   const [emailSent, setEmailSent] = useState(false);
   const [errors, setErrors] = useState();
@@ -37,7 +37,8 @@ const PasswordReset = ({ switchPage, sendPwResetLink, pwResetStatus }) => {
 
   useEffect(() => {
     setErrors({});
-  }, [])
+    return () => resetPwResetRes();
+  }, [resetPwResetRes])
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -46,14 +47,24 @@ const PasswordReset = ({ switchPage, sendPwResetLink, pwResetStatus }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    resetPwResetRes();
+
     setIsLoading(true);
+
+    if (userData.email?.length === 0) {
+      setErrors({
+        email: 'Required'
+      });
+      return;
+    }
+
     sendPwResetLink({ email: userData.email });
   };
 
   return (
     <>
       <Heading><div className="heading-bg">PASSWORD RESET</div></Heading>
-      
+
       {emailSent
         ? <motion.div className="acc-status"
           variants={variants}
@@ -95,7 +106,8 @@ const mapStateToProps = createStructuredSelector({
 
 
 const mapDispatchToProps = dispatch => ({
-  sendPwResetLink: email => dispatch(sendPwResetStart(email))
+  sendPwResetLink: email => dispatch(sendPwResetStart(email)),
+  resetPwResetRes: () => dispatch(resetPwResetResponse())
 });
 
 export default connect(

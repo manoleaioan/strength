@@ -77,6 +77,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         updateUserError: action.payload
       }
+    case UserActionTypes.RESET_PWRESET_RES:
+      return {
+        ...state,
+        pwReset_res: null
+      }
     default:
       return state;
   }

@@ -40,8 +40,6 @@ const UserAccount = ({ user, signOut, changeUserPicture, resendActivation, updat
     
     if (resendActivation_res === "sent") {
       setVerificationWarning(false);
-    } else if (resendActivation_res) {
-      // console.log(resendActivation_res);
     }
   }, [resendActivation_res, alert])
 
